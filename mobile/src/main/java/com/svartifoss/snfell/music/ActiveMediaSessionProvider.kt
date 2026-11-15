@@ -78,6 +78,13 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
     private var sessionsPerPackage: Map<String, Int> = emptyMap()
 
     /**
+     * The sessions, in order, as this provider last saw the list - what a reported list is compared
+     * with before anything is done about it ([SessionListChange]). Null while not listening, so the
+     * first report after (re)activation is always handled.
+     */
+    private var lastSessionTokens: List<MediaSession.Token>? = null
+
+    /**
      * Whether [packageName] has exactly one live session. When it does, a media notification of that
      * package can only belong to that session, whatever its token compares as - see
      * [notificationMayBelongToSession][com.svartifoss.snfell.notifications.notificationMayBelongToSession].
@@ -91,6 +98,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
 
     private fun findPlayingMediaController(reason: String) {
         val activeSessions = getActiveSessions()
+        lastSessionTokens = activeSessions.map { it.sessionToken }
         rememberSessionCounts(activeSessions)
         publishedStates.keys.retainAll(activeSessions.mapTo(HashSet()) { it.sessionToken })
         // Package and token only. Each session's playback state and info are a binder call apiece,
@@ -213,6 +221,12 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
     }
 
     override fun onActiveSessionsChanged(controllers: MutableList<MediaController>?) {
+        // Most of these name the very sessions already known: the system sends one whenever any app
+        // creates or drops a session, inactive ones included. Those say nothing about what plays,
+        // so they cost nothing more than this comparison - see SessionListChange.
+        val tokens = controllers.orEmpty().map { it.sessionToken }
+        if (!SessionListChange.isNew(lastSessionTokens, tokens)) return
+        lastSessionTokens = tokens
         Timber.d("ActiveSessions changed %s", controllers?.map { it.logLabel() })
         // Before the check below, which returns without reading the list when the playing session
         // is still the one playing: a session that appeared or went away still changes the count.
@@ -226,6 +240,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
 
     override fun onInactive() {
         mediaSessionManager.removeOnActiveSessionsChangedListener(this)
+        lastSessionTokens = null
 
         // Dropped with the rest of the state: a controller retained across a pause must not
         // outlive the observer that would have shown it.

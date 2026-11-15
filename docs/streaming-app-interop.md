@@ -94,7 +94,7 @@ Known from Svartifoss's own testing: SoundCloud's session plays a track URI and 
 
 ### YouTube Music (Automotive and Wear builds)
 
-`com.google.android.apps.youtube.music.mediabrowser.MusicBrowserService` (legacy browser + `MEDIA_BUTTON`). On the phone, YouTube Music already plays shortcuts through its media browser, including with the screen off, so nothing here changes for it.
+`com.google.android.apps.youtube.music.mediabrowser.MusicBrowserService` (legacy browser + `MEDIA_BUTTON`). On the phone, YouTube Music already plays shortcuts through its media browser, including with the screen off, so nothing here changes for it. (No longer true of every version: 8.30.54 refuses Svartifoss's browser, see 5.9.)
 
 ### Amazon Music (Fire TV and Wear builds)
 
@@ -309,6 +309,28 @@ If Spotify on the phone plays nothing it is asked for, could the Spotify app *on
 | `VIEW` of `https://music.youtube.com/playlist?list=LM` to the watch's YouTube Music | Its account picker: the app is not signed in on that watch. Not taken further |
 
 So the watch's own apps are not a way to start something on the phone. The probe was removed afterwards and both apps were stopped.
+
+### 5.9 Listing a playlist's tracks, and YouTube Music's browser (2026-11-14)
+
+The question: can the watch's shortcut screen list a saved playlist's songs and play the one picked? Pixel 3, Android 10, YouTube Music 8.30.54 from the Play Store (installed 2026-10-25, updated the morning of the test), the phone app's play debug build 93, commands sent through the simulated watch of 5.7 on the real phone. Positions count from 1.
+
+| What was tried | Result |
+|---|---|
+| YouTube Data API `playlistItems.list` (1 quota unit per call, 50 items a page) on the owner's own playlist, someone else's, an `OLAK5uy_` album and a short `PL…` id | All four listed: 74 items (two pages), 46, 11 and 12. Each item has its title, video id, privacy and thumbnails, and the channel: `<artist> - Topic` for YouTube Music's own tracks, the uploader otherwise (so a fan's upload reads as its raw video title and the uploader's channel name). One unlisted video was listed like the rest |
+| The same call for `LM` (Liked Music) | HTTP 404 `playlistNotFound`: an API key cannot read it |
+| A pick of `watch?v=<5th item>&list=<playlist>`, YouTube Music playing something else | Step 1 `playFromUri`, verified, about 2 s; verdict "handled". It started on the 5th item, and its queue followed the playlist in order (the queue entries seen were items 5 to 25; the session queue held 25 entries) |
+| The same with YouTube Music force-stopped, for the 10th item | Step 2 **refused** (`onConnectFailed` for `MusicBrowserService`). Step 3's follow-up played the 10th item through the session the bind had woken, about 8 s in, with the launcher still in front. But the verdict carried the link, so a real watch would also have shown "Continue on your phone" and opened YouTube Music on the phone |
+| Browse library, at the root | `onConnectFailed` again, so the library cannot be listed, nor Liked Music or private playlists through it |
+
+What it changes:
+
+- **This YouTube Music refuses Svartifoss's browser**, which contradicts what section 2 records. A cold YouTube Music shortcut now plays only through the visible rung's follow-up, and the watch is told to open the phone anyway. Whether newer versions accept again is not known; re-test when the app updates.
+- **A track inside a playlist is one link.** `watch?v=X&list=P` starts at X and continues with the playlist, so a track list needs no queue manipulation, only the ids the Data API returns.
+- **For YouTube Music the Data API is the only source of a track list.** Public and unlisted playlists and albums work; Liked Music and private playlists would need the user's Google sign-in.
+
+Five quota units were spent.
+
+Built on these results the same day: the shortcut screen's song list (`ShortcutTracksResponder` on the phone, `ShortcutTracks` on the watch), and the rule that asks a woken session before the watch is told to open the phone (`VisibleOpenFollowUp.triesWokenSession`). On the Pixel 3 and the TicWatch Pro 5, opening the owner's 74-song playlist on the watch listed all of it (two pages, two quota units) under the screen's buttons, titles with the artist's name and no "- Topic". A pick from that list was not repeated on the devices (the phone was in use); it sends the very link the warm and cold rows above played.
 
 ---
 

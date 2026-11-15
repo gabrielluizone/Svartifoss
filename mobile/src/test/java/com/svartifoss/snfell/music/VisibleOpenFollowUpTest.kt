@@ -247,4 +247,52 @@ class VisibleOpenFollowUpTest {
         assertTrue(PlaybackIdentity(null, "id", null).hasTrack)
         assertTrue(PlaybackIdentity(null, null, "Title").hasTrack)
     }
+
+    @Test
+    fun onlyAColdAppThatRefusedTheBrowserHasItsWokenSessionAskedFirst() {
+        assertTrue(VisibleOpenFollowUp.triesWokenSession(
+                browserRefused = true, appWasCold = true, opensInTheSameApp = true))
+        // A running app was already asked in step 1; asking again only delays the open.
+        assertFalse(VisibleOpenFollowUp.triesWokenSession(
+                browserRefused = true, appWasCold = false, opensInTheSameApp = true))
+        // One that connected was asked through its browser and did nothing with it.
+        assertFalse(VisibleOpenFollowUp.triesWokenSession(
+                browserRefused = false, appWasCold = true, opensInTheSameApp = true))
+        // The follow-up watches the app the link opens in, which is not the one that was woken.
+        assertFalse(VisibleOpenFollowUp.triesWokenSession(
+                browserRefused = true, appWasCold = true, opensInTheSameApp = false))
+    }
+
+    @Test
+    fun aWokenSessionCountsOnlyWhenItPlaysSomethingOtherThanWhatItCameUpHolding() {
+        // How the woken session is followed: measured against the track it came up holding, so
+        // that one starting by itself is not the request having worked. Read from YouTube Music
+        // 8.30.54 cold: up paused on its last track, playing the requested one after the third
+        // request, about 4.4 s in.
+        val woken = { VisibleOpenFollowUp(wasPlayingBefore = true, identityBefore = old, canRequest = true) }
+        val played = follow(woken(), untilMs = VisibleOpenFollowUp.WOKEN_SESSION_FOLLOW_MS) { t ->
+            if (t < 4_400) Reading(STATE_PAUSED, old) else Reading(STATE_PLAYING, requested)
+        }
+        assertEquals(Step.PLAYED, played.last().second)
+        assertEquals(VisibleOpenFollowUp.MAX_REQUESTS, played.count(Step.REQUEST))
+
+        val restoredItself = follow(woken(), untilMs = VisibleOpenFollowUp.WOKEN_SESSION_FOLLOW_MS) { t ->
+            if (t < 1_000) Reading(STATE_PAUSED, old) else Reading(STATE_PLAYING, old)
+        }
+        assertEquals("its own last track playing is not the request working",
+                0, restoredItself.count(Step.PLAYED))
+    }
+
+    @Test
+    fun theWokenSessionIsGivenAllItsRequestsAndStillLeavesTheWatchTimeToOpen() {
+        val lastRequestAt = VisibleOpenFollowUp.STEADY_BEFORE_REQUEST_MS +
+                (VisibleOpenFollowUp.MAX_REQUESTS - 1) * VisibleOpenFollowUp.REQUEST_INTERVAL_MS
+        assertTrue("every request fits in the woken session's window",
+                lastRequestAt < VisibleOpenFollowUp.WOKEN_SESSION_FOLLOW_MS)
+        // The watch gives up on a verdict after 30 s and the ladder already spends up to about 22
+        // before step 3; this wait is added only after a refused bind, which costs no time, but it
+        // must never be what makes the verdict late.
+        assertTrue(VisibleOpenFollowUp.WOKEN_SESSION_APPEAR_MS +
+                VisibleOpenFollowUp.WOKEN_SESSION_FOLLOW_MS <= 10_000)
+    }
 }

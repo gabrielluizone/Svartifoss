@@ -141,6 +141,35 @@ internal class VisibleOpenFollowUp(
         const val FOLLOW_MS = 15_000L
         const val POLL_MS = 250L
 
+        /**
+         * Whether the visible fallback first asks the session a refused browser bind woke.
+         *
+         * Binding an app's browser service starts its process even when the app then turns the
+         * connection away, and a cold app comes up with a session that takes the request the
+         * browser was refused - YouTube Music 8.30.54 did exactly that (section 5.9 of
+         * `docs/streaming-app-interop.md`). Answering the watch with the link at once made it open
+         * the app on the phone's screen while the music had already started.
+         *
+         * Only for an app that was cold (a running one was already asked in step 1, and asking
+         * again would only delay the open), that refused rather than connected and did nothing (one
+         * that connected was asked through its browser, the same request), and that is the app the
+         * link opens in (the follow-up watches the app it opens). The hand-off path does not take
+         * it: an app with a declared play technique is better served by the technique.
+         */
+        fun triesWokenSession(browserRefused: Boolean, appWasCold: Boolean, opensInTheSameApp: Boolean): Boolean =
+                browserRefused && appWasCold && opensInTheSameApp
+
+        /** How long the woken app's session may take to appear before the link is opened. */
+        const val WOKEN_SESSION_APPEAR_MS = 2_000L
+
+        /**
+         * How long the woken session is followed before the link is opened after all: room for the
+         * three requests of [MAX_REQUESTS] after a second of settling. YouTube Music played after
+         * the third, about 4.4 s in. Together with [WOKEN_SESSION_APPEAR_MS] this is added to the
+         * verdict's wait in the worst case, so it stays far under the watch's 30 s backstop.
+         */
+        const val WOKEN_SESSION_FOLLOW_MS = 6_500L
+
         private const val NOT_YET = Long.MIN_VALUE
     }
 }

@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package com.svartifoss.snfell.proto;
+
+option java_package = "com.svartifoss.snfell.proto";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+// Watch -> phone: the songs of the streaming shortcut the watch's shortcut screen is showing.
+// Asked for when that screen opens, never pushed: a shortcut nobody opens costs nothing.
+message ShortcutTracksRequest {
+  // The shortcut as the watch holds it (a list entry id or a menu entry's remote URI). Echoed
+  // back untouched, so the screen can tell its answer from one meant for another shortcut.
+  required string link = 1;
+  // Made up by the watch for each request. The phone's manifest listener and its music service
+  // can both receive the same message, and one request must be answered once.
+  optional string requestId = 2;
+  // True when the user tapped "See songs". That tap is the consent to look the list up online
+  // when the phone's shortcut lookup switch is off.
+  optional bool explicit = 3;
+}
+
+// Phone -> watch: the answer.
+message ShortcutTracks {
+  enum Status {
+    // The songs follow (in the playlist's order).
+    LISTED = 0;
+    // Not something this phone can list: another service, a private playlist, Liked Music, or
+    // no YouTube key in this build. The screen shows nothing for it.
+    NOT_LISTABLE = 1;
+    // Listing needs an online lookup the user has not agreed to: the screen offers "See songs".
+    NEEDS_CONSENT = 2;
+    // A lookup was tried and failed, or no answer could be made: worth trying again.
+    FAILED = 3;
+  }
+
+  required string link = 1;
+  optional Status status = 2 [default = NOT_LISTABLE];
+  repeated Track tracks = 3;
+  // How many songs the playlist holds, which is more than the tracks sent when it was cut short.
+  optional int32 totalCount = 4;
+  // The request this answers, echoed: the last answer is replayed to a screen that opens later,
+  // and one asked for before the newest request must not overwrite what that request brings.
+  optional string requestId = 5;
+
+  message Track {
+    // What to send back to play this song: the song inside its playlist, so the rest of the
+    // playlist follows it. Played through the shortcut path like any saved link.
+    required string entryId = 1;
+    required string title = 2;
+    optional string artist = 3;
+  }
+}

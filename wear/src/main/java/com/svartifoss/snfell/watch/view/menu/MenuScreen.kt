@@ -80,6 +80,8 @@ import com.svartifoss.snfell.watch.view.queue.rememberCoverImage
 import com.svartifoss.snfell.watch.view.queue.coverScrimFor
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailContent
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutTrackRow
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutTracksUi
 
 /** What [MenuScreen] is currently showing. */
 sealed interface MenuContent {
@@ -129,6 +131,10 @@ fun MenuScreen(
         onDetailPlay: (ShortcutPlayMode) -> Unit = {},
         onDetailOpenOnPhone: () -> Unit = {},
         onDetailDismiss: () -> Unit = {},
+        /** The open shortcut's songs, for a YouTube playlist or album. */
+        detailTracks: ShortcutTracksUi = ShortcutTracksUi.Hidden,
+        onDetailShowTracks: () -> Unit = {},
+        onDetailPlayTrack: (ShortcutTrackRow) -> Unit = {},
         onDismiss: () -> Unit
 ) {
     // Guard: SwipeToDismissBox can fire onDismissed more than once in edge cases.
@@ -186,7 +192,10 @@ fun MenuScreen(
                                     accentSource = accentSource,
                                     fallbackAccent = accentColor ?: Color(WatchTheme.ACCENT_DEFAULT),
                                     onPlay = onDetailPlay,
-                                    onOpenOnPhone = onDetailOpenOnPhone)
+                                    onOpenOnPhone = onDetailOpenOnPhone,
+                                    tracks = detailTracks,
+                                    onShowTracks = onDetailShowTracks,
+                                    onPlayTrack = onDetailPlayTrack)
                         }
                     }
                 }

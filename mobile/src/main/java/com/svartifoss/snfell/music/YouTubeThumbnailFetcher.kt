@@ -1,19 +1,12 @@
 package com.svartifoss.snfell.music
 
 import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.BuildConfig
-import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.SampledBitmaps
 import org.json.JSONObject
 import timber.log.Timber
 import java.net.HttpURLConnection
 import java.net.URL
-import java.net.URLEncoder
-import java.security.MessageDigest
-import java.util.Locale
 
 /**
  * Retrieves a YouTube video's own thumbnail for a track whose player published no artwork.
@@ -34,13 +27,7 @@ object YouTubeThumbnailFetcher {
     /** Whether this APK was built with the project-owned distribution key. */
     fun hasBundledKey(): Boolean = BuildConfig.YOUTUBE_DATA_API_KEY.trim().isNotEmpty()
 
-    private fun configuredApiKey(context: Context): String {
-        val userKey = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(MiscPreferences.YOUTUBE_DATA_API_KEY.key, "")
-                ?.trim()
-                .orEmpty()
-        return userKey.ifBlank { BuildConfig.YOUTUBE_DATA_API_KEY.trim() }
-    }
+    private fun configuredApiKey(context: Context): String = YouTubeDataApi.apiKey(context)
 
     fun isConfigured(context: Context): Boolean =
             configuredApiKey(context).isNotEmpty()
@@ -57,7 +44,7 @@ object YouTubeThumbnailFetcher {
         OnlineArtworkCache.get(context, key)?.let { return it.bytes }
 
         val query = YouTubeThumbnailMatch.searchQuery(channel, title) ?: return null
-        val response = fetchSearch(context, apiKey, query) ?: return null
+        val response = fetchSearch(context, query) ?: return null
         val items = try {
             JSONObject(response).optJSONArray("items")
         } catch (e: Exception) {
@@ -100,14 +87,14 @@ object YouTubeThumbnailFetcher {
                 .firstOrNull { it.isNotBlank() }
     }
 
-    private fun fetchSearch(context: Context, apiKey: String, query: String): String? {
-        val url = SEARCH_ENDPOINT +
-                "?part=snippet&type=video&maxResults=$CANDIDATES&q=" +
-                URLEncoder.encode(query, "UTF-8") +
-                "&key=" + URLEncoder.encode(apiKey, "UTF-8")
-        return openConnection(context, url) { connection ->
-            connection.inputStream.bufferedReader().use { it.readText() }
-        }
+    private fun fetchSearch(context: Context, query: String): String? {
+        val response = YouTubeDataApi.get(
+                context,
+                SEARCH_ENDPOINT,
+                mapOf("part" to "snippet", "type" to "video",
+                        "maxResults" to CANDIDATES.toString(), "q" to query),
+                userAgent = "Svartifoss-youtube-artwork") ?: return null
+        return response.body
     }
 
     private fun downloadBytes(url: String): ByteArray? {
@@ -133,61 +120,4 @@ object YouTubeThumbnailFetcher {
     private fun decodeAndEncode(raw: ByteArray): ByteArray? =
             SampledBitmaps.decode(raw, OnlineArtworkFetcher.MAX_ARTWORK_PX)
                     ?.let(OnlineArtworkFetcher::encodeForBackdrop)
-
-    private fun <T> openConnection(
-            context: Context,
-            url: String,
-            block: (HttpURLConnection) -> T
-    ): T? {
-        return try {
-            val connection = URL(url).openConnection() as HttpURLConnection
-            try {
-                connection.connectTimeout = CONNECT_TIMEOUT_MS
-                connection.readTimeout = READ_TIMEOUT_MS
-                connection.instanceFollowRedirects = true
-                connection.setRequestProperty("User-Agent", "Svartifoss-youtube-artwork")
-                connection.setRequestProperty("Connection", "close")
-                connection.setRequestProperty("X-Android-Package", context.packageName)
-                signingCertificateSha1(context)?.let {
-                    connection.setRequestProperty("X-Android-Cert", it)
-                }
-                if (connection.responseCode != HttpURLConnection.HTTP_OK) {
-                    Timber.w("YouTube Data API request failed with HTTP %d", connection.responseCode)
-                    return null
-                }
-                block(connection)
-            } finally {
-                connection.disconnect()
-            }
-        } catch (e: Exception) {
-            Timber.w(e, "YouTube Data API request failed")
-            null
-        }
-    }
-
-    /** The header format is uppercase SHA-1 hex without colons or a prefix. */
-    private fun signingCertificateSha1(context: Context): String? = try {
-        val packageManager = context.packageManager
-        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            packageManager.getPackageInfo(
-                    context.packageName,
-                    PackageManager.GET_SIGNING_CERTIFICATES)
-        } else {
-            @Suppress("DEPRECATION")
-            packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
-        }
-        val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            packageInfo.signingInfo?.apkContentsSigners?.firstOrNull()
-        } else {
-            @Suppress("DEPRECATION")
-            packageInfo.signatures?.firstOrNull()
-        } ?: return null
-        val digest = MessageDigest.getInstance("SHA-1").digest(signature.toByteArray())
-        buildString(digest.size * 2) {
-            digest.forEach { append("%02X".format(Locale.US, it.toInt() and 0xFF)) }
-        }
-    } catch (e: Exception) {
-        Timber.w(e, "Could not determine the app signing certificate")
-        null
-    }
 }

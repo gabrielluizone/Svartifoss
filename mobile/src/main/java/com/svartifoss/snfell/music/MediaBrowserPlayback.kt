@@ -123,12 +123,32 @@ object MediaBrowserPlayback {
         }
     }
 
+    /** How the browser route ended, as the visible fallback after it needs to know. */
+    enum class Outcome {
+        /** The app took a command and went on to play. */
+        PLAYED,
+
+        /** Connected, asked, and nothing played. */
+        NOT_PLAYED,
+
+        /**
+         * The app declares a browser service and turned this one away (or never answered). The
+         * bind still starts the app's process, so a cold app is usually up with a session a moment
+         * later - which is what lets the visible fallback ask that session first (YouTube Music
+         * 8.30.54 refuses Svartifoss's browser; `docs/streaming-app-interop.md` section 5.9).
+         */
+        REFUSED,
+
+        /** Nothing to try: no browser service, or nothing in the link a browser could play. */
+        UNAVAILABLE
+    }
+
     /**
-     * True when the target app took a command and went on to play (see [awaitRequestedPlayback]
-     * for why buffering alone is not that).
-     * False means the caller should fall back to the visible deep-link flow (no browser service,
-     * connection rejected - e.g. an app that allowlists browser clients like Spotify often does -
-     * or playback never started).
+     * [Outcome.PLAYED] when the target app took a command and went on to play (see
+     * [awaitRequestedPlayback] for why buffering alone is not that). Anything else means the
+     * caller should fall back to the visible deep-link flow: no browser service, a connection
+     * rejected (an app that allowlists browser clients, as Spotify does), or playback that never
+     * started.
      *
      * @param preferSearch when true (artists), the named search is tried first/only, because
      *   playing an artist by URI is not honored.
@@ -139,26 +159,31 @@ object MediaBrowserPlayback {
             playbackLink: String,
             searchQuery: String?,
             preferSearch: Boolean
-    ): Boolean {
+    ): Outcome {
         val query = searchQuery?.trim()?.takeIf { it.isNotEmpty() }
         val strategies = buildStrategies(Uri.parse(playbackLink), query, preferSearch)
-        if (strategies.isEmpty()) return false
+        if (strategies.isEmpty()) return Outcome.UNAVAILABLE
 
         // Every browser service the app declares, until one accepts: an app can run two under
         // different rules (Spotify's legacy one and its Media3 one).
-        val browser = MediaBrowserSearch.connectFirst(
-                context, MediaBrowserSearch.findBrowserServices(context, packageName)) ?: return false
+        val services = MediaBrowserSearch.findBrowserServices(context, packageName)
+        if (services.isEmpty()) return Outcome.UNAVAILABLE
+        val browser = MediaBrowserSearch.connectFirst(context, services) ?: return Outcome.REFUSED
 
         return try {
             val controller = MediaControllerCompat(context, browser.sessionToken)
-            strategies.any { strategy -> awaitActivePlayback(controller, strategy) }
+            if (strategies.any { strategy -> awaitActivePlayback(controller, strategy) }) {
+                Outcome.PLAYED
+            } else {
+                Outcome.NOT_PLAYED
+            }
         } catch (e: CancellationException) {
             throw e
         } catch (e: RuntimeException) {
             // Dead session token, remote app crash mid-call, security rejection - all mean this
             // path is unavailable, not that the request itself was invalid.
             Timber.w(e, "Browser playback failed for %s", packageName)
-            false
+            Outcome.NOT_PLAYED
         } finally {
             browser.disconnect()
         }

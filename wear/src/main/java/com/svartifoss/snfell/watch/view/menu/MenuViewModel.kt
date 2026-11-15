@@ -10,6 +10,7 @@ import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutTracksSource
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.PreferencesBus
 import com.svartifoss.snfell.watch.config.WatchActionMenuProvider
@@ -54,6 +55,11 @@ class MenuViewModel @Inject constructor(
 
     /** The playing cover, for the album colour the menu is washed in. */
     val albumArt = phoneConnection.albumArt
+
+    /** Where the open shortcut's screen asks the phone for its songs. */
+    val shortcutTracksSource = ShortcutTracksSource(phoneConnection.shortcutTracks) { link, explicit, id ->
+        phoneConnection.requestShortcutTracks(link, explicit, id)
+    }
 
     /** Deletes one entry from a watch-managed deletable custom list (currently just search
      *  history) - the phone re-pushes the updated list afterwards, updating [customList]. */

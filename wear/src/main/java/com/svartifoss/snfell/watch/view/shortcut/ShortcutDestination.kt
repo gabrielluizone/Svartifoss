@@ -48,6 +48,22 @@ internal object ShortcutDestination {
                 queryParameter(uri.rawQuery, "list") == "LM"
     }
 
+    /**
+     * Whether [target] is a YouTube playlist or album whose songs the phone may be able to list:
+     * a `list` that is not one of an account's private lists (Liked Music, liked videos, Watch
+     * later). The phone has the last word (`ShortcutTrackListing.playlistIdFor`); this only spares
+     * a request for a link that could never be listed.
+     */
+    fun mayListSongs(target: String): Boolean {
+        val link = linkOf(target).trim()
+        if (serviceOfLink(link) != Service.YOUTUBE_MUSIC) return false
+        val list = queryParameter(parse(link)?.rawQuery, "list")?.takeIf { it.isNotBlank() }
+                ?: return false
+        return list !in PRIVATE_LISTS
+    }
+
+    private val PRIVATE_LISTS = setOf("LM", "LL", "WL")
+
     private fun serviceOfLink(link: String): Service? {
         val lower = link.trim().lowercase(Locale.US)
         val scheme = lower.substringBefore(':', "")

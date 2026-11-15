@@ -489,6 +489,25 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private var previousAlbumArt: Bitmap? = null
 
     /**
+     * The latest state built, whether or not it was transmitted. The persistent notification follows
+     * this rather than [previousMusicState]: a state can be deduped or paced, and the shade must not
+     * wait for the watch to be told.
+     */
+    private var notificationState: MusicState? = null
+
+    /** The queue's next track, read behind the queue refresh's debounce - see [refreshUpNextForNotification]. */
+    private var upNextReading: UpNextReading? = null
+
+    /** What the persistent notification shows now, so an unchanged one is not posted again. */
+    private var shownNotificationContent: PersistentNotificationContent? = null
+
+    /**
+     * True from a successful promotion until the notification is removed. Gates every update, so a
+     * state that lands after Stop cannot put a notification back for a service that is stopping.
+     */
+    private var persistentNotificationShown = false
+
+    /**
      * The cover currently shown on the watch's now-playing screen, or null when there is none.
      *
      * Exposed so the queue can reuse it for the entry that is actually playing. Media3-based
@@ -795,7 +814,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
 
     /**
-     * Builds the persistent notification and promotes the service to the foreground.
+     * Shows the persistent notification as the service's foreground notification, saying what
+     * [currentNotificationContent] says now.
      *
      * Must be called for **every** `startForegroundService()` aimed at this service, not only on
      * creation. A start aimed at an already-created service does not run [onCreate], so nothing
@@ -809,6 +829,39 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * service has already stopped itself.
      */
     private fun promoteToForeground(): Boolean {
+        val content = currentNotificationContent()
+        // ServiceCompat passes the FGS type on API 29+ (required on API 34+) and is a no-op arg
+        // on older versions, so this stays correct across the minSdk 23.. range.
+        //
+        // onCreate can run after a background startForegroundService() (WatchListenerService /
+        // NotificationService). On API 31+ the promotion to foreground can still be refused with
+        // ForegroundServiceStartNotAllowedException (an IllegalStateException) when the OS considers
+        // us fully backgrounded. Catch it and stop the service rather than crash: letting onCreate
+        // throw kills the process, and swallowing it while staying alive gets us killed later for
+        // "did not call startForeground()". stopSelf() satisfies the start-timeout contract cleanly;
+        // control resumes the next time the app is foregrounded or the phone starts playing.
+        try {
+            ServiceCompat.startForeground(
+                    this,
+                    NOTIFICATION_ID_PERSISTENT,
+                    buildPersistentNotification(content),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+            )
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "Could not promote MusicService to foreground from background; stopping")
+            stopSelf()
+            return false
+        }
+        shownNotificationContent = content
+        persistentNotificationShown = true
+        return true
+    }
+
+    /**
+     * The persistent notification for [content]. Its pending intents are the same on every build
+     * (FLAG_UPDATE_CURRENT), so building it again changes only what it says.
+     */
+    private fun buildPersistentNotification(content: PersistentNotificationContent): Notification {
         val stopSelfIntent = Intent(this, MusicService::class.java)
         stopSelfIntent.action = ACTION_STOP_SELF
 
@@ -844,11 +897,25 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         createNotificationChannel()
+
+        // What the shade says: the track playing on the title line, and the track after it on the
+        // line beneath (or the artist, when there is no next track). Expanded, the artist and the
+        // next track with its artist, so nothing is lost to the one collapsed line.
+        val playing = content.playing
+        val upNext = content.upNext
+        val upNextLine = upNext?.let { getString(R.string.notification_up_next, it.title) }
+        val upNextWithArtist = upNext?.let { track ->
+            val line = getString(R.string.notification_up_next, track.title)
+            track.artist?.let { "$line · $it" } ?: line
+        }
+        val expandedText = listOfNotNull(playing?.artist, upNextWithArtist).joinToString("\n")
+
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
-                .setContentTitle(getString(commonR.string.music_control_active))
+                .setContentTitle(playing?.title ?: getString(commonR.string.music_control_active))
+                .setContentText(upNextLine ?: playing?.artist)
                 .setContentIntent(openAppPendingIntent)
                 .addAction(R.drawable.ic_palette,
-                        getString(R.string.watch_themes_title), themesPendingIntent)
+                        getString(R.string.notification_action_themes), themesPendingIntent)
                 // "Stop" ends the service; "force stop" additionally unbinds the notification
                 // listener and kills the process outright.
                 .addAction(R.drawable.ic_nav_stopped,
@@ -863,34 +930,89 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // everywhere else outside MainActivity (LyraAccent is the single source of truth
                 // there too), rather than mixing in a separate hardcoded value here.
                 .setColor(LyraAccent.resolve(this))
+                // The time it was posted says nothing about a line that is rewritten on each track.
+                .setShowWhen(false)
+                // Every track change updates this notification, and an update must never sound.
+                .setOnlyAlertOnce(true)
+                // The lock screen gets the generic line, as a notification's private content does.
+                .setPublicVersion(NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
+                        .setContentTitle(getString(commonR.string.music_control_active))
+                        .setSmallIcon(R.drawable.ic_notification_brand)
+                        .setColor(LyraAccent.resolve(this))
+                        .build())
+
+        if (expandedText.isNotEmpty()) {
+            notificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(expandedText))
+        }
 
         // This is still needed for Pre-O versions, so it must be used, even if it is deprecated.
         @Suppress("DEPRECATION")
         notificationBuilder.priority = Notification.PRIORITY_MIN
 
-        // ServiceCompat passes the FGS type on API 29+ (required on API 34+) and is a no-op arg
-        // on older versions, so this stays correct across the minSdk 23.. range.
-        //
-        // onCreate can run after a background startForegroundService() (WatchListenerService /
-        // NotificationService). On API 31+ the promotion to foreground can still be refused with
-        // ForegroundServiceStartNotAllowedException (an IllegalStateException) when the OS considers
-        // us fully backgrounded. Catch it and stop the service rather than crash: letting onCreate
-        // throw kills the process, and swallowing it while staying alive gets us killed later for
-        // "did not call startForeground()". stopSelf() satisfies the start-timeout contract cleanly;
-        // control resumes the next time the app is foregrounded or the phone starts playing.
+        return notificationBuilder.build()
+    }
+
+    /**
+     * What the persistent notification should say now: the playing track, and the next one from the
+     * queue when that can be relied on. The rules are in [PersistentNotificationContent.compose].
+     */
+    private fun currentNotificationContent(): PersistentNotificationContent {
+        val state = notificationState
+        return PersistentNotificationContent.compose(
+                playingTitle = state?.title,
+                playingArtist = state?.artist,
+                reading = upNextReading,
+                shuffleOn = state?.shuffleEnabled == true,
+                repeatsOneTrack = state?.repeatMode == repeatModeCode(PlaybackStateCompat.REPEAT_MODE_ONE))
+    }
+
+    /**
+     * Posts the notification again when what it says has changed. Does nothing before the service has
+     * been promoted or after the notification has been taken down, so a state that lands during Stop
+     * cannot bring the notification back for a service that is going away.
+     */
+    private fun refreshPersistentNotification() {
+        if (!persistentNotificationShown) return
+        val content = currentNotificationContent()
+        if (content == shownNotificationContent) return
+        shownNotificationContent = content
         try {
+            // Already in the foreground, so this only replaces the text of the notification it shows.
             ServiceCompat.startForeground(
                     this,
                     NOTIFICATION_ID_PERSISTENT,
-                    notificationBuilder.build(),
+                    buildPersistentNotification(content),
                     ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
             )
         } catch (e: IllegalStateException) {
-            Timber.w(e, "Could not promote MusicService to foreground from background; stopping")
-            stopSelf()
-            return false
+            Timber.w(e, "Could not update the persistent notification")
         }
-        return true
+    }
+
+    /**
+     * Reads the queue's next track for the persistent notification. It runs behind the queue refresh's
+     * debounce, for the reason that refresh documents: it has to see the position the player has
+     * settled on.
+     *
+     * It is read whatever the shuffle or repeat state, and [PersistentNotificationContent.compose]
+     * decides whether to show it, so turning shuffle off reveals the next track at once instead of
+     * waiting for the following track change.
+     */
+    private fun refreshUpNextForNotification() {
+        val controller = currentMediaController
+        val queue = resolvePlaybackQueue()
+        upNextReading = null
+        if (controller != null && queue != null) {
+            val active = activeQueueIndex(queue)
+            val next = if (active >= 0) queue.getOrNull(active + 1)?.description else null
+            if (next != null) {
+                upNextReading = UpNextReading.of(
+                        playingTitle = controller.metadata?.getString(MediaMetadata.METADATA_KEY_TITLE),
+                        nextTitle = next.title?.toString(),
+                        nextArtist = next.subtitle?.toString())
+            }
+        }
+        refreshPersistentNotification()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -1034,6 +1156,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     private fun removeServiceNotifications() {
+        // Before anything that can throw: once this runs, no later state may post the notification again.
+        persistentNotificationShown = false
+        shownNotificationContent = null
         try {
             ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID_PERSISTENT)
@@ -1996,6 +2121,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         val musicState = musicStateBuilder.build()
 
+        // The shade follows the player as it is now, not as it was last transmitted: the dedupe and
+        // pacing below can hold a state back, and the notification must not wait for the watch.
+        notificationState = musicState
+        refreshPersistentNotification()
+
         // Before the dedupe below, deliberately: a timer waiting for the end of the track needs
         // every reading, including the position-only ones that are not worth a transmission.
         if (sleepTimer.atTrackEnd) {
@@ -2105,6 +2235,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // playing, and a player that has published new metadata but not yet moved
             // activeQueueItemId would have them both pointing one track back.
             publishAdjacentTrackArtwork()
+            // The shade's "up next" line reads the same queue position, so it waits for the same
+            // settled state for the same reason.
+            refreshUpNextForNotification()
         }, QUEUE_REFRESH_DEBOUNCE_MS)
     }
 
@@ -4120,22 +4253,29 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // e.g. YouTube Music only acts on once its UI reaches the foreground. Falls back to
         // the visible deep-link flow when the app has no browser service, rejects the
         // connection, or never starts playing.
-        val played = MediaBrowserPlayback.play(
+        // Read before the bind, which can start the app: with no session now, step 1 had nothing
+        // to ask, and any session that shows up after a refused bind was woken by it.
+        val wasCold = mediaSessionProvider.controllerForPackage(playbackPackage) == null
+        val outcome = MediaBrowserPlayback.play(
                 this@MusicService,
                 playbackPackage,
                 StreamingShortcutLinks.forPlayback(
                         link, officialAppTarget = playbackPackage == service.packageName),
                 query,
                 preferSearch)
-        if (played) {
+        if (outcome == MediaBrowserPlayback.Outcome.PLAYED) {
             Timber.d("playDeepLink: %s played via MediaBrowserService (step 2)", playbackPackage)
             reply(null)
             scheduleStateRefresh()
         } else {
-            Timber.d("playDeepLink: step 2 (MediaBrowserService) did not play %s, moving to step 3",
-                    playbackPackage)
+            Timber.d("playDeepLink: step 2 (MediaBrowserService) did not play %s (%s), moving to step 3",
+                    playbackPackage, outcome)
             startStreamingLinkWithPlaybackNudge(link, service, visiblePackage, browserLink, query,
-                    preferSearch, sessionShuffle, reply)
+                    preferSearch, sessionShuffle, reply,
+                    wokenByBrowser = VisibleOpenFollowUp.triesWokenSession(
+                            browserRefused = outcome == MediaBrowserPlayback.Outcome.REFUSED,
+                            appWasCold = wasCold,
+                            opensInTheSameApp = visiblePackage == playbackPackage))
         }
     }
 
@@ -4149,7 +4289,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             searchQuery: String? = null,
             preferSearch: Boolean = false,
             sessionShuffle: Boolean? = null,
-            reply: suspend (String?) -> Unit
+            reply: suspend (String?) -> Unit,
+            /** The app was cold and refused the browser, whose bind started it anyway. */
+            wokenByBrowser: Boolean = false
     ) {
         val primaryLink = StreamingShortcutRoutes.linkForTarget(link, service, targetPackage)
 
@@ -4178,6 +4320,21 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
         }
 
+        // A cold app that turned the browser away is usually running a moment later anyway,
+        // because the bind started its process, and its fresh session takes the request the
+        // browser was refused. Asked here first, so the watch is told to open the phone only if
+        // that did not play: answering with the link at once had a real watch show "Continue on
+        // your phone" and open the app on the phone's screen while the music had already started
+        // silently (YouTube Music 8.30.54, docs/streaming-app-interop.md section 5.9).
+        if (wokenByBrowser && targetPackage != null && request != null &&
+                playThroughWokenSession(targetPackage, request)) {
+            Timber.d("playDeepLink: %s played through the session its refused bind woke; " +
+                    "nothing to open", targetPackage)
+            reply(null)
+            scheduleStateRefresh()
+            return
+        }
+
         Timber.d("playDeepLink: step 3 (visible open) opening %s", primaryLink)
 
         // Every silent route is spent, so the link has to be opened visibly - and only the watch
@@ -4202,6 +4359,30 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 request, VisibleOpenFollowUp.FOLLOW_MS)
         Timber.d("playDeepLink: visible open of %s -> played=%s", targetPackage, played)
         scheduleStateRefresh()
+    }
+
+    /**
+     * Gives the session a refused browser bind woke ([VisibleOpenFollowUp.triesWokenSession]) a
+     * few seconds to play what was asked, through the same follow-up a visible open gets. True
+     * only when it started *something other than* the track it came up holding: a cold app
+     * restores its last track, and that one playing is not the request having worked.
+     */
+    private suspend fun playThroughWokenSession(targetPackage: String, request: () -> Unit): Boolean {
+        val start = android.os.SystemClock.elapsedRealtime()
+        var woken = mediaSessionProvider.controllerForPackage(targetPackage)
+        while (woken == null) {
+            if (android.os.SystemClock.elapsedRealtime() - start >=
+                    VisibleOpenFollowUp.WOKEN_SESSION_APPEAR_MS) {
+                Timber.d("playDeepLink: no session of %s appeared after the refused bind", targetPackage)
+                return false
+            }
+            delay(VisibleOpenFollowUp.POLL_MS)
+            woken = mediaSessionProvider.controllerForPackage(targetPackage)
+        }
+        val holding = woken.toPlaybackIdentity()
+        return followVisibleOpen(targetPackage, wasPlayingBefore = holding.hasTrack,
+                identityBefore = holding, request = request,
+                followMs = VisibleOpenFollowUp.WOKEN_SESSION_FOLLOW_MS) == true
     }
 
     /**

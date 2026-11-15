@@ -41,6 +41,8 @@ import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailActivity
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutScreenPolicy
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutTrackRow
+import com.svartifoss.snfell.watch.view.shortcut.rememberShortcutTracks
 import com.svartifoss.snfell.watch.view.shortcut.showContinueOnPhone
 import com.svartifoss.snfell.watch.view.shortcut.toShortcutDetail
 import com.matejdro.wearutils.miscutils.VibratorCompat
@@ -151,6 +153,11 @@ class MenuActivity : ComponentActivity() {
             } ?: AlbumAccentSource.BALANCED
             val accent = rememberPlayingAccent(albumArt, preferences, appearance, accentSource)
 
+            val openShortcut = shortcutDetail
+            val shortcutTracks = rememberShortcutTracks(
+                    if (openShortcut != null) viewModel.shortcutTracksSource else null,
+                    openShortcut?.entryId.orEmpty())
+
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(preferences)) {
             MenuScreen(
@@ -168,6 +175,9 @@ class MenuActivity : ComponentActivity() {
                     onDetailPlay = { mode -> playShortcut(mode) },
                     onDetailOpenOnPhone = { openShortcutOnPhone() },
                     onDetailDismiss = { shortcutDetail = null },
+                    detailTracks = shortcutTracks.state,
+                    onDetailShowTracks = shortcutTracks.show,
+                    onDetailPlayTrack = { row -> playShortcutTrack(row) },
                     onDismiss = { safeFinish() }
             )
             }
@@ -339,6 +349,23 @@ class MenuActivity : ComponentActivity() {
                         .putExtra(RESULT_EXTRA_LIST_ID, CustomLists.PLAYLIST_SHORTCUTS)
                         .putExtra(RESULT_EXTRA_ENTRY_ID, detail.entryId)
                         .putExtra(ShortcutDetailActivity.RESULT_EXTRA_PLAY_MODE, mode.number)
+        )
+        safeFinish()
+    }
+
+    /**
+     * A song picked from the open shortcut's list: handed back through the shortcut path like Play,
+     * with the song inside its playlist as the link, so the rest of the playlist follows it.
+     */
+    private fun playShortcutTrack(row: ShortcutTrackRow) {
+        buzz()
+        setResult(
+                RESULT_OK,
+                Intent()
+                        .putExtra(RESULT_EXTRA_LIST_ID, CustomLists.PLAYLIST_SHORTCUTS)
+                        .putExtra(RESULT_EXTRA_ENTRY_ID, row.entryId)
+                        .putExtra(ShortcutDetailActivity.RESULT_EXTRA_PLAY_MODE,
+                                ShortcutPlayMode.IN_ORDER.number)
         )
         safeFinish()
     }

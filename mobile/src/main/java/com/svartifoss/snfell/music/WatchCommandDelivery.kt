@@ -27,6 +27,12 @@ internal object WatchCommandDelivery {
             PinchCalibrationReceiver.receive(context.applicationContext, event)
             return
         }
+        // A question about a saved link, not a playback command: answered without the music
+        // service, which listing a playlist has no use for (see ShortcutTracksResponder).
+        if (event.path == CommPaths.MESSAGE_REQUEST_SHORTCUT_TRACKS) {
+            ShortcutTracksResponder.receive(context.applicationContext, event)
+            return
+        }
         val command = WatchCommand(event.sourceNodeId, event.requestId, event.path,
                 event.data?.copyOf() ?: ByteArray(0))
         val appContext = context.applicationContext

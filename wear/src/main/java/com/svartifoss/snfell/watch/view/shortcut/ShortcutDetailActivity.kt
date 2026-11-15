@@ -153,6 +153,13 @@ class ShortcutDetailActivity : ComponentActivity() {
                     cover = current.cover ?: listed.icon,
                     mark = current.mark ?: listed.mark)
 
+            val tracksSource = remember {
+                ShortcutTracksSource(phoneConnection.shortcutTracks) { link, explicit, id ->
+                    phoneConnection.requestShortcutTracks(link, explicit, id)
+                }
+            }
+            val tracks = rememberShortcutTracks(tracksSource, shown.entryId)
+
             var dismissed by remember { mutableStateOf(false) }
             CompositionLocalProvider(LocalWatchUiFontFamily provides watchUiFontFamily(prefs)) {
                 SwipeToDismissBox(onDismissed = {
@@ -167,7 +174,13 @@ class ShortcutDetailActivity : ComponentActivity() {
                                 accentSource = accentSource,
                                 fallbackAccent = displayedFallbackAccent,
                                 onPlay = { mode -> choose(shown.entryId, mode, execute) },
-                                onOpenOnPhone = { openOnPhone(shown.entryId) })
+                                onOpenOnPhone = { openOnPhone(shown.entryId) },
+                                tracks = tracks.state,
+                                onShowTracks = tracks.show,
+                                // The song inside its playlist, through the same path as Play.
+                                onPlayTrack = { row ->
+                                    choose(row.entryId, ShortcutPlayMode.IN_ORDER, execute)
+                                })
                     }
                 }
             }

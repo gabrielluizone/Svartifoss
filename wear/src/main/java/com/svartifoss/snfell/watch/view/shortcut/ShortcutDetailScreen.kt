@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.derivedStateOf
@@ -68,6 +69,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumnDefaults
+import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.material3.Icon
@@ -78,6 +80,7 @@ import com.svartifoss.snfell.proto.ShortcutPlayMode
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
+import com.svartifoss.snfell.watch.view.compose.LoadingBars
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
@@ -127,8 +130,11 @@ data class ShortcutDetailUi(
  * from it. Inside the menu a swipe returns to the list the shortcut was picked from; on its own
  * (from the Shortcuts Tile or the quick panel) it closes the screen.
  *
- * Nothing here downloads or stores music - Play and Shuffle are requests to the phone's own player,
- * and "Open on phone" opens the link in the service's app on the phone.
+ * Below them, for a YouTube playlist or album, its songs ([tracks]): picking one plays it inside
+ * its playlist, so the rest follows it (see [ShortcutTracksUi]).
+ *
+ * Nothing here downloads or stores music - Play, Shuffle and a song are requests to the phone's own
+ * player, and "Open on phone" opens the link in the service's app on the phone.
  */
 @Composable
 fun ShortcutDetailContent(
@@ -139,7 +145,12 @@ fun ShortcutDetailContent(
          *  shortcut has no cover, the same as the menu under it. */
         fallbackAccent: Color,
         onPlay: (ShortcutPlayMode) -> Unit,
-        onOpenOnPhone: () -> Unit
+        onOpenOnPhone: () -> Unit,
+        /** The playlist's songs, or what stands in for them; nothing for most shortcuts. */
+        tracks: ShortcutTracksUi = ShortcutTracksUi.Hidden,
+        /** "See songs", or "try again" after a failed lookup. */
+        onShowTracks: () -> Unit = {},
+        onPlayTrack: (ShortcutTrackRow) -> Unit = {}
 ) {
     val screen = LocalConfiguration.current.let { minOf(it.screenWidthDp, it.screenHeightDp) }.toFloat()
     val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
@@ -238,6 +249,31 @@ fun ShortcutDetailContent(
             if (hasAbout) {
                 item(key = "about") {
                     ShortcutAbout(detail.creator, detail.description)
+                }
+            }
+            when (tracks) {
+                ShortcutTracksUi.Hidden -> Unit
+                ShortcutTracksUi.Offer -> item(key = "tracks-offer") {
+                    TracksNotice(stringResource(R.string.shortcut_tracks_show), onShowTracks)
+                }
+                ShortcutTracksUi.Loading -> item(key = "tracks-loading") {
+                    Box(Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                            contentAlignment = Alignment.Center) {
+                        LoadingBars(color = Color.White.copy(alpha = .7f))
+                    }
+                }
+                ShortcutTracksUi.Failed -> item(key = "tracks-failed") {
+                    TracksNotice(stringResource(R.string.shortcut_tracks_failed), onShowTracks)
+                }
+                is ShortcutTracksUi.Listed -> {
+                    item(key = "tracks-heading") {
+                        TracksHeading(color = playContainer)
+                    }
+                    // By position: a playlist can hold the same song twice, and a key must be
+                    // unique in the list.
+                    itemsIndexed(tracks.rows, key = { index, _ -> "track-$index" }) { _, row ->
+                        TrackRow(row) { onPlayTrack(row) }
+                    }
                 }
             }
         }
@@ -571,6 +607,103 @@ private fun PillMark(mark: Bitmap?, service: ShortcutDestination.Service?) {
             tint = Color.White,
             modifier = Modifier.size(if (service != null) 16.dp else 18.dp))
 }
+
+/**
+ * "Songs", over the list - in the light tone of the cover's colour, which is the one the Play
+ * button carries, so the list reads as part of the page and not as a second screen. Below the
+ * buttons the backdrop has closed to black, where that tone is the legible one.
+ */
+@Composable
+private fun TracksHeading(color: Color) {
+    Text(
+            text = stringResource(R.string.shortcut_tracks_heading),
+            color = color,
+            fontFamily = LocalWatchUiFontFamily.current,
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp)
+                    .semantics { heading() })
+}
+
+/**
+ * One song: its title over its artist, on the same dark surface as "Open on phone". A tap plays it
+ * inside its playlist. One line each, ellipsized: a list is read by its starts, and the full title
+ * is a tap away on the player.
+ */
+@Composable
+private fun TrackRow(row: ShortcutTrackRow, onClick: () -> Unit) {
+    val font = LocalWatchUiFontFamily.current
+    Column(
+            modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(TRACK_ROW_RADIUS_DP.dp))
+                    .background(Color(WatchTheme.SURFACE_DARK))
+                    .clickable(onClick = onClick)
+                    .semantics(mergeDescendants = true) { role = Role.Button }
+                    .padding(horizontal = 14.dp, vertical = 7.dp)
+    ) {
+        Text(
+                text = row.title,
+                color = Color.White,
+                fontFamily = font,
+                fontWeight = FontWeight.Medium,
+                fontSize = 13.sp,
+                lineHeight = 16.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
+        if (!row.artist.isNullOrBlank()) {
+            Text(
+                    text = row.artist,
+                    color = Color.White.copy(alpha = .62f),
+                    fontFamily = font,
+                    fontSize = 11.sp,
+                    lineHeight = 14.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+        }
+    }
+}
+
+/** "See songs", or the failed lookup's "try again": a capsule like "Open on phone", centred. */
+@Composable
+private fun TracksNotice(text: String, onClick: () -> Unit) {
+    Box(Modifier.fillMaxWidth().padding(top = 4.dp), contentAlignment = Alignment.Center) {
+        Row(
+                modifier = Modifier
+                        .clip(RoundedCornerShape(TRACK_ROW_RADIUS_DP.dp))
+                        .background(Color(WatchTheme.SURFACE_DARK))
+                        .clickable(onClick = onClick)
+                        .semantics(mergeDescendants = true) { role = Role.Button }
+                        .padding(horizontal = 14.dp, vertical = 9.dp),
+                horizontalArrangement = Arrangement.spacedBy(7.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                    painter = painterResource(R.drawable.ic_queue_music),
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(16.dp))
+            Text(
+                    text = text,
+                    color = Color.White,
+                    fontFamily = LocalWatchUiFontFamily.current,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 12.5.sp,
+                    textAlign = TextAlign.Center,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f, fill = false))
+        }
+    }
+}
+
+/** The corner of a song's row: rounded, not a capsule, because it holds two lines. */
+private const val TRACK_ROW_RADIUS_DP = 18f
 
 /** The gap the page's items are laid out with; the geometry takes it out of the spaces it fills. */
 private const val ITEM_SPACING = 8f

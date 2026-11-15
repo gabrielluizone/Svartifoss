@@ -179,6 +179,24 @@ interface CommPaths {
         const val MESSAGE_TRACK_METADATA = "/Messages/TrackMetadata"
 
         /**
+         * Watch -> phone: the songs of the shortcut whose screen just opened, as a serialized
+         * `ShortcutTracksRequest`.
+         *
+         * Asked for, never pushed, for the reason [MESSAGE_REQUEST_LYRICS] gives: a shortcut nobody
+         * opens should cost nothing. The phone answers it without starting its music service (see
+         * `ShortcutTracksResponder`): listing a playlist starts no playback, and a start refused on
+         * a locked phone would otherwise leave the screen waiting for nothing.
+         */
+        const val MESSAGE_REQUEST_SHORTCUT_TRACKS = "/Messages/RequestShortcutTracks"
+
+        /**
+         * Phone -> watch: the answer, as a serialized `ShortcutTracks`, naming the shortcut it is
+         * for. `/Messages`, so it reaches only `PhoneConnection`'s runtime listener, for the reason
+         * [MESSAGE_LYRICS_RESULT] documents.
+         */
+        const val MESSAGE_SHORTCUT_TRACKS = "/Messages/ShortcutTracks"
+
+        /**
          * Watch -> phone: "where is playback actually at?". Payload is an 8-byte token, the
          * watch's own monotonic clock reading at send time.
          *

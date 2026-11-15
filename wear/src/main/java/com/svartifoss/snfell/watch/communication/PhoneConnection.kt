@@ -32,6 +32,8 @@ import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
 import com.svartifoss.snfell.proto.ShortcutPlayMode
+import com.svartifoss.snfell.proto.ShortcutTracks
+import com.svartifoss.snfell.proto.ShortcutTracksRequest
 import com.svartifoss.snfell.proto.LyricsRequest
 import com.svartifoss.snfell.proto.LyricsResponse
 import com.svartifoss.snfell.proto.MusicState
@@ -160,6 +162,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * (see MetadataFeed) - the replay can never show the wrong table.
      */
     val trackMetadata = MutableLiveData<TrackMetadata>()
+
+    /**
+     * The phone's most recent answer about a shortcut's songs, for the shortcut screen.
+     *
+     * Replayed to a screen that opens later like [lyrics], and as harmless: the answer names the
+     * shortcut and the request it is for, and the screen ignores any other (see ShortcutTracks).
+     */
+    val shortcutTracks = MutableLiveData<ShortcutTracks>()
 
     /**
      * The phone's sleep timer: when it ends, as a reading of **this** watch's `elapsedRealtime` (0
@@ -1493,6 +1503,21 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         sendToPhone(CommPaths.MESSAGE_REQUEST_TRACK_METADATA, request.toByteArray())
     }
 
+    /**
+     * Asks the phone for the songs of the shortcut [link] - an entry id as the shortcut screen
+     * holds it. [explicit] when the user tapped "See songs", which is the consent to a lookup the
+     * phone's switch would otherwise not allow. The answer arrives in [shortcutTracks], carrying
+     * [requestId].
+     */
+    suspend fun requestShortcutTracks(link: String, explicit: Boolean, requestId: String) {
+        val request = ShortcutTracksRequest.newBuilder()
+                .setLink(link)
+                .setRequestId(requestId)
+                .setExplicit(explicit)
+                .build()
+        sendToPhone(CommPaths.MESSAGE_REQUEST_SHORTCUT_TRACKS, request.toByteArray())
+    }
+
     override fun onMessageReceived(event: MessageEvent) {
         when (event.path) {
             CommPaths.MESSAGE_LYRICS_RESULT -> try {
@@ -1503,6 +1528,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 // state, which its own timeout resolves - far better than taking the process down
                 // over a lyric.
                 Timber.w(e, "Could not parse the lyrics response")
+            }
+
+            CommPaths.MESSAGE_SHORTCUT_TRACKS -> try {
+                shortcutTracks.postValue(ShortcutTracks.parseFrom(event.data))
+            } catch (e: Exception) {
+                // A phone build that disagrees about the schema: the screen times out to its
+                // "try again" row instead of the process going down over a song list.
+                Timber.w(e, "Could not parse the shortcut's songs")
             }
 
             CommPaths.MESSAGE_TRACK_METADATA -> try {
