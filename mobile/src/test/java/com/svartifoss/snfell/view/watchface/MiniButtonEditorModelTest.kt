@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiniButtonPlacement
@@ -50,6 +51,26 @@ class MiniButtonEditorModelTest {
                 .filter { MiniButtonEditorModel.specFor(it)?.persisted == true }
                 .filterNot(FaceScopedPreferences::isScoped)
         assertTrue("These mini-button keys are not face-scoped: $unscoped", unscoped.isEmpty())
+    }
+
+    @Test
+    fun `the appearance card disappears while the row is switched off`() {
+        // Split, Verse, Metadata, Ribbon and Frame default the row to Never, and their Mini buttons
+        // page used to offer four style pickers whose every choice drew the same screen.
+        val off = MiniButtonEditorModel.revealedIn(
+                MiniButtonSlot.APPEARANCE, "verse", ActivityVisibility.NEVER)
+        assertTrue(off.isEmpty())
+        // The switch that turns it back on stays, and so does the way to the actions.
+        val buttons = MiniButtonEditorModel.revealedIn(
+                MiniButtonSlot.BUTTONS, "verse", ActivityVisibility.NEVER).map { it.control }
+        assertTrue(MiniButtonControl.MODE in buttons)
+        assertTrue(MiniButtonControl.ASSIGN in buttons)
+        listOf(ActivityVisibility.ALWAYS, ActivityVisibility.PLAYING, ActivityVisibility.PAUSED)
+                .forEach { mode ->
+                    assertEquals(mode,
+                            MiniButtonEditorModel.visibleIn(MiniButtonSlot.APPEARANCE, "verse"),
+                            MiniButtonEditorModel.revealedIn(MiniButtonSlot.APPEARANCE, "verse", mode))
+                }
     }
 
     @Test

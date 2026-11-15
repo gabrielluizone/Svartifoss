@@ -9,5 +9,11 @@
             android:name="com.svartifoss.snfell.debug.SimulatedWatchCommandReceiver"
             android:exported="true"
             android:permission="android.permission.DUMP" />
+        <!-- Debug builds only: renders the Watch tab's preview for every value of every setting
+             and writes down which ones change nothing. Same DUMP gate as above. -->
+        <receiver
+            android:name="com.svartifoss.snfell.debug.PreviewSweepReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP" />
     </application>
 </manifest>

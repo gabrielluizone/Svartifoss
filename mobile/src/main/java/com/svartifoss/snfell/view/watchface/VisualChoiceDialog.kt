@@ -35,6 +35,11 @@ import kotlin.math.roundToInt
  *
  * The same `AlertDialog.Builder` + `applyLyraDialogStyling` shell every other picker uses, with the
  * grid as its content.
+ *
+ * A cell is drawn by giving the preview [key] = `pictureValue(value)` as its candidate, plus the
+ * companion values picking it would also write. For a preference the two are the same value; a
+ * background layer's style, which is not a preference, is drawn as the whole stack with that one
+ * layer's style replaced.
  */
 internal object VisualChoiceDialog {
 
@@ -54,6 +59,8 @@ internal object VisualChoiceDialog {
             values: Array<CharSequence>,
             selected: String?,
             pictures: WatchLookThumbnailer,
+            companions: (String) -> Map<String, Any?> = { emptyMap() },
+            pictureValue: (String) -> String = { it },
             textAccent: Int,
             ringColor: Int,
             onChosen: (String) -> Unit
@@ -68,6 +75,8 @@ internal object VisualChoiceDialog {
                 values = values.map(CharSequence::toString),
                 selected = selected,
                 pictures = pictures,
+                companions = companions,
+                pictureValue = pictureValue,
                 textAccent = textAccent,
                 ringColor = ringColor,
                 // The dialog is already lyra_surface; the empty watch has to show on it.
@@ -89,6 +98,13 @@ internal object VisualChoiceDialog {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     if (rows * dp(CELL_HEIGHT_DP) > cap) cap else ViewGroup.LayoutParams.WRAP_CONTENT)
         }
+        // Nothing is drawn while the grid moves: a picture costs more than a frame, so drawing
+        // during a fling stuttered. What is on screen when it rests is drawn then.
+        grid.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                pictures.hold(newState != RecyclerView.SCROLL_STATE_IDLE)
+            }
+        })
         // The dialog stretches its custom view to the space it has; a container keeps the grid at
         // the height chosen above, so a long list scrolls instead of measuring every cell.
         val container = FrameLayout(context).apply { addView(grid) }
@@ -111,7 +127,11 @@ internal object VisualChoiceDialog {
                 }
             }
         }
-        dialog.setOnDismissListener { pictures.cancelChoices() }
+        dialog.setOnDismissListener {
+            pictures.cancelChoices()
+            // Closed mid-fling: the theme strip shares this renderer and must not stay held.
+            pictures.hold(false)
+        }
         dialog.show()
         return dialog
     }
@@ -122,6 +142,8 @@ internal object VisualChoiceDialog {
             private val values: List<String>,
             private val selected: String?,
             private val pictures: WatchLookThumbnailer,
+            private val companions: (String) -> Map<String, Any?>,
+            private val pictureValue: (String) -> String,
             private val textAccent: Int,
             private val ringColor: Int,
             private val placeholder: Int,
@@ -143,7 +165,8 @@ internal object VisualChoiceDialog {
 
         override fun onViewRecycled(holder: Cell) {
             // A cell scrolled away before its turn: its picture is not needed any more.
-            holder.boundValue?.takeIf { it !in drawn }?.let { pictures.cancelChoice(key, it) }
+            holder.boundValue?.takeIf { it !in drawn }
+                    ?.let { pictures.cancelChoice(key, pictureValue(it)) }
         }
 
         inner class Cell(view: View) : RecyclerView.ViewHolder(view) {
@@ -177,7 +200,7 @@ internal object VisualChoiceDialog {
                                 setColor(placeholder)
                             },
                             (3 * itemView.resources.displayMetrics.density).roundToInt()))
-                    pictures.requestChoice(key, value) { bitmap ->
+                    pictures.requestChoice(key, pictureValue(value), companions(value)) { bitmap ->
                         drawn[value] = bitmap
                         val index = values.indexOf(value)
                         if (index >= 0) notifyItemChanged(index)

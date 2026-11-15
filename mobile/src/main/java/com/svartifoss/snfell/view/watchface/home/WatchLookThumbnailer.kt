@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.LruCache
 import android.view.View
+import com.svartifoss.snfell.view.watchface.PreviewButtonIcons
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeProfile
 import timber.log.Timber
@@ -74,6 +75,9 @@ internal class WatchLookThumbnailer(context: Context) {
     private var draining = false
     private var released = false
 
+    /** True while a list of these pictures is moving under a finger or a fling - see [hold]. */
+    private var held = false
+
     /** Whoever shows the looks; told about each one as it is drawn. */
     var listener: Listener? = null
 
@@ -109,15 +113,35 @@ internal class WatchLookThumbnailer(context: Context) {
     }
 
     /**
-     * Queues a picture of the active theme with [key] set to [value], for a picker. [onDrawn] gets
-     * it; nothing is cached here, so a picker that closes takes its pictures with it.
+     * Queues a picture of the active theme with [key] set to [value], for a picker. [companions]
+     * are the other values picking it would write, drawn with it. [onDrawn] gets the picture;
+     * nothing is cached here, so a picker that closes takes its pictures with it.
      */
-    fun requestChoice(key: String, value: String, onDrawn: (Bitmap) -> Unit) {
+    fun requestChoice(
+            key: String,
+            value: String,
+            companions: Map<String, Any?> = emptyMap(),
+            onDrawn: (Bitmap) -> Unit
+    ) {
         if (released) return
         val jobKey = choiceKey(key, value)
         if (jobKey in pending) return
-        pending[jobKey] = Job(draw = { renderChoice(key, value) }, onDrawn = onDrawn)
+        pending[jobKey] = Job(draw = { renderChoice(key, value, companions) }, onDrawn = onDrawn)
         scheduleNext()
+    }
+
+    /**
+     * Holds the queue while a list of pictures is moving, and lets it go when the list rests.
+     *
+     * A picture is drawn on the main thread and takes longer than a frame, so drawing while a grid
+     * is flung cost a frame per picture: measured on a Pixel 3 over the 71 album art styles, one
+     * frame in eight missed its deadline. Cells that scroll past are cancelled anyway, so what is
+     * drawn once the list rests is only what is on screen.
+     */
+    fun hold(holding: Boolean) {
+        if (held == holding) return
+        held = holding
+        if (!holding) scheduleNext()
     }
 
     /** Forgets a queued choice that scrolled away before its turn came. */
@@ -152,6 +176,38 @@ internal class WatchLookThumbnailer(context: Context) {
         return true
     }
 
+    private var buttonIcons: PreviewButtonIcons? = null
+    private var sourceGlyph: Bitmap? = null
+    private var sourceGlyphTintable = true
+
+    /**
+     * The user's own mini buttons (and quadrant and quick-panel icons), from the same action config
+     * the docked preview reads. Without them every picture showed a watch with no mini buttons -
+     * a layout grid in which the text sat lower than it will on the wrist, and a mini-button
+     * picker that could only draw sample icons. Returns whether the pictures went out of date.
+     */
+    fun setButtonIcons(icons: PreviewButtonIcons): Boolean {
+        if (icons == buttonIcons) return false
+        buttonIcons = icons
+        renderer.setButtonIcons(icons)
+        invalidateAll()
+        return true
+    }
+
+    /** The playing app's mark, as the docked preview has it. Returns whether pictures went stale. */
+    fun setSourceGlyph(glyph: Bitmap?, tintable: Boolean): Boolean {
+        // Compared by content: the Watch tab converts the app's drawable afresh on every media
+        // change, and redrawing every picture for the same mark would cost a frame per tile.
+        val same = glyph === sourceGlyph ||
+                (glyph != null && sourceGlyph?.let { glyph.sameAs(it) } == true)
+        if (same && tintable == sourceGlyphTintable) return false
+        sourceGlyph = glyph
+        sourceGlyphTintable = tintable
+        renderer.setSourceGlyph(glyph, tintable)
+        invalidateAll()
+        return true
+    }
+
     /** The connected watch's shape, so a square watch is not shown its themes on a round one. */
     fun setDeviceProfile(round: Boolean?, widthPx: Int, heightPx: Int, density: Float): Boolean {
         if (round == deviceRound && widthPx == deviceWidthPx && heightPx == deviceHeightPx &&
@@ -178,14 +234,14 @@ internal class WatchLookThumbnailer(context: Context) {
     }
 
     private fun scheduleNext() {
-        if (draining || pending.isEmpty()) return
+        if (draining || held || pending.isEmpty()) return
         draining = true
         handler.post(::drawNext)
     }
 
     private fun drawNext() {
         draining = false
-        if (released) return
+        if (released || held) return
         val next = pending.entries.firstOrNull() ?: return
         pending.remove(next.key)
         next.value.draw()?.let(next.value.onDrawn)
@@ -203,10 +259,14 @@ internal class WatchLookThumbnailer(context: Context) {
      * layout, exactly as picking it does. The candidate is cleared afterwards so none is left on
      * the shared renderer for the next picture.
      */
-    private fun renderChoice(key: String, value: String): Bitmap? = try {
+    private fun renderChoice(
+            key: String,
+            value: String,
+            companions: Map<String, Any?>
+    ): Bitmap? = try {
         drawSafely {
             renderer.clearThemeProfile()
-            renderer.showPreference(key, value)
+            renderer.showPreference(key, value, companions)
         }
     } finally {
         renderer.refresh()

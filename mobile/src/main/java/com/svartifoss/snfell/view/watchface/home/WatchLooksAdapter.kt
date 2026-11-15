@@ -182,7 +182,9 @@ internal class WatchLooksAdapter(
         private fun titleOf(look: WatchLook): String = when (look) {
             is WatchLook.BuiltIn -> WatchThemeRepository.displayNameForFace(context, look.face)
             is WatchLook.Saved -> look.profile.name
-            WatchLook.Community -> context.getString(R.string.online_themes_title)
+            // One short word, because the name is one line: the full name below needed two and was
+            // cut off. [describe] still gives a screen reader the full name.
+            WatchLook.Community -> context.getString(R.string.online_themes_title_short)
         }
 
         /** The sentence the themes library reads for the same theme, so the two agree. */
@@ -195,7 +197,7 @@ internal class WatchLooksAdapter(
                 is WatchLook.Saved -> context.getString(
                         R.string.watch_theme_custom_subtitle,
                         WatchThemeRepository.displayNameForFace(context, look.profile.baseFace))
-                WatchLook.Community -> return titleOf(look)
+                WatchLook.Community -> return context.getString(R.string.online_themes_title)
             }
             return context.getString(
                     if (tile.applied) R.string.watch_theme_row_description_applied

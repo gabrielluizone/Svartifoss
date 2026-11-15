@@ -4,6 +4,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import java.io.File
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -17,6 +18,25 @@ import org.junit.Test
  * it, and a model entry naming a key the XML no longer declares points search at nothing.
  */
 class ColorEditorModelTest {
+
+    @Test
+    fun `a tone and a contrast correction are offered only on a colour taken from the cover`() {
+        listOf(ColorControl.TONE, ColorControl.ADAPTIVE_CONTRAST).forEach { control ->
+            // The title keeps each face's own colour in "face" mode, so there is nothing to tone.
+            assertFalse(ColorEditorModel.appliesInMode(
+                    ColorTarget.TITLE, control, MiscPreferences.TITLE_COLOR_FACE_DEFAULT))
+            assertTrue(ColorEditorModel.appliesInMode(ColorTarget.TITLE, control, "follow"))
+            // The clock's album colour is the only one both act on (resolveClockColor).
+            assertTrue(ColorEditorModel.appliesInMode(ColorTarget.CLOCK, control, "album"))
+            listOf("white", "dynamic", "custom").forEach { mode ->
+                assertFalse("$control in $mode",
+                        ColorEditorModel.appliesInMode(ColorTarget.CLOCK, control, mode))
+            }
+            // The artist line is corrected and toned whatever its mode.
+            assertTrue(ColorEditorModel.appliesInMode(ColorTarget.ARTIST, control, "custom"))
+        }
+        assertTrue(ColorEditorModel.appliesInMode(ColorTarget.CLOCK, ColorControl.MODE, "white"))
+    }
 
     @Test
     fun `every declared colour row is owned by the editor`() {

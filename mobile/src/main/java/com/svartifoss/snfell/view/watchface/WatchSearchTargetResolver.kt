@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.view.watchface
 
 import com.svartifoss.snfell.common.FaceElements
+import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AlbumArtSource
 
 import com.svartifoss.snfell.common.MiniButtonPlacement
@@ -193,6 +194,53 @@ internal object WatchSearchTargetResolver {
         if (flexAxesFontKey != null &&
                 !WatchTypography.isFlexFont(readString(flexAxesFontKey, ""))) {
             return redirect(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, flexAxesFontKey)
+        }
+
+        // On Note the artist is a span of the title's sentence, so its size and effects are the
+        // title's - see TypographyEditorModel.NOTE_ARTIST_FROM_TITLE. Search lands on the title's
+        // own control, which is what changes that part of the sentence there.
+        if (face == "note" && key.startsWith("wear_artist_") &&
+                TypographyEditorModel.NOTE_ARTIST_FROM_TITLE.any { control ->
+                    TypographyEditorModel.settingKeyFor(TypographyTarget.ARTIST, control) == key ||
+                            TypographyEditorModel.customColorKeyFor(TypographyTarget.ARTIST, control) == key
+                }) {
+            return redirect(WatchFacePrefsFragment.SECTION_TYPOGRAPHY,
+                    key.replaceFirst("wear_artist_", "wear_title_"))
+        }
+
+        // The row's appearance is hidden while the row itself is switched off - see
+        // MiniButtonEditorModel.isRevealed. Checked after the hosting-face clause above, which
+        // already sends the two placement rows to the face picker.
+        val miniButtonAppearanceKeys = MiniButtonEditorModel.APPEARANCE_CONTROLS
+                .mapNotNull(MiniButtonEditorModel::keyFor)
+        if (key in miniButtonAppearanceKeys &&
+                readString(MiscPreferences.WEAR_MINI_BUTTONS_MODE.key,
+                        MiscPreferences.WEAR_MINI_BUTTONS_MODE.defaultValue) ==
+                ActivityVisibility.NEVER) {
+            return redirect(WatchFacePrefsFragment.SECTION_MINI_BUTTONS,
+                    MiscPreferences.WEAR_MINI_BUTTONS_MODE.key)
+        }
+
+        // No cover on screen, no filter - see FaceElements.artworkFilterApplies.
+        if (key == MiscPreferences.ALBUM_ART_FILTER.key &&
+                !FaceElements.artworkFilterApplies(face, readString(
+                        MiscPreferences.ALBUM_ART_STYLE.key,
+                        MiscPreferences.ALBUM_ART_STYLE.defaultValue))) {
+            return redirect(WatchFacePrefsFragment.SECTION_BACKGROUND,
+                    MiscPreferences.ALBUM_ART_STYLE.key)
+        }
+
+        // A Tone or a contrast correction needs a colour taken from the cover - see
+        // ColorEditorModel.appliesInMode, which the Color page asks too.
+        listOf(ColorTarget.TITLE, ColorTarget.CLOCK).forEach { target ->
+            val modeKey = ColorEditorModel.keyFor(target, ColorControl.MODE) ?: return@forEach
+            val control = listOf(ColorControl.TONE, ColorControl.ADAPTIVE_CONTRAST)
+                    .firstOrNull { ColorEditorModel.keyFor(target, it) == key } ?: return@forEach
+            val default = (ColorEditorModel.specFor(modeKey)?.value as? ColorValueSpec.Choice)
+                    ?.defaultValue ?: ""
+            if (!ColorEditorModel.appliesInMode(target, control, readString(modeKey, default))) {
+                return redirect(WatchFacePrefsFragment.SECTION_COLORS, modeKey)
+            }
         }
 
         if (key == "album_art_blur_radius" &&

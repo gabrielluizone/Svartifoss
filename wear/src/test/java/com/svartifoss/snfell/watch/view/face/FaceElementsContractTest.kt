@@ -123,6 +123,30 @@ class FaceElementsContractTest {
     }
 
     /**
+     * The artwork filter is offered beside a background that hides the cover only on the faces
+     * that draw a cover anyway. A face that starts honouring `albumArtHidden` for its own cover -
+     * or stops - changes whether the filter does anything there, and the phone has to know.
+     */
+    @Test
+    fun theRegistryMatchesTheFacesThatDrawACoverOverAHiddenBackground() {
+        val cover = Regex("""(?<![A-Za-z])FaceCoverImage\(|state\.albumArt(?![A-Za-z])""")
+        val hiddenGuard = Regex("""albumArt\??\s*\.takeUnless\s*\{\s*state\.albumArtHidden""")
+        ENTRY_POINTS.forEach { (face, entry) ->
+            val body = awakeComposition(entry.first, entry.second)
+            val drawsRegardless = cover.containsMatchIn(body) && !hiddenGuard.containsMatchIn(body)
+            assertEquals(
+                    "Does $face draw a cover when the background hides the artwork? " +
+                            "FaceElements says " +
+                            (face in FaceElements.COVER_UNDER_HIDDEN_BACKGROUND_FACES),
+                    face in FaceElements.COVER_UNDER_HIDDEN_BACKGROUND_FACES,
+                    drawsRegardless)
+        }
+        VIEW_FACES.forEach {
+            assertTrue(it !in FaceElements.COVER_UNDER_HIDDEN_BACKGROUND_FACES)
+        }
+    }
+
+    /**
      * [root]'s body and the bodies of every function of [fileName] it reaches, minus the always-on
      * variants. A function's body is taken as everything up to the next declaration, which is
      * generous but only ever over-includes a face's own code.

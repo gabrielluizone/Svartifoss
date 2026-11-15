@@ -3,6 +3,7 @@ package com.svartifoss.snfell.view.watchface
 import androidx.annotation.StringRes
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.MiscPreferences
@@ -146,6 +147,29 @@ internal object MiniButtonEditorModel {
     /** The rows of [slot] this face can actually consume, in the order they render. */
     fun visibleIn(slot: MiniButtonSlot, face: String): List<MiniButtonSettingSpec> =
             specsFor(slot).filter { appliesToFace(it.control, face) }
+
+    /** [visibleIn], minus the rows the row's own [mode] leaves with nothing to act on. */
+    fun revealedIn(slot: MiniButtonSlot, face: String, mode: String): List<MiniButtonSettingSpec> =
+            visibleIn(slot, face).filter { isRevealed(it.control, mode) }
+
+    /** The controls that only describe how the row looks, which mean nothing while it never shows. */
+    val APPEARANCE_CONTROLS: Set<MiniButtonControl> = setOf(
+            MiniButtonControl.ARRANGEMENT,
+            MiniButtonControl.SHAPE,
+            MiniButtonControl.BACKGROUND,
+            MiniButtonControl.OPACITY)
+
+    /**
+     * Whether [control] is worth showing while "Show mini buttons" is [mode].
+     *
+     * With the row switched off ([ActivityVisibility.NEVER] - the default on Split, Verse,
+     * Metadata, Ribbon and Frame) the watch draws no row at all, so its arrangement, shape,
+     * background and opacity changed nothing on the wrist, and the miniature and every picture in
+     * their pickers showed the same screen for every choice. The same rule the Always-on page
+     * applies to its artwork card, and mirrored by [WatchSearchTargetResolver].
+     */
+    fun isRevealed(control: MiniButtonControl, mode: String): Boolean =
+            control !in APPEARANCE_CONTROLS || mode != ActivityVisibility.NEVER
 
     /**
      * Whether [control] applies to [face], mirroring

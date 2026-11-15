@@ -813,6 +813,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         }
 
         val sizeKey = settingKey(typographyTarget, TypographyControl.SIZE)
+                ?.takeIf { TypographyEditorModel.appliesToFace(
+                        typographyTarget, TypographyControl.SIZE, face) }
         val sizeControls = listOf(
                 root.findViewById<MaterialButton>(R.id.typography_size_decrease_button),
                 root.findViewById<MaterialButton>(R.id.typography_size_button),
@@ -879,6 +881,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 root.findViewById<MaterialButton>(R.id.typography_shadow_strength_button)
         val shadowDetailRow = root.findViewById<View>(R.id.typography_shadow_detail_row)
         val shadowKey = settingKey(typographyTarget, TypographyControl.SHADOW)
+                ?.takeIf { TypographyEditorModel.appliesToFace(
+                        typographyTarget, TypographyControl.SHADOW, face) }
         shadowButton.isVisible = shadowKey != null
         var shadowOn = false
         shadowKey?.let { key ->
@@ -914,6 +918,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val outlineColorButton =
                 root.findViewById<MaterialButton>(R.id.typography_outline_color_button)
         val outlineKey = settingKey(typographyTarget, TypographyControl.OUTLINE)
+                ?.takeIf { TypographyEditorModel.appliesToFace(
+                        typographyTarget, TypographyControl.OUTLINE, face) }
         outlineButton.isVisible = outlineKey != null
         var outlineOn = false
         outlineKey?.let { key ->
@@ -945,6 +951,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 root.findViewById<MaterialButton>(R.id.typography_backdrop_opacity_button)
         val backdropDetailRow = root.findViewById<View>(R.id.typography_backdrop_detail_row)
         val backdropKey = settingKey(typographyTarget, TypographyControl.BACKDROP)
+                ?.takeIf { TypographyEditorModel.appliesToFace(
+                        typographyTarget, TypographyControl.BACKDROP, face) }
         backdropButton.isVisible = backdropKey != null
         var backdropOn = false
         backdropKey?.let { key ->
@@ -1737,7 +1745,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // value they do not have.
         val toneKey = ColorEditorModel.keyFor(colorTarget, ColorControl.TONE)
         val toneButton = root.findViewById<MaterialButton>(R.id.color_editor_tone_button)
-        toneButton.isVisible = toneKey != null
+        // A Tone needs a colour taken from the cover to act on - see ColorEditorModel.appliesInMode.
+        toneButton.isVisible = toneKey != null &&
+                ColorEditorModel.appliesInMode(colorTarget, ColorControl.TONE, mode)
         toneKey?.let { key ->
             val label = choiceLabel(key, readStringPreference(key, colorChoiceDefault(key)))
             toneButton.text = "${findPreference<Preference>(key)?.title ?: key} · $label"
@@ -1760,10 +1770,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val contrastKey = ColorEditorModel.keyFor(colorTarget, ColorControl.ADAPTIVE_CONTRAST)
         val contrastSwitch = root.findViewById<SwitchMaterial>(R.id.color_editor_contrast_switch)
         // The correction measures the line against the artwork, which says nothing while the title
-        // keeps the face's own designed colour - that colour is not derived from the art. Same rule
-        // as updateTitleAdaptiveContrastVisibility.
+        // keeps the face's own designed colour - that colour is not derived from the art - and
+        // moves the clock's album colour alone. Same rule as updateTitleAdaptiveContrastVisibility.
         contrastSwitch.isVisible = contrastKey != null &&
-                (colorTarget != ColorTarget.TITLE || mode != MiscPreferences.TITLE_COLOR_FACE_DEFAULT)
+                ColorEditorModel.appliesInMode(colorTarget, ColorControl.ADAPTIVE_CONTRAST, mode)
         if (contrastSwitch.isVisible && contrastKey != null) {
             bindColorSwitch(
                     contrastSwitch,
@@ -3088,27 +3098,53 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * renderer to draw the pictures with.
      */
     private fun showVisualChoiceDialog(preference: ListPreference): Boolean {
-        val pictures = (parentFragment as? WatchFaceFragment)?.choicePictures() ?: return false
         val labels = preference.entries ?: return false
         val values = preference.entryValues ?: return false
         if (labels.isEmpty() || labels.size != values.size) return false
-        val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
-        val rawAccent = lyraRuntimeAccent()
-        VisualChoiceDialog.show(
-                context = requireContext(),
+        return showChoiceGrid(
                 title = preference.dialogTitle ?: preference.title,
                 key = preference.key,
                 labels = labels,
                 values = values,
                 selected = preference.value,
-                pictures = pictures,
-                textAccent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 4.5),
-                ringColor = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 3.0),
+                companions = { value -> choiceCompanions(preference.key, value) },
                 onChosen = { value ->
                     if (value != preference.value && preference.callChangeListener(value)) {
                         preference.value = value
                     }
                 })
+    }
+
+    /**
+     * Opens a [VisualChoiceDialog] tinted with the accent on screen, or returns false when this
+     * page has no renderer to draw the pictures with - the caller then opens its list instead.
+     */
+    private fun showChoiceGrid(
+            title: CharSequence?,
+            key: String,
+            labels: Array<CharSequence>,
+            values: Array<CharSequence>,
+            selected: String?,
+            companions: (String) -> Map<String, Any?> = { emptyMap() },
+            pictureValue: (String) -> String = { it },
+            onChosen: (String) -> Unit
+    ): Boolean {
+        val pictures = (parentFragment as? WatchFaceFragment)?.choicePictures() ?: return false
+        val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
+        val rawAccent = lyraRuntimeAccent()
+        VisualChoiceDialog.show(
+                context = requireContext(),
+                title = title,
+                key = key,
+                labels = labels,
+                values = values,
+                selected = selected,
+                pictures = pictures,
+                companions = companions,
+                pictureValue = pictureValue,
+                textAccent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 4.5),
+                ringColor = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 3.0),
+                onChosen = onChosen)
         return true
     }
 
@@ -4108,6 +4144,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val face = readStringPreference(
                 MiscPreferences.WEAR_SCREEN_FACE.key,
                 MiscPreferences.WEAR_SCREEN_FACE.defaultValue)
+        val mode = readStringPreference(
+                MiscPreferences.WEAR_MINI_BUTTONS_MODE.key,
+                MiscPreferences.WEAR_MINI_BUTTONS_MODE.defaultValue)
         val palette = editorPalette()
         val rowColors = editorRowColors(palette)
 
@@ -4115,7 +4154,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val container = root.findViewById<LinearLayout>(R.id.mini_button_editor_groups)
         container.removeAllViews()
         MiniButtonSlot.entries.forEach { slot ->
-            val specs = MiniButtonEditorModel.visibleIn(slot, face)
+            // The appearance card disappears while the row is switched off - see
+            // MiniButtonEditorModel.isRevealed.
+            val specs = MiniButtonEditorModel.revealedIn(slot, face, mode)
             if (specs.isEmpty()) return@forEach
             val rows = inflateEditorGroupCard(container, slot.headingRes, palette)
             specs.forEach { spec ->
@@ -4486,6 +4527,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
         val filterKey = MiscPreferences.ALBUM_ART_FILTER.key
         val filterButton = root.findViewById<MaterialButton>(R.id.background_editor_filter_button)
+        // Gone while no cover is on screen for it to act on - see FaceElements.artworkFilterApplies.
+        // Offered there, its picker drew thirty identical pictures.
+        filterButton.isVisible = FaceElements.artworkFilterApplies(
+                readStringPreference(
+                        MiscPreferences.WEAR_SCREEN_FACE.key,
+                        MiscPreferences.WEAR_SCREEN_FACE.defaultValue),
+                artworkValue)
         val filterValue = readStringPreference(
                 filterKey, MiscPreferences.ALBUM_ART_FILTER.defaultValue)
         filterButton.text = choiceLabel(filterKey, filterValue)
@@ -4564,11 +4612,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * that clearly do something - and it makes adopting the stack a visual no-op, since the first
      * edit is saved from exactly what was being displayed.
      */
-    private fun currentBackgroundLayers(): List<BackgroundLayer> = BackgroundLayerStack.resolve(
-            raw = readStringPreference(BACKGROUND_LAYERS_KEY, ""),
-            background = PlayerBackgroundStyle.fromPreference(readStringPreference(
-                    MiscPreferences.ALBUM_ART_STYLE.key,
-                    MiscPreferences.ALBUM_ART_STYLE.defaultValue)),
+    private fun currentBackgroundLayers(): List<BackgroundLayer> =
+            BackgroundLayerStack.parse(readStringPreference(BACKGROUND_LAYERS_KEY, ""))
+                    ?: legacyBackground().implicitFor(PlayerBackgroundStyle.fromPreference(
+                            readStringPreference(
+                                    MiscPreferences.ALBUM_ART_STYLE.key,
+                                    MiscPreferences.ALBUM_ART_STYLE.defaultValue)))
+
+    /** The legacy settings the stack falls back to, read through [store] for this face. */
+    private fun legacyBackground() = AlbumArtStylePick.LegacyBackground(
             dimEnabled = store.getBoolean(
                     MiscPreferences.DIM_ALBUM_ART.key, MiscPreferences.DIM_ALBUM_ART.defaultValue),
             dimPercent = store.getInt(
@@ -4588,6 +4640,42 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     MiscPreferences.WEAR_ACCENT_FLOOR_COLOR_MODE.defaultValue)),
             baseWashDrawn = readStringPreference("wear_screen_face", "classic") !in
                     BackgroundLayerStack.SELF_BACKDROP_FACES)
+
+    /**
+     * What the background stack becomes when [style] is picked as the album art style, or null
+     * when it stays as it is - see [AlbumArtStylePick].
+     */
+    private fun backgroundStackForAlbumArtStyle(style: String): String? =
+            AlbumArtStylePick.stackAfter(
+                    storedRaw = readStringPreference(BACKGROUND_LAYERS_KEY, ""),
+                    oldStyle = readStringPreference(
+                            MiscPreferences.ALBUM_ART_STYLE.key,
+                            MiscPreferences.ALBUM_ART_STYLE.defaultValue),
+                    newStyle = style,
+                    legacy = legacyBackground())
+
+    /**
+     * Makes a picked album art style the one the watch shows, by bringing its wash into the
+     * background stack where a chosen shading or a composed stack would otherwise hide it.
+     * Called from the preference's change listener, before the style itself is stored, so it
+     * reads the style being replaced.
+     */
+    private fun showPickedAlbumArtStyle(style: String) {
+        val stack = backgroundStackForAlbumArtStyle(style) ?: return
+        store.putString(BACKGROUND_LAYERS_KEY, stack)
+        refreshBackgroundEditor()
+    }
+
+    /**
+     * Values a picture of [value] in [key]'s grid has to show alongside it, because picking that
+     * value writes them too.
+     */
+    private fun choiceCompanions(key: String, value: String): Map<String, Any?> = when (key) {
+        MiscPreferences.ALBUM_ART_STYLE.key -> backgroundStackForAlbumArtStyle(value)
+                ?.let { mapOf(BACKGROUND_LAYERS_KEY to it) }
+                .orEmpty()
+        else -> emptyMap()
+    }
 
     /**
      * Persists [layers] and repaints both the list and the miniature.
@@ -4644,15 +4732,27 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 ?: BackgroundLayerStack.stylesFor(layer.kind)
         if (offered.isEmpty()) return
         val labels = offered.map { choiceLabel(sourceKey, it) }.toTypedArray()
-        showLyraChoiceDialog(
-                getString(R.string.background_layer_style_title,
-                        backgroundLayerKindLabel(layer.kind)),
-                labels,
-                checkedItem = offered.indexOf(layer.style)
-        ) { chosen ->
-            writeBackgroundLayers(layers.toMutableList().also {
-                it[index] = layer.copy(style = offered[chosen])
-            })
+        val title = getString(R.string.background_layer_style_title,
+                backgroundLayerKindLabel(layer.kind))
+        fun withStyle(style: String) = layers.toMutableList().also {
+            it[index] = layer.copy(style = style)
+        }
+        // A grid of pictures, as the album art style has: forty washes or a dozen shadings are no
+        // easier to judge by name here than there. A layer's style is not a preference, so each
+        // picture is the whole stack with this one layer's style replaced.
+        val shown = showChoiceGrid(
+                title = title,
+                key = BACKGROUND_LAYERS_KEY,
+                labels = labels,
+                values = offered.map<String, CharSequence> { it }.toTypedArray(),
+                selected = layer.style,
+                pictureValue = { style -> BackgroundLayerStack.encode(withStyle(style)) },
+                onChosen = { style ->
+                    if (style != layer.style) writeBackgroundLayers(withStyle(style))
+                })
+        if (shown) return
+        showLyraChoiceDialog(title, labels, checkedItem = offered.indexOf(layer.style)) { chosen ->
+            writeBackgroundLayers(withStyle(offered[chosen]))
         }
     }
 
@@ -5492,6 +5592,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     // The listener fires before the new value persists, so pass it along
                     // instead of re-reading the (still old) preference.
                     updateBlurRadiusEnabled(newValue as? String)
+                    (newValue as? String)?.let(::showPickedAlbumArtStyle)
                     true
                 }
         updateProgressGradientVisibility()

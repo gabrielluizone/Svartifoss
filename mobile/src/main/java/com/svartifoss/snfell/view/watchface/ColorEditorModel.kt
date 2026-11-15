@@ -234,6 +234,28 @@ internal object ColorEditorModel {
     fun keyFor(target: ColorTarget, control: ColorControl): String? =
             specsFor(target).firstOrNull { it.control == control }?.key
 
+    /**
+     * Whether [control] of [target] does anything while that element's colour mode is [mode].
+     *
+     * Two element controls only act on a colour derived from the cover. The title's Tone and its
+     * contrast correction have nothing to work on in "face" mode, where each face keeps the colour
+     * it designed and no palette is resolved at all. The clock's Tone and correction act on the
+     * album colour alone: "dynamic" picks black or white for itself, and "white" or "custom" are
+     * explicit choices (`MainActivity.resolveClockColor` on the watch). Offered in those modes
+     * they changed nothing on the wrist or in the miniature. Mirrored by [WatchSearchTargetResolver].
+     */
+    fun appliesInMode(target: ColorTarget, control: ColorControl, mode: String?): Boolean {
+        if (control != ColorControl.TONE && control != ColorControl.ADAPTIVE_CONTRAST) return true
+        return when (target) {
+            ColorTarget.TITLE -> mode != MiscPreferences.TITLE_COLOR_FACE_DEFAULT
+            ColorTarget.CLOCK -> mode == CLOCK_ALBUM_MODE
+            else -> true
+        }
+    }
+
+    /** The clock colour mode drawn from the cover - see [appliesInMode]. */
+    const val CLOCK_ALBUM_MODE = "album"
+
     /** Destination used when Settings search opens the compact editor for a legacy row key. */
     fun searchTargetFor(key: String): ColorSearchTarget? =
             specFor(key)?.let { ColorSearchTarget(it.target, it.control) }

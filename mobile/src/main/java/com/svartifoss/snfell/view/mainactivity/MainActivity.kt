@@ -325,13 +325,7 @@ class MainActivity : WearCompanionPhoneActivity(),
                 val color = dynamicAccentColor ?: resolveDefaultAccent()
                 applyAccentColorToViewTree(v, color)
                 if (f is androidx.preference.PreferenceFragmentCompat) {
-                    f.listView?.addOnChildAttachStateChangeListener(object : RecyclerView.OnChildAttachStateChangeListener {
-                        override fun onChildViewAttachedToWindow(view: View) {
-                            val c = dynamicAccentColor ?: resolveDefaultAccent()
-                            applyAccentColorToViewTree(view, c)
-                        }
-                        override fun onChildViewDetachedFromWindow(view: View) {}
-                    })
+                    f.listView?.let(::trackAccentOnPreferenceList)
                 }
             }
         }, true)
@@ -1239,18 +1233,46 @@ class MainActivity : WearCompanionPhoneActivity(),
             for (i in 0 until recyclerView.childCount) {
                 applyAccentColorToViewTree(recyclerView.getChildAt(i), color)
             }
-            if (recyclerView.getTag(R.id.tag_accent_listener_attached) != true) {
-                recyclerView.setTag(R.id.tag_accent_listener_attached, true)
-                recyclerView.addOnChildAttachStateChangeListener(
-                    object : androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener {
-                        override fun onChildViewAttachedToWindow(child: View) {
-                            val accent = dynamicAccentColor ?: resolveDefaultAccent()
-                            applyAccentColorToViewTree(child, accent)
-                        }
+            trackAccentOnPreferenceList(recyclerView)
+        }
+    }
 
-                        override fun onChildViewDetachedFromWindow(child: View) {}
-                    }
-                )
+    /**
+     * Keeps a preference list on the accent for as long as it is on screen. Two things undo it and
+     * each needs its own hook.
+     *
+     * A row that scrolls in or is created is bound and *then* attached, so the attach callback
+     * sees its final state and recolors it.
+     *
+     * A row that is **rebound in place** is not detached, so that callback never fires again - and
+     * `PreferenceGroupAdapter.onBindViewHolder` calls `PreferenceViewHolder.resetState()`, which
+     * puts every title back to the color it was inflated with. For a category header that is the
+     * static `lyra_accent` (sage green), so the first rebind of "Community themes" or "Updates"
+     * turned it green for good while a header nothing had rebound stayed on the accent. Any change
+     * to the list (a summary arriving, a category shown or hidden) rebinds rows, and a rebind only
+     * happens while the list is laid out, so the titles are put back after each layout, before the
+     * frame is drawn. Only titles are touched: they are the one thing `resetState` restores, and
+     * setting a text color only invalidates, so this cannot start another layout.
+     */
+    private fun trackAccentOnPreferenceList(list: RecyclerView) {
+        if (list.getTag(R.id.tag_accent_listener_attached) == true) return
+        list.setTag(R.id.tag_accent_listener_attached, true)
+        list.addOnChildAttachStateChangeListener(object : RecyclerView.OnChildAttachStateChangeListener {
+            override fun onChildViewAttachedToWindow(child: View) {
+                applyAccentColorToViewTree(child, dynamicAccentColor ?: resolveDefaultAccent())
+            }
+
+            override fun onChildViewDetachedFromWindow(child: View) {}
+        })
+        list.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            val readable = accentTextColor(dynamicAccentColor ?: resolveDefaultAccent())
+            for (i in 0 until list.childCount) {
+                val holder = list.getChildViewHolder(list.getChildAt(i))
+                        as? androidx.preference.PreferenceViewHolder ?: continue
+                val title = holder.findViewById(android.R.id.title) as? android.widget.TextView ?: continue
+                if (title.getTag(R.id.tag_uses_accent) == true && title.currentTextColor != readable) {
+                    title.setTextColor(readable)
+                }
             }
         }
     }

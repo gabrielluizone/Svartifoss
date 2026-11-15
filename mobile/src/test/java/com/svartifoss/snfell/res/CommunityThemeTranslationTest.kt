@@ -65,7 +65,10 @@ class CommunityThemeTranslationTest {
             // the only place that says what the filter is, so an English fallback would leave the
             // reader with a bare name and no way to tell it apart from a search they had typed.
             "online_theme_filter_author",
-            "online_theme_filter_author_selected"
+            "online_theme_filter_author_selected",
+            // The Watch tab Home's last tile, which opens the gallery. Its name is one line, so it is
+            // one short word rather than the title above; the cap is in the test below.
+            "online_themes_title_short"
     )
 
     @Test
@@ -98,6 +101,31 @@ class CommunityThemeTranslationTest {
         }
     }
 
+    /**
+     * The gallery's tile on the Watch tab's Home draws this on one line of 12sp in about 84dp, and the
+     * strip it sits in does not grow for a second line, so a translation that is a phrase rather than
+     * a word is ellipsized on the very tile it was written to fit. Characters, not width, because a
+     * unit test cannot measure text; ten is the longest word in use ("Продавница").
+     */
+    @Test
+    fun `the short gallery name is one short word in every locale`() {
+        val files = resourceDirectory().listFiles()
+                ?.filter { it.isDirectory && it.name.startsWith("values") }
+                ?.map { File(it, "watch_themes_strings.xml") }
+                ?.filter(File::isFile)
+                .orEmpty()
+        assertTrue("Expected the base and the translated watch-theme resources", files.size >= 31)
+
+        files.forEach { file ->
+            val name = file.parentFile?.name ?: file.name
+            val value = strings(file).getValue("online_themes_title_short")
+            val characters = value.codePointCount(0, value.length)
+            assertTrue("$name: \"$value\" is $characters characters, the tile fits $MAX_SHORT_NAME_LENGTH",
+                    characters <= MAX_SHORT_NAME_LENGTH)
+            assertTrue("$name: the short name must be one line", '\n' !in value)
+        }
+    }
+
     private fun resourceDirectory(): File = listOf(
             File("src/main/res"),
             File("mobile/src/main/res")
@@ -112,6 +140,7 @@ class CommunityThemeTranslationTest {
             .sorted()
 
     private companion object {
+        const val MAX_SHORT_NAME_LENGTH = 10
         val STRING = Regex("""<string name="([^"]+)">(.*?)</string>""")
         val PLACEHOLDER = Regex("""%\d+\$[a-zA-Z]""")
     }

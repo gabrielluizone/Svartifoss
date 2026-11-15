@@ -1,0 +1,199 @@
+context	face	key	tag	surfaces	values	of	distinct	coarse	maxChangedPct	nondet	error	groups
+face	classic	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	23.134	nondet		
+face	classic	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	8.667			
+face	classic	wear_title_outline_style	ListPreference	PLAYER	5	5	5	5	3.625			
+face	classic	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	19.400			
+face	classic	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	1.171			
+face	classic	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	1.922			
+face	classic	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	4.235			
+face	classic	wear_artist_outline_style	ListPreference	PLAYER	5	5	4	4	1.436			hairline,thin
+face	classic	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	7.350			
+face	expressive	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	1.725			
+face	expressive	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	3.846			
+face	expressive	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.277			hairline,thin
+face	expressive	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	5.800			
+face	expressive	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.565			
+face	expressive	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.952			
+face	expressive	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	2.019			
+face	expressive	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.880			hairline,thin,medium
+face	expressive	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	3.756			
+archived	vinyl	wear_title_text_case	ListPreference	PLAYER	4	4	3	3	1.091			normal,uppercase
+archived	vinyl	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	3.118			
+archived	vinyl	wear_title_outline_style	ListPreference	PLAYER	5	5	3	3	0.891			hairline,thin,medium
+archived	vinyl	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	15.211			
+archived	vinyl	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.341			
+archived	vinyl	wear_artist_text_case	ListPreference	PLAYER	4	4	3	3	0.504			normal,uppercase
+archived	vinyl	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.928			
+archived	vinyl	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.775			hairline,thin,medium
+archived	vinyl	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	13.853			
+face	poster	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	2.957			
+face	poster	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	5.516			
+face	poster	wear_title_outline_style	ListPreference	PLAYER	5	5	5	5	2.110			
+face	poster	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	10.859			
+face	poster	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.282			
+face	poster	wear_artist_text_case	ListPreference	PLAYER	4	4	3	3	0.436			normal,uppercase
+face	poster	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.434			
+face	poster	wear_artist_outline_style	ListPreference	PLAYER	5	5	2	2	0.694			hairline,thin,medium,bold
+face	poster	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.819			
+face	studio	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	1.523			
+face	studio	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	3.366			
+face	studio	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.147			hairline,thin
+face	studio	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	5.083			
+face	studio	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.351			
+face	studio	wear_artist_text_case	ListPreference	PLAYER	4	4	3	3	0.504			normal,uppercase
+face	studio	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.711			
+face	studio	wear_artist_outline_style	ListPreference	PLAYER	5	5	2	2	0.715			hairline,thin,medium,bold
+face	studio	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.831			
+archived	halo	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	1.232			
+archived	halo	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	2.793			
+archived	halo	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	0.945			hairline,thin
+archived	halo	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	3.834			
+archived	halo	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.326			
+archived	halo	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.530			
+archived	halo	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.492			
+archived	halo	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.616			hairline,thin,medium
+archived	halo	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	1.704			
+archived	aurora	wear_title_text_case	ListPreference	PLAYER	4	4	1	1	0.000			normal,uppercase,lowercase,title_case
+archived	aurora	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	5.496			
+archived	aurora	wear_title_outline_style	ListPreference	PLAYER	5	5	1	1	0.000			none,hairline,thin,medium,bold
+archived	aurora	wear_title_text_bg_style	ListPreference	PLAYER	4	4	1	1	0.000			none,highlight,soft,block
+archived	aurora	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.389			
+archived	aurora	wear_artist_text_case	ListPreference	PLAYER	4	4	3	3	0.526			normal,uppercase
+archived	aurora	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.766			
+archived	aurora	wear_artist_outline_style	ListPreference	PLAYER	5	5	2	2	0.688			hairline,thin,medium,bold
+archived	aurora	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.193			
+archived	eclipse	wear_title_text_case	ListPreference	PLAYER	4	4	3	3	1.553			normal,uppercase
+archived	eclipse	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	4.886			
+archived	eclipse	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	2.092			hairline,thin
+archived	eclipse	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	7.113			
+archived	eclipse	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.603			
+archived	eclipse	wear_artist_text_case	ListPreference	PLAYER	4	4	3	3	0.951			normal,uppercase
+archived	eclipse	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	3.089			
+archived	eclipse	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	1.203			hairline,thin,medium
+archived	eclipse	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	5.990			
+archived	spectrum	wear_title_text_case	ListPreference	PLAYER	4	4	3	3	1.090			normal,uppercase
+archived	spectrum	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	3.205			
+archived	spectrum	wear_title_outline_style	ListPreference	PLAYER	5	5	3	3	1.280			hairline,thin,medium
+archived	spectrum	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	4.437			
+archived	spectrum	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.356			
+archived	spectrum	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.567			
+archived	spectrum	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.878			
+archived	spectrum	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.618			hairline,thin,medium
+archived	spectrum	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.234			
+face	material	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	2.132			
+face	material	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	4.666			
+face	material	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.588			hairline,thin
+face	material	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	7.257			
+face	material	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.473			
+face	material	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.838			
+face	material	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	1.507			
+face	material	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.863			hairline,thin,medium
+face	material	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.956			
+face	immersive	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	1.934			
+face	immersive	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	4.014			
+face	immersive	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.427			hairline,thin
+face	immersive	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	6.549			
+face	immersive	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.638			
+face	immersive	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	1.150			
+face	immersive	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	2.604			
+face	immersive	wear_artist_outline_style	ListPreference	PLAYER	5	5	4	3	1.226			hairline,thin
+face	immersive	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	4.844			
+archived	depth	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	1.368			
+archived	depth	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	3.077			
+archived	depth	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.026			hairline,thin
+archived	depth	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	4.601			
+archived	depth	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.481			
+archived	depth	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.855			
+archived	depth	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	1.724			
+archived	depth	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.867			hairline,thin,medium
+archived	depth	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	3.201			
+face	carousel	wear_title_text_case	ListPreference	PLAYER	4	4	3	3	0.826			normal,uppercase
+face	carousel	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	1.741			
+face	carousel	wear_title_outline_style	ListPreference	PLAYER	5	5	3	3	0.904			hairline,thin,medium
+face	carousel	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	3.458			
+face	carousel	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.371			
+face	carousel	wear_artist_text_case	ListPreference	PLAYER	4	4	3	3	0.493			normal,uppercase
+face	carousel	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.933			
+face	carousel	wear_artist_outline_style	ListPreference	PLAYER	5	5	2	2	0.664			hairline,thin,medium,bold
+face	carousel	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.246			
+face	chat	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	11.797	nondet		
+face	chat	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	3.127			
+face	chat	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.128			hairline,thin
+face	chat	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	4.735			
+face	chat	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.515			
+face	chat	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.782			
+face	chat	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	1.449			
+face	chat	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.728			hairline,thin,medium
+face	chat	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	3.545			
+face	split	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	1.511			
+face	split	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	3.701			
+face	split	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.276			hairline,thin
+face	split	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	14.020			
+face	split	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	3.283	nondet		
+face	split	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.902			
+face	split	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	1.916			
+face	split	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	1.034			hairline,thin,medium
+face	split	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	11.696			
+face	note	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	10.013	nondet		
+face	note	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	5.756			
+face	note	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	2.230			hairline,thin
+face	note	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	10.261			
+face	note	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.926			
+face	note	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	2.473			
+face	note	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	1.352			
+face	note	wear_artist_outline_style	ListPreference	PLAYER	5	5	1	1	0.000			none,hairline,thin,medium,bold
+face	note	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	1	1	0.000			none,highlight,soft,block
+face	verse	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	8.359	nondet		
+face	verse	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	1.582			
+face	verse	wear_title_outline_style	ListPreference	PLAYER	5	5	3	3	0.772			hairline,thin,medium
+face	verse	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.615			
+face	verse	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.377			
+face	verse	wear_artist_text_case	ListPreference	PLAYER	4	4	3	3	0.547			normal,uppercase
+face	verse	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	1.736			
+face	verse	wear_artist_outline_style	ListPreference	PLAYER	5	5	2	2	0.715			hairline,thin,medium,bold
+face	verse	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.884			
+face	metadata	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	8.240	nondet		
+face	metadata	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	1.125			
+face	metadata	wear_title_outline_style	ListPreference	PLAYER	5	5	3	3	0.574			hairline,thin,medium
+face	metadata	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	2.079			
+face	metadata	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.323			
+face	metadata	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.529			
+face	metadata	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	0.675			
+face	metadata	wear_artist_outline_style	ListPreference	PLAYER	5	5	2	2	0.512			hairline,thin,medium,bold
+face	metadata	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	1.784			
+face	artist	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	0.889			
+face	artist	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	2.961			
+face	artist	wear_title_outline_style	ListPreference	PLAYER	5	5	4	3	1.119			hairline,thin
+face	artist	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	4.000			
+face	artist	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	1.468			
+face	artist	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	1.937			
+face	artist	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	5.099			
+face	artist	wear_artist_outline_style	ListPreference	PLAYER	5	5	4	4	1.784			hairline,thin
+face	artist	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	9.429			
+face	ribbon	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	9.914	nondet		
+face	ribbon	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	4.949			
+face	ribbon	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.588			hairline,thin
+face	ribbon	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	15.438			
+face	ribbon	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	3.446	nondet		
+face	ribbon	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	1.173			
+face	ribbon	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	3.090			
+face	ribbon	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.884			hairline,thin,medium
+face	ribbon	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	12.037			
+face	frame	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	4.929	nondet		
+face	frame	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	5.129			
+face	frame	wear_title_outline_style	ListPreference	PLAYER	5	5	4	4	1.864			hairline,thin
+face	frame	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	6.392			
+face	frame	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	0.579			
+face	frame	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	0.782			
+face	frame	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	2.173			
+face	frame	wear_artist_outline_style	ListPreference	PLAYER	5	5	3	3	0.746			hairline,thin,medium
+face	frame	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	3.587			
+archived	matejdro	wear_title_text_case	ListPreference	PLAYER	4	4	4	4	9.717	nondet		
+archived	matejdro	wear_title_shadow_style	ListPreference	PLAYER	6	6	6	6	9.335			
+archived	matejdro	wear_title_outline_style	ListPreference	PLAYER	5	5	5	5	3.616			
+archived	matejdro	wear_title_text_bg_style	ListPreference	PLAYER	4	4	4	4	16.732			
+archived	matejdro	wear_artist_font_opacity	ResettableNumericEditTextPreference	PLAYER	3	3	3	3	2.098	nondet		
+archived	matejdro	wear_artist_text_case	ListPreference	PLAYER	4	4	4	4	3.085			
+archived	matejdro	wear_artist_shadow_style	ListPreference	PLAYER	6	6	6	6	7.505			
+archived	matejdro	wear_artist_outline_style	ListPreference	PLAYER	5	5	5	5	2.931			
+archived	matejdro	wear_artist_text_bg_style	ListPreference	PLAYER	4	4	4	4	15.278			

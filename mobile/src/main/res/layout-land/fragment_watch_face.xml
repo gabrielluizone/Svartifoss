@@ -41,6 +41,23 @@
             android:textSize="13sp"
             tools:text="Studio · Volume" />
 
+        <!-- Shown while no watch has reported in, so changes that never reach a wrist are
+             explained; the Settings tab's banner says the same with the same strings. -->
+        <TextView
+            android:id="@+id/watch_no_watch_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center_horizontal"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="No watch connected" />
+
     </LinearLayout>
 
     <View
@@ -106,6 +123,24 @@
                 app:tabTextColor="@color/lyra_text_secondary" />
 
         </LinearLayout>
+
+        <!-- What the selected area holds, the sentence Home's list already shows beside it; the
+             Settings tab says the same under its own rail. -->
+        <TextView
+            android:id="@+id/watch_section_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lyra_background"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:maxLines="2"
+            android:paddingStart="20dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="13sp"
+            tools:text="Control album art, blur, fading and readability behind the player." />
 
         <View
             android:layout_width="match_parent"

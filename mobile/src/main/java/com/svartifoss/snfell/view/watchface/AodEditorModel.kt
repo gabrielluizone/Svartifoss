@@ -89,8 +89,8 @@ internal data class AodSettingSpec(
 internal object AodEditorModel {
 
     /**
-     * Ambient styles drawn by a Compose face, which are the ones with a transport row, a progress
-     * ring and an Up Next pill to switch off.
+     * Ambient styles that draw a transport row, a progress ring and an Up Next pill - the ones
+     * with something for those three switches to hide: Expressive and the curated collection.
      *
      * An explicit allow-list rather than a negation, for [PausedHoldPolicy]'s reason: a removed or
      * unknown persisted style (legacy "minimal") then falls on the safe Classic path instead of
@@ -98,11 +98,24 @@ internal object AodEditorModel {
      */
     val VISUAL_STYLES: Set<String> = setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material", "immersive", "depth", "carousel", "chat", "split",
-            "note", "verse", "metadata", "ribbon", "frame")
+            "spectrum", "material", "immersive", "depth")
 
-    /** Ambient styles that draw no artwork at all, so its three controls have nothing to act on. */
-    val ARTLESS_STYLES: Set<String> = setOf("chrono", "minute_ring", "hex_frame", "eclipse", "artist")
+    // Carousel, Chat, Split, Note, Verse, Metadata, Ribbon and Frame are Compose faces too, and
+    // used to be listed above - but their ambient variants draw no transport, no ring and no pill
+    // (only ExpressiveFace and CuratedAmbientFace read those three switches), so the chips were
+    // offered on eight styles where they changed nothing on the wrist or in the miniature. Found by
+    // rendering the preview for every value of every setting on every face.
+
+    /**
+     * Ambient styles that draw no artwork at all, so its three controls have nothing to act on.
+     *
+     * Chat, Split, Note, Ribbon and Frame belong here because their ambient variants paint an
+     * opaque black field over the whole screen, so the host's dimmed cover behind them is never
+     * seen whatever these controls say.
+     */
+    val ARTLESS_STYLES: Set<String> = setOf(
+            "chrono", "minute_ring", "hex_frame", "eclipse", "artist",
+            "chat", "split", "note", "ribbon", "frame")
 
     // Artist is deliberately absent from VISUAL_STYLES above and present here, which together say
     // the same thing chrono's entries do: its ambient variant is two lines of type on black. It

@@ -4,7 +4,12 @@
      last tile shows an icon instead of a picture and opens the community gallery.
 
      The whole tile is the touch target and the accessibility node; the picture, ring and check are
-     decoration, since the description says the name, the kind of theme and whether it is applied. -->
+     decoration, since the description says the name, the kind of theme and whether it is applied.
+
+     The name is one line, ellipsized. The strip is a wrap_content RecyclerView, so it is as tall as
+     the tiles it laid out first: a name that wrapped to a second line was cut off when its tile
+     scrolled in (the community tile read "Temas da" with "comunidade" missing). The description
+     carries the full name, so a shortened label costs a screen reader nothing. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/watch_look_tile"
@@ -72,7 +77,7 @@
         android:gravity="center_horizontal"
         android:includeFontPadding="false"
         android:lineSpacingExtra="1dp"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textColor="@color/lyra_on_surface"
         android:textSize="12sp"
         tools:text="Expressive" />

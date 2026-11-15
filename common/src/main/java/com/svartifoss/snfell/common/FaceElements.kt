@@ -64,6 +64,27 @@ object FaceElements {
     /** Faces whose awake composition draws the elapsed/total track time. */
     val TRACK_TIME_FACES: Set<String> = ThemeAppearance.ALLOWED_BASE_FACES - WITHOUT_TRACK_TIME
 
+    /**
+     * Faces whose awake composition draws the cover itself even when the background style hides
+     * the artwork (`PlayerBackgroundStyle.hidesArtwork`): Carousel's rail, Chat's avatar, Note's
+     * disc, Ribbon's cards, Frame's card and Depth's full-bleed cover (the face *is* the cover).
+     * `FaceElementsContractTest` (wear) pins it. Every other face shows the cover only through the
+     * backdrop, or draws its own cover only while the backdrop shows one, so a hidden background
+     * leaves it no picture at all.
+     */
+    val COVER_UNDER_HIDDEN_BACKGROUND_FACES: Set<String> =
+            setOf("carousel", "chat", "note", "ribbon", "frame", "depth")
+
+    /**
+     * Whether the artwork filter (`album_art_filter`) has a picture to act on: always while the
+     * background shows the cover, and on a background that hides it only for a face that draws
+     * the cover anyway. Offered elsewhere, the filter's thirty choices drew thirty identical
+     * pictures - on the watch as well as in its picker.
+     */
+    fun artworkFilterApplies(face: String?, backgroundStyle: String?): Boolean =
+            !PlayerBackgroundStyle.fromPreference(backgroundStyle).hidesArtwork ||
+                    face in COVER_UNDER_HIDDEN_BACKGROUND_FACES
+
     fun drawsSourceIcon(face: String?): Boolean = face in SOURCE_ICON_FACES
 
     fun drawsTrackTime(face: String?): Boolean = face in TRACK_TIME_FACES

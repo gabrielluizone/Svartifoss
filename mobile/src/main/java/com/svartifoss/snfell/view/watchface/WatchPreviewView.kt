@@ -501,6 +501,12 @@ class WatchPreviewView @JvmOverloads constructor(
     private var candidateValue: Any? = null
     private var candidateActive = false
 
+    /**
+     * Values that travel with the candidate because picking it would write them too - see
+     * [showPreference]. Cleared with the candidate everywhere it is cleared.
+     */
+    private var companionCandidates: Map<String, Any?> = emptyMap()
+
     /** The connected watch profile. A null shape deliberately falls back to the historical
      *  192dp round preview, while a reported square device keeps its real dp aspect ratio. */
     private var deviceRound: Boolean? = null
@@ -833,6 +839,18 @@ class WatchPreviewView @JvmOverloads constructor(
             Paint.Align.RIGHT -> x - width
             else -> x - width / 2f
         }
+        drawTrackTextBackdropBox(canvas, spec, left, width, baselineY)
+    }
+
+    /** [drawTrackTextBackdrop] for a box already measured - a line made of several runs. */
+    private fun drawTrackTextBackdropBox(
+            canvas: Canvas,
+            spec: TextBackdropSpec,
+            left: Float,
+            width: Float,
+            baselineY: Float
+    ) {
+        if (spec.isNone) return
         val metrics = textPaint.fontMetrics
         fillPaint.shader = null
         fillPaint.color = ColorUtils.setAlphaComponent(
@@ -1309,6 +1327,7 @@ class WatchPreviewView @JvmOverloads constructor(
         candidateActive = false
         candidateKey = null
         candidateValue = null
+        companionCandidates = emptyMap()
         focusedPreference = null
         surface = PreviewSurface.PLAYER
         readPreferenceSnapshot()
@@ -1324,6 +1343,7 @@ class WatchPreviewView @JvmOverloads constructor(
         candidateActive = false
         candidateKey = null
         candidateValue = null
+        companionCandidates = emptyMap()
         focusedPreference = null
         this.surface = surface
         readPreferenceSnapshot()
@@ -1347,6 +1367,7 @@ class WatchPreviewView @JvmOverloads constructor(
         candidateActive = false
         candidateKey = null
         candidateValue = null
+        companionCandidates = emptyMap()
         focusedPreference = null
         surface = when (section) {
             "aod" -> PreviewSurface.AOD
@@ -1358,12 +1379,23 @@ class WatchPreviewView @JvmOverloads constructor(
     }
 
     /** Shows the watch surface affected by [key]. [candidateValue] is a transient, non-persisted
-     *  value used by open list/color/numeric dialogs, so the preview can update before Apply. */
-    fun showPreference(key: String, candidateValue: Any? = null) {
+     *  value used by open list/color/numeric dialogs, so the preview can update before Apply.
+     *
+     *  [companions] are other keys that picking [candidateValue] would also write - an album art
+     *  style that brings its wash into the background stack, for one - so a picture of the
+     *  choice shows what choosing it does rather than half of it. They apply only alongside a
+     *  candidate. */
+    @JvmOverloads
+    fun showPreference(
+            key: String,
+            candidateValue: Any? = null,
+            companions: Map<String, Any?> = emptyMap()
+    ) {
         focusedPreference = key
         candidateKey = key
         this.candidateValue = candidateValue
         candidateActive = candidateValue != null
+        companionCandidates = if (candidateActive) companions else emptyMap()
         surface = surfaceForPreference(key)
         readPreferenceSnapshot()
     }
@@ -1375,6 +1407,7 @@ class WatchPreviewView @JvmOverloads constructor(
         candidateActive = false
         candidateKey = null
         candidateValue = null
+        companionCandidates = emptyMap()
         if (changedKey != null) {
             focusedPreference = changedKey
             surface = surfaceForPreference(changedKey)
@@ -1869,6 +1902,11 @@ class WatchPreviewView @JvmOverloads constructor(
         if (focusedPreference == "wear_track_time_mode") {
             return trackTimeMode != "paused"
         }
+        // The play mark is drawn only while paused and the pause mark only while playing, so each
+        // picker shows the state in which its own mark is on screen - otherwise every play glyph
+        // previewed the pause one and the picker looked broken.
+        if (focusedPreference == MiscPreferences.WEAR_PLAY_ICON.key) return false
+        if (focusedPreference == MiscPreferences.WEAR_PAUSE_ICON.key) return true
         // A public profile always keeps the sample playback state. The optional detail-only cover
         // is deliberately visual-only: it must not turn a community preview into a disclosure of
         // the person's current playback state.
@@ -1996,8 +2034,11 @@ class WatchPreviewView @JvmOverloads constructor(
         }
     }
 
-    private fun candidateFor(key: String): Any? =
-            if (candidateActive && candidateKey == key) candidateValue else null
+    private fun candidateFor(key: String): Any? = when {
+        !candidateActive -> null
+        candidateKey == key -> candidateValue
+        else -> companionCandidates[key]
+    }
 
     /** The complete supplied profile wins over the active default preferences, but dialog
      * candidates still win over both so the existing preference editor remains live-previewable. */
@@ -2464,16 +2505,51 @@ class WatchPreviewView @JvmOverloads constructor(
         return textPaint.measureText(run.text)
     }
 
-    /** Draws [runs] as one line centred on [cx], each run in its own colour and typeface. */
-    private fun drawTextRuns(canvas: Canvas, runs: List<TextRun>, cx: Float, baseline: Float) {
+    /**
+     * Draws [runs] as one line centred on [cx], each run in its own colour and typeface - behind
+     * [backdrop]'s plate and inside [outline]'s stroke when given, which is how the watch's Note
+     * sentence carries the title's effects across both of its spans.
+     */
+    private fun drawTextRuns(
+            canvas: Canvas,
+            runs: List<TextRun>,
+            cx: Float,
+            baseline: Float,
+            outline: TextOutlineSpec = TextOutlineSpec.NONE,
+            backdrop: TextBackdropSpec = TextBackdropSpec.NONE
+    ) {
         val widths = runs.map { measureRun(it) }
-        var x = cx - widths.sum() / 2f
+        val left = cx - widths.sum() / 2f
         textPaint.textAlign = Paint.Align.LEFT
-        runs.forEachIndexed { index, run ->
-            measureRun(run)
-            canvas.drawText(run.text, x, baseline, textPaint)
-            x += widths[index]
+        if (!backdrop.isNone && runs.isNotEmpty()) {
+            measureRun(runs.first())
+            drawTrackTextBackdropBox(canvas, backdrop, left, widths.sum(), baseline)
         }
+        fun pass(stroke: Boolean) {
+            var x = left
+            runs.forEachIndexed { index, run ->
+                measureRun(run)
+                if (stroke) {
+                    textPaint.style = Paint.Style.STROKE
+                    textPaint.strokeWidth = outline.strokeWidthPx(
+                            textPaint.textSize, resources.displayMetrics.density)
+                    textPaint.strokeJoin = Paint.Join.ROUND
+                    textPaint.color = TextOutlineSpec.resolveColor(
+                            outline.colorMode, outline.customColor,
+                            albumAccent().takeIf { it != 0 })
+                } else {
+                    textPaint.style = Paint.Style.FILL
+                }
+                canvas.drawText(run.text, x, baseline, textPaint)
+                x += widths[index]
+            }
+        }
+        if (!outline.isNone) {
+            pass(stroke = true)
+            // The shadow rides the stroke pass alone, as in withTrackTextOutline.
+            textPaint.clearShadowLayer()
+        }
+        pass(stroke = false)
         textPaint.textAlign = Paint.Align.CENTER
         resetTrackTextPaint()
     }
@@ -3382,10 +3458,26 @@ class WatchPreviewView @JvmOverloads constructor(
                 drawCuratedPlayer(canvas, geometry, dp, demonstratedFace)
             else -> drawClassic(canvas, geometry, dp)
         }
-        if (edgeProgressVisible) {
+        if (edgeProgressVisible || ringPreviewForced()) {
             drawEdgeSeekRing(canvas, geometry.cx, geometry.cy, geometry.radius, dp)
         }
     }
+
+    /**
+     * True while one of the ring's own controls is being edited and the ring would otherwise not
+     * be drawn - the clock's [clockPreviewForced] for the ring.
+     *
+     * The Player page offers the ring's style, layout, weight and gradient whenever edge seek is
+     * on, even with the resting ring off, because a drag on the bezel draws it. The preview never
+     * drags, so on those faces (Split, Verse, Note, Chat, Ribbon, Frame, Artist and Matejdro all
+     * default the resting ring off) every picture of every style was the same screen with no ring.
+     * Shown here it is the ring the user will see while dragging.
+     */
+    private fun ringPreviewForced(): Boolean = edgeSeekEnabled && focusedPreference in setOf(
+            MiscPreferences.WEAR_PROGRESS_STYLE.key,
+            MiscPreferences.WEAR_PROGRESS_LAYOUT.key,
+            MiscPreferences.WEAR_PROGRESS_WEIGHT.key,
+            MiscPreferences.WEAR_PROGRESS_GRADIENT.key)
 
     private fun drawPlayerBackdrop(
             canvas: Canvas,
@@ -10841,7 +10933,8 @@ class WatchPreviewView @JvmOverloads constructor(
 
         val artistVisible = showTrackArtist || !isPlayingShown()
         val artistText = if (isPlayingShown()) {
-            displayArtist()
+            // The artist case, which the watch's OutlineTextView carries on this face too.
+            artistTypographySpec.case.apply(displayArtist())
         } else {
             context.getString(R.string.preview_playback_stopped)
         }
@@ -10902,11 +10995,24 @@ class WatchPreviewView @JvmOverloads constructor(
                         canvas, groupLeft + sourceDiameter / 2f, y + blockH / 2f,
                         sourceDiameter, rawColor)
             }
+            // Plate and outline, as OutlineTextView draws them on the watch (the shadow is already
+            // on the paint from artistTypeface). Bare text here left both effects out.
             if (plan.marquee) {
-                drawMarqueeText(canvas, artistText, labelCx, y - metrics.ascent, plan.labelWidth)
+                drawTrackTextBackdrop(canvas, artistBackdropSpec, artistText, labelCx,
+                        y - metrics.ascent)
             } else {
                 plan.lines.forEachIndexed { index, line ->
-                    canvas.drawText(line, labelCx, y - metrics.ascent + index * lineH, textPaint)
+                    drawTrackTextBackdrop(canvas, artistBackdropSpec, line, labelCx,
+                            y - metrics.ascent + index * lineH)
+                }
+            }
+            withTrackTextOutline(artistOutlineSpec) {
+                if (plan.marquee) {
+                    drawMarqueeText(canvas, artistText, labelCx, y - metrics.ascent, plan.labelWidth)
+                } else {
+                    plan.lines.forEachIndexed { index, line ->
+                        canvas.drawText(line, labelCx, y - metrics.ascent + index * lineH, textPaint)
+                    }
                 }
             }
             resetTrackTextPaint()
@@ -10922,25 +11028,32 @@ class WatchPreviewView @JvmOverloads constructor(
             val metrics = textPaint.fontMetrics
             val lineH = metrics.descent - metrics.ascent
             val blockH = plan.lines.size * lineH
-            var y = areaTop + artistBand + (titleBand - blockH) / 2f
+            val y = areaTop + artistBand + (titleBand - blockH) / 2f
             val titleLine = blockLine(
                     Paint.Align.CENTER, cx, textWidth, top = y, bottom = y + blockH)
             textPaint.textAlign = titleLine.align
-            if (plan.marquee) {
-                drawMarqueeText(
-                        canvas,
-                        plan.lines.first(),
-                        when (titleLine.align) {
-                            Paint.Align.LEFT -> titleLine.x + titleLine.width / 2f
-                            Paint.Align.RIGHT -> titleLine.x - titleLine.width / 2f
-                            else -> titleLine.x
-                        },
-                        y - metrics.ascent,
-                        titleLine.width)
-            } else {
-                plan.lines.forEach { line ->
-                    canvas.drawText(line, titleLine.x, y - metrics.ascent, textPaint)
-                    y += lineH
+            plan.lines.forEachIndexed { index, line ->
+                drawTrackTextBackdrop(canvas, titleBackdropSpec, line, titleLine.x,
+                        y - metrics.ascent + index * lineH)
+            }
+            withTrackTextOutline(titleOutlineSpec) {
+                if (plan.marquee) {
+                    drawMarqueeText(
+                            canvas,
+                            plan.lines.first(),
+                            when (titleLine.align) {
+                                Paint.Align.LEFT -> titleLine.x + titleLine.width / 2f
+                                Paint.Align.RIGHT -> titleLine.x - titleLine.width / 2f
+                                else -> titleLine.x
+                            },
+                            y - metrics.ascent,
+                            titleLine.width)
+                    textPaint.textAlign = titleLine.align
+                } else {
+                    plan.lines.forEachIndexed { index, line ->
+                        canvas.drawText(line, titleLine.x, y - metrics.ascent + index * lineH,
+                                textPaint)
+                    }
                 }
             }
             resetTrackTextPaint()
@@ -11121,7 +11234,9 @@ class WatchPreviewView @JvmOverloads constructor(
 
         val artistVisible = showTrackArtist || !isPlayingShown()
         val classicArtistText = if (isPlayingShown()) {
-            displayArtist()
+            // OutlineTextView carries the artist case on the watch; this block draws its own text
+            // rather than going through drawArtistLine, so it has to apply it itself.
+            artistTypographySpec.case.apply(displayArtist())
         } else {
             context.getString(R.string.preview_playback_stopped)
         }
@@ -11224,16 +11339,33 @@ class WatchPreviewView @JvmOverloads constructor(
                         sourceDiameter,
                         rawArtistColor)
             }
+            // The three text effects, as OutlineTextView draws them on the watch: the plate behind
+            // each line, then the outline pass and the fill, the shadow riding the paint. This
+            // block used to draw bare text, so none of the six effects showed on Classic or
+            // Matejdro - the default face - while the watch drew all of them.
+            applyTrackTextShadow(artistShadowSpec)
             if (artistPlan.marquee) {
-                drawMarqueeText(
-                        canvas,
-                        classicArtistText,
-                        labelCx,
-                        y - artistFm.ascent,
-                        artistPlan.labelWidth)
+                drawTrackTextBackdrop(canvas, artistBackdropSpec, classicArtistText, labelCx,
+                        y - artistFm.ascent)
             } else {
                 artistPlan.lines.forEachIndexed { index, line ->
-                    canvas.drawText(line, labelCx, y - artistFm.ascent + index * artistLineH, textPaint)
+                    drawTrackTextBackdrop(canvas, artistBackdropSpec, line, labelCx,
+                            y - artistFm.ascent + index * artistLineH)
+                }
+            }
+            withTrackTextOutline(artistOutlineSpec) {
+                if (artistPlan.marquee) {
+                    drawMarqueeText(
+                            canvas,
+                            classicArtistText,
+                            labelCx,
+                            y - artistFm.ascent,
+                            artistPlan.labelWidth)
+                } else {
+                    artistPlan.lines.forEachIndexed { index, line ->
+                        canvas.drawText(line, labelCx, y - artistFm.ascent + index * artistLineH,
+                                textPaint)
+                    }
                 }
             }
             resetTrackTextPaint()
@@ -11249,26 +11381,38 @@ class WatchPreviewView @JvmOverloads constructor(
             val titleBand = blockLine(
                     Paint.Align.CENTER, cx, textWidth, top = y, bottom = y + titleH)
             textPaint.textAlign = titleBand.align
-            if (plan.marquee) {
-                // drawMarqueeText centres its window on the x it is handed, so a line the user
-                // pushed to an edge has to be given the middle of its own run instead.
-                drawMarqueeText(
-                        canvas,
-                        plan.lines.first(),
-                        when (titleBand.align) {
-                            Paint.Align.LEFT -> titleBand.x + titleBand.width / 2f
-                            Paint.Align.RIGHT -> titleBand.x - titleBand.width / 2f
-                            else -> titleBand.x
-                        },
-                        y - titleFm.ascent,
-                        titleBand.width)
-                y += titleLineH
-            } else {
-                plan.lines.forEach { line ->
-                    canvas.drawText(line, titleBand.x, y - titleFm.ascent, textPaint)
-                    y += titleLineH
+            // Shadow, plate and outline, as for the artist above.
+            applyTrackTextShadow(titleShadowSpec)
+            val titleTop = y
+            plan.lines.forEachIndexed { index, line ->
+                drawTrackTextBackdrop(canvas, titleBackdropSpec, line, titleBand.x,
+                        titleTop - titleFm.ascent + index * titleLineH)
+            }
+            withTrackTextOutline(titleOutlineSpec) {
+                if (plan.marquee) {
+                    // drawMarqueeText centres its window on the x it is handed, so a line the user
+                    // pushed to an edge has to be given the middle of its own run instead.
+                    drawMarqueeText(
+                            canvas,
+                            plan.lines.first(),
+                            when (titleBand.align) {
+                                Paint.Align.LEFT -> titleBand.x + titleBand.width / 2f
+                                Paint.Align.RIGHT -> titleBand.x - titleBand.width / 2f
+                                else -> titleBand.x
+                            },
+                            titleTop - titleFm.ascent,
+                            titleBand.width)
+                    // drawMarqueeText leaves the paint centred; the fill pass needs the line's own.
+                    textPaint.textAlign = titleBand.align
+                } else {
+                    plan.lines.forEachIndexed { index, line ->
+                        canvas.drawText(line, titleBand.x,
+                                titleTop - titleFm.ascent + index * titleLineH, textPaint)
+                    }
                 }
             }
+            y = titleTop + (if (plan.marquee) 1 else plan.lines.size) * titleLineH
+            resetTrackTextPaint()
             textPaint.textAlign = Paint.Align.CENTER
         }
 
@@ -11748,12 +11892,15 @@ class WatchPreviewView @JvmOverloads constructor(
      * Shared by the bottom row and by a face that hosts the buttons itself, so the two can never
      * disagree about whether there are any. Mirrors hasActiveMiniButtons on the watch: a face with
      * mini buttons off for the current playback state never shows them regardless of what is
-     * configured, and the preview's shown state (playing vs paused) picks which toggle. Mini
-     * buttons themselves are playback-only; paused is deliberately not treated as idle.
+     * configured, and the preview's shown state (playing vs paused) picks which toggle.
+     *
+     * Paused shows them too, as the watch does: its row follows the stopped config while nothing
+     * plays (the Watch tab loads that config's icons then - see previewPlayingConfig). This used to
+     * return nothing whenever the preview showed a paused track, a rule the watch dropped when the
+     * row came back to the idle screen, so "Only while paused" could never be seen here at all.
      */
     private fun activeMiniButtonIcons(): List<PreviewActionIcon> {
         if (!ActivityVisibility.isActive(miniButtonsMode, isPlayingShown())) return emptyList()
-        if (!isPlayingShown()) return emptyList()
         return when {
             miniButtonIcons.isNotEmpty() -> miniButtonIcons
             surface == PreviewSurface.MINI_BUTTONS -> demoMiniButtonIcons
@@ -12613,8 +12760,11 @@ class WatchPreviewView @JvmOverloads constructor(
                     sizeSp = 15f
             )
         }
-        // Ribbon hosts only its cards and metadata; the generic mini-button rail would cover the
-        // title and is intentionally not part of this face's composition.
+        // The shared mini-button row, as on the watch: MainActivity draws it over every face but
+        // the one that hosts it (Chat), so a row switched on here appears over this composition
+        // too. This face only defaults it off; leaving it out made "Show mini buttons" and every
+        // control under it change nothing in the miniature.
+        drawBottomChrome(canvas, geometry.cx, geometry.cy, geometry.radius, dp, "ribbon")
     }
 
     /**
@@ -12792,8 +12942,11 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         textPaint.textAlign = Paint.Align.CENTER
         resetTrackTextPaint()
-        // The card uses every available lower pixel for its wide cover. Generic bottom chrome is
-        // deliberately absent, matching the watch face rather than floating buttons over the art.
+        // The shared mini-button row, as on the watch: MainActivity draws it over every face but
+        // the one that hosts it (Chat), so a row switched on here appears over this composition
+        // too. This face only defaults it off; leaving it out made "Show mini buttons" and every
+        // control under it change nothing in the miniature.
+        drawBottomChrome(canvas, geometry.cx, geometry.cy, geometry.radius, dp, "frame")
     }
 
     /**
@@ -12934,7 +13087,8 @@ class WatchPreviewView @JvmOverloads constructor(
 
             textPaint.typeface = titleTypeface(bold = true)
             textPaint.textSize = titleSize
-            val titleText = ellipsize(displayTitle(), maxContent)
+            // The case, as TitleLineText applies it in the watch's bubble.
+            val titleText = ellipsize(titleTypographySpec.case.apply(displayTitle()), maxContent)
             val titleW = if (namesTitle) textPaint.measureText(titleText) else 0f
             val titleLineH = textPaint.fontMetrics.let { it.descent - it.ascent }
 
@@ -12962,7 +13116,14 @@ class WatchPreviewView @JvmOverloads constructor(
                 textPaint.textSize = titleSize
                 textPaint.textAlign = Paint.Align.LEFT
                 textPaint.color = titleAlpha(Color.WHITE)
-                canvas.drawText(titleText, textLeft, lineY - textPaint.fontMetrics.ascent, textPaint)
+                // TitleLineText draws the title's plate and outline in the bubble on the watch;
+                // bare text here left both out of the miniature.
+                val titleBaseline = lineY - textPaint.fontMetrics.ascent
+                drawTrackTextBackdrop(canvas, titleBackdropSpec, titleText, textLeft, titleBaseline)
+                withTrackTextOutline(titleOutlineSpec) {
+                    canvas.drawText(titleText, textLeft, titleBaseline, textPaint)
+                }
+                resetTrackTextPaint()
                 lineY += titleLineH
             }
             if (namesArtist) {
@@ -13340,6 +13501,16 @@ class WatchPreviewView @JvmOverloads constructor(
                     canvas, timeText(), cx, cy + radius * .75f, dp(9f),
                     ColorUtils.setAlphaComponent(Color.WHITE, 0x9E), textPaint.typeface)
         }
+        // FaceClock, which the watch draws on this face like on every Compose face; the miniature
+        // left it out, so the clock's switch, colour and typography changed nothing here.
+        if (alwaysShowTime || clockPreviewForced()) {
+            drawFaceClock(canvas, geometry.cx, geometry.cy - geometry.radius, dp)
+        }
+        // The shared mini-button row, as on the watch: MainActivity draws it over every face but
+        // the one that hosts it (Chat), so a row switched on here appears over this composition
+        // too. This face only defaults it off; leaving it out made "Show mini buttons" and every
+        // control under it change nothing in the miniature.
+        drawBottomChrome(canvas, geometry.cx, geometry.cy, geometry.radius, dp, "verse")
     }
 
     /**
@@ -13432,7 +13603,13 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.textSize = titleTypographySpec.scaled(dp(10f))
             textPaint.color = titleAlpha(Color.WHITE)
             y += dp(9f)
-            canvas.drawText(ellipsize(displayTitle(), screen * .70f), cx, y, textPaint)
+            // Case, plate and outline, as the watch's TitleLineText draws this header.
+            val title = ellipsize(titleTypographySpec.case.apply(displayTitle()), screen * .70f)
+            drawTrackTextBackdrop(canvas, titleBackdropSpec, title, cx, y)
+            withTrackTextOutline(titleOutlineSpec) {
+                canvas.drawText(title, cx, y, textPaint)
+            }
+            resetTrackTextPaint()
         }
         if (showTrackArtist) {
             y += dp(9f)
@@ -13480,6 +13657,16 @@ class WatchPreviewView @JvmOverloads constructor(
             y += lineHeight
         }
         textPaint.textAlign = Paint.Align.CENTER
+        // FaceClock, which the watch draws on this face like on every Compose face; the miniature
+        // left it out, so the clock's switch, colour and typography changed nothing here.
+        if (alwaysShowTime || clockPreviewForced()) {
+            drawFaceClock(canvas, geometry.cx, geometry.cy - geometry.radius, dp)
+        }
+        // The shared mini-button row, as on the watch: MainActivity draws it over every face but
+        // the one that hosts it (Chat), so a row switched on here appears over this composition
+        // too. This face only defaults it off; leaving it out made "Show mini buttons" and every
+        // control under it change nothing in the miniature.
+        drawBottomChrome(canvas, geometry.cx, geometry.cy, geometry.radius, dp, "metadata")
     }
 
     /** A stand-in row, carrying what the watch's `MetadataEntry` carries: a label, a value, and
@@ -13716,6 +13903,11 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         // The shared mini-button row draws over this face on the watch, and the face carries the
         // Up Next pill in the same band when no row is configured.
+        // FaceClock, which the watch draws on this face like on every Compose face; the miniature
+        // left it out, so the clock's switch, colour and typography changed nothing here.
+        if (alwaysShowTime || clockPreviewForced()) {
+            drawFaceClock(canvas, geometry.cx, geometry.cy - geometry.radius, dp)
+        }
         drawBottomChrome(canvas, cx, geometry.cy, radius, dp, "artist")
     }
 
@@ -13966,7 +14158,10 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         var consumed = 0
         plan.lines.forEachIndexed { index, line ->
-            drawTextRuns(canvas, runs(line, consumed), cx, baseline + index * lineHeight)
+            // The sentence is this face's title, so it wears the title's outline and plate, as
+            // NoteFace's AdaptiveTitleText does; the miniature drew it bare.
+            drawTextRuns(canvas, runs(line, consumed), cx, baseline + index * lineHeight,
+                    outline = titleOutlineSpec, backdrop = titleBackdropSpec)
             // splitLines rejoins each line's words with a single space, so every line boundary
             // swallowed exactly one character of the sentence.
             consumed += line.length + 1
@@ -14072,10 +14267,8 @@ class WatchPreviewView @JvmOverloads constructor(
         withTextFit(textFit) {
             var baseline = seamY + screen * .04f + dp(11f)
             if (showTrackArtist || !isPlayingShown()) {
-                textPaint.typeface = artistTypeface(bold = false)
-                textPaint.textSize = artistTypographySpec.scaled(dp(12f))
                 // The panel-contrast colour until the user picks an artist colour - as SplitFace does.
-                textPaint.color = if (artistColorChosen() && isPlayingShown()) {
+                val artistColor = if (artistColorChosen() && isPlayingShown()) {
                     artistTextColor()
                 } else {
                     secondary
@@ -14085,7 +14278,11 @@ class WatchPreviewView @JvmOverloads constructor(
                 } else {
                     context.getString(R.string.preview_playback_stopped)
                 }
-                canvas.drawText(ellipsize(artistText, available), textLeft, baseline, textPaint)
+                // Through drawArtistLine, the miniature's ArtistLineText, which is what SplitFace
+                // draws this line with. It was bare text, so the artist's opacity, case, outline,
+                // plate, overflow mode and alignment all changed nothing on this face.
+                drawArtistLine(canvas, artistText, textLeft, baseline, available, artistColor,
+                        dp(12f), align = Paint.Align.LEFT)
                 baseline += dp(16f)
             }
             if (showTrackTitle) {
@@ -14139,8 +14336,11 @@ class WatchPreviewView @JvmOverloads constructor(
         if (alwaysShowTime || clockPreviewForced()) {
             drawFaceClock(canvas, cx, cy - radius, dp)
         }
-        // No drawBottomChrome: like Chat, this face defaults its mini-button row off and composes
-        // the whole screen itself, so the shared row would preview something the watch won't draw.
+        // The shared mini-button row, as on the watch: MainActivity draws it over every face but
+        // the one that hosts it (Chat), so a row switched on here appears over this composition
+        // too. This face only defaults it off; leaving it out made "Show mini buttons" and every
+        // control under it change nothing in the miniature.
+        drawBottomChrome(canvas, geometry.cx, geometry.cy, geometry.radius, dp, "split")
     }
 
     /** What one curated face designs for its artist line, beyond the size. */

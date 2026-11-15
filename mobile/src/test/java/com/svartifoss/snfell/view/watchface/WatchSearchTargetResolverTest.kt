@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.WatchTypography
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -382,19 +383,24 @@ class WatchSearchTargetResolverTest {
     }
 
     @Test
-    fun `ribbon and frame keep visual AOD controls on their own rows`() {
+    fun `ribbon and frame send their absent AOD controls to the AOD style`() {
+        // RibbonAmbient and FrameAmbient read the tint, the intensity and the track info and
+        // nothing else - no transport, ring or pill - so the three switches are not on their page
+        // and a search for one goes to the style that would bring them back.
         listOf("ribbon", "frame").forEach { face ->
             listOf(
                     "wear_aod_show_transport",
                     "wear_aod_show_progress",
                     "wear_aod_show_pills").forEach { key ->
-                assertFalse(
-                        "$face should support $key when its AOD style follows the face",
-                        resolve(
-                                key = key,
-                                strings = mapOf("wear_screen_face" to face)).redirected)
+                assertRedirect(
+                        resolve(key = key, strings = mapOf("wear_screen_face" to face)),
+                        WatchFacePrefsFragment.SECTION_AOD,
+                        "wear_aod_style")
             }
         }
+        // A curated face's own ambient keeps them.
+        assertFalse(resolve(key = "wear_aod_show_transport",
+                strings = mapOf("wear_screen_face" to "poster")).redirected)
     }
 
     @Test
@@ -495,6 +501,64 @@ class WatchSearchTargetResolverTest {
                             key = key,
                             strings = mapOf("wear_screen_face" to "studio")).redirected)
                 }
+    }
+
+    @Test
+    fun `on note the artist size and effects lead to the title's own`() {
+        listOf("wear_artist_font_scale", "wear_artist_shadow_style", "wear_artist_outline_style",
+                "wear_artist_text_bg_opacity").forEach { key ->
+            assertRedirect(
+                    resolve(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, key,
+                            strings = mapOf("wear_screen_face" to "note")),
+                    WatchFacePrefsFragment.SECTION_TYPOGRAPHY,
+                    key.replaceFirst("wear_artist_", "wear_title_"))
+            assertFalse(resolve(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, key,
+                    strings = mapOf("wear_screen_face" to "classic")).redirected)
+        }
+        // The span keeps its own weight.
+        assertFalse(resolve(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, "wear_artist_font_weight",
+                strings = mapOf("wear_screen_face" to "note")).redirected)
+    }
+
+    @Test
+    fun `a mini button style picker hidden by a switched-off row redirects to that switch`() {
+        listOf("screen_buttons_bg_style", "screen_buttons_opacity").forEach { key ->
+            assertRedirect(
+                    resolve(WatchFacePrefsFragment.SECTION_MINI_BUTTONS, key,
+                            strings = mapOf("wear_screen_face" to "classic",
+                                    "wear_mini_buttons_mode" to "never")),
+                    WatchFacePrefsFragment.SECTION_MINI_BUTTONS, "wear_mini_buttons_mode")
+            assertFalse(resolve(WatchFacePrefsFragment.SECTION_MINI_BUTTONS, key,
+                    strings = mapOf("wear_mini_buttons_mode" to "paused")).redirected)
+        }
+    }
+
+    @Test
+    fun `the artwork filter redirects to the background style when no cover is on screen`() {
+        assertRedirect(
+                resolve(WatchFacePrefsFragment.SECTION_BACKGROUND, "album_art_filter",
+                        strings = mapOf("wear_screen_face" to "verse", "album_art_style" to "hidden")),
+                WatchFacePrefsFragment.SECTION_BACKGROUND, "album_art_style")
+        // Note draws its disc whatever the background says, so the filter still has a picture.
+        assertFalse(resolve(WatchFacePrefsFragment.SECTION_BACKGROUND, "album_art_filter",
+                strings = mapOf("wear_screen_face" to "note", "album_art_style" to "hidden"))
+                .redirected)
+        assertFalse(resolve(WatchFacePrefsFragment.SECTION_BACKGROUND, "album_art_filter",
+                strings = mapOf("wear_screen_face" to "verse", "album_art_style" to "cover"))
+                .redirected)
+    }
+
+    @Test
+    fun `a clock tone outside the album colour redirects to the clock colour`() {
+        listOf("wear_clock_color_modifier", "wear_clock_adaptive_contrast").forEach { key ->
+            assertRedirect(resolve(key = key, strings = mapOf("wear_clock_color_mode" to "white")),
+                    WatchFacePrefsFragment.SECTION_COLORS, "wear_clock_color_mode")
+            assertFalse(resolve(key = key, strings = mapOf("wear_clock_color_mode" to "album"))
+                    .redirected)
+        }
+        assertRedirect(resolve(key = "wear_title_color_modifier",
+                strings = mapOf("wear_title_color_mode" to MiscPreferences.TITLE_COLOR_FACE_DEFAULT)),
+                WatchFacePrefsFragment.SECTION_COLORS, "wear_title_color_mode")
     }
 
     private fun resolve(

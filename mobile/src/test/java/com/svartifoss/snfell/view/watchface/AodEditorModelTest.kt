@@ -69,6 +69,33 @@ class AodEditorModelTest {
     }
 
     @Test
+    fun `the compose ambient faces without a transport row are not offered its switches`() {
+        // Their ambient variants read none of the three switches, so offering the chips there
+        // was offering controls that changed nothing on the watch or in the miniature.
+        listOf("carousel", "chat", "split", "note", "verse", "metadata", "ribbon", "frame")
+                .forEach { style ->
+                    listOf(AodControl.SHOW_TRANSPORT, AodControl.SHOW_PROGRESS, AodControl.SHOW_PILLS)
+                            .forEach { control ->
+                                assertFalse("$control on $style",
+                                        AodEditorModel.appliesToStyle(control, style))
+                            }
+                }
+    }
+
+    @Test
+    fun `an opaque ambient face is not offered the artwork controls`() {
+        // Each of these paints a black field over the whole screen in ambient, so the dimmed cover
+        // behind it is never visible.
+        listOf("chat", "split", "note", "ribbon", "frame").forEach { style ->
+            assertFalse(style, AodEditorModel.appliesToStyle(AodControl.SHOW_ART, style))
+        }
+        // Verse, Metadata and Carousel let it through, so they keep the controls.
+        listOf("verse", "metadata", "carousel").forEach { style ->
+            assertTrue(style, AodEditorModel.appliesToStyle(AodControl.SHOW_ART, style))
+        }
+    }
+
+    @Test
     fun `an unknown or removed style falls on the safe classic path`() {
         // The allow-list exists so a value arriving from a backup, a community theme or a newer
         // build - legacy "minimal" is the known one - is treated as Classic rather than as a face

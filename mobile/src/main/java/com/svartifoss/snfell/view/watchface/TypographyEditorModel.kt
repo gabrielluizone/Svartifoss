@@ -126,6 +126,30 @@ internal data class TypographySearchTarget(
  */
 internal object TypographyEditorModel {
 
+    /**
+     * The Artist controls that do nothing on Note, whose `Artist: Title` is one sentence: the
+     * artist is a span inside the title's line, so it takes its weight, slant, tracking, opacity,
+     * case and colour, while the size and the three text effects are the title's for the whole
+     * sentence (NoteFace builds it that way so it reads as one line). Offered there, they changed
+     * nothing on the wrist.
+     */
+    val NOTE_ARTIST_FROM_TITLE: Set<TypographyControl> = setOf(
+            TypographyControl.SIZE,
+            TypographyControl.SHADOW,
+            TypographyControl.SHADOW_COLOR,
+            TypographyControl.SHADOW_STRENGTH,
+            TypographyControl.OUTLINE,
+            TypographyControl.OUTLINE_COLOR,
+            TypographyControl.BACKDROP,
+            TypographyControl.BACKDROP_COLOR,
+            TypographyControl.BACKDROP_OPACITY)
+
+    /** Whether [control] of [target] has anything to act on in [face]'s composition. */
+    fun appliesToFace(target: TypographyTarget, control: TypographyControl, face: String): Boolean =
+            !(face == "note" && target == TypographyTarget.ARTIST &&
+                    control in NOTE_ARTIST_FROM_TITLE)
+
+
     val specs: List<TypographySettingSpec> = listOf(
             choice(MiscPreferences.WEAR_FONT, TypographyTarget.TITLE, TypographyControl.FONT),
             toggle(

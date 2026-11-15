@@ -57,6 +57,8 @@ import com.svartifoss.snfell.music.OnlineArtworkFetcher
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.databinding.FragmentWatchFaceBinding
+import com.svartifoss.snfell.config.WatchInfoProvider
+import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.config.buttons.GlobalButtonConfig
 import com.svartifoss.snfell.music.isPlaying
 import com.svartifoss.snfell.notifications.AppGlyphStore
@@ -80,6 +82,7 @@ import com.svartifoss.snfell.view.watchface.theme.WatchThemesActivity
 import com.svartifoss.snfell.view.watchface.theme.activeQuickThemeKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.abs
@@ -87,6 +90,7 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 import timber.log.Timber
 import com.svartifoss.snfell.view.NEUTRAL_WATCH_ACCENT
+import com.svartifoss.snfell.util.WearableAvailability
 
 private const val PLAYBACK_TICK_INTERVAL_MS = 500L
 
@@ -138,6 +142,9 @@ class WatchFaceFragment : Fragment() {
 
         /** How long a run of edits is left to settle before the applied theme's picture is redrawn. */
         private const val THUMBNAIL_REFRESH_DELAY_MS = 600L
+
+        /** As long as the Settings tab waits before saying no watch is connected. */
+        private const val NO_WATCH_NOTE_DELAY_MS = 600L
 
         /** Widget.MaterialComponents.Snackbar's backgroundOverlayColorAlpha. */
         private const val SNACKBAR_OVERLAY_ALPHA = 0.8f
@@ -277,6 +284,9 @@ class WatchFaceFragment : Fragment() {
     private var thumbnailArtwork: Bitmap? = null
     private val activeThumbnailRefresh = Runnable { redrawActiveThumbnail() }
 
+    /** The wait before [updateNoWatchNote] shows its line. */
+    private var noWatchNoteJob: Job? = null
+
     /** The theme's name under the preview, read when the theme changes rather than per touch. */
     private var captionThemeName: String = ""
 
@@ -305,6 +315,7 @@ class WatchFaceFragment : Fragment() {
             val nextSection = SECTIONS[position].key
             val sectionChanged = pagerSection != nextSection
             pagerSection = nextSection
+            describeSection(position)
             // The pager also reports a position when its pages are attached behind Home, after a
             // rotation; that must not open an area by itself.
             if (place !is WatchTabPlace.Area) return
@@ -376,7 +387,11 @@ class WatchFaceFragment : Fragment() {
                 MiniButtonIconLoader.loadConfiguredIcons(context, playing)
             }
             // A media-state callback may have switched configs while this disk read was running.
-            if (playing == previewPlayingConfig) previews { it.setButtonIcons(icons) }
+            if (playing == previewPlayingConfig) {
+                previews { it.setButtonIcons(icons) }
+                // The pictures in the theme strip and the pickers are the same watch.
+                if (thumbnailer?.setButtonIcons(icons) == true) looksAdapter?.redrawAll()
+            }
         }
     }
 
@@ -470,6 +485,7 @@ class WatchFaceFragment : Fragment() {
             if (thumbnailer?.setDeviceProfile(round, width, height, density) == true) {
                 looksAdapter?.redrawAll()
             }
+            updateNoWatchNote(info)
         }
         GlobalButtonConfig.playingConfigSaved.observe(viewLifecycleOwner) {
             if (previewPlayingConfig) loadMiniButtons()
@@ -511,6 +527,7 @@ class WatchFaceFragment : Fragment() {
         attachPager()
         pagerSection = section
         binding.watchPager.setCurrentItem(index, false)
+        describeSection(index)
         binding.watchHomeContainer.isVisible = false
         binding.watchEditorContainer.isVisible = true
         backToHome.isEnabled = true
@@ -518,6 +535,40 @@ class WatchFaceFragment : Fragment() {
         previews { it.showSection(section) }
         selectedPreviewPreference?.let { key -> previews { it.showPreference(key) } }
         renderCaption()
+    }
+
+    /**
+     * Says so under the preview while no watch has reported in. Every change still shows on the
+     * phone, and without this nothing explained why the wrist never followed.
+     *
+     * After the same short wait as the Settings tab's banner: the provider publishes nothing until
+     * its first Data Layer read, and a connected watch's info can land a moment after that.
+     */
+    private fun updateNoWatchNote(info: WatchInfoWithIcons?) {
+        noWatchNoteJob?.cancel()
+        val note = _binding?.watchNoWatchNote ?: return
+        note.isVisible = false
+        val provider = (activity as? MainActivity)?.connectedWatchInfo() as? WatchInfoProvider
+                ?: return
+        if (info != null || !provider.hasResolvedInitialValue) return
+        noWatchNoteJob = viewLifecycleOwner.lifecycleScope.launch {
+            delay(NO_WATCH_NOTE_DELAY_MS)
+            if (provider.value != null || !provider.hasResolvedInitialValue) return@launch
+            val shown = _binding?.watchNoWatchNote ?: return@launch
+            // On a phone with no Data Layer at all, pairing would never help: say which it is.
+            shown.setText(if (WearableAvailability.isAvailable(shown.context)) {
+                R.string.setting_no_watch_banner
+            } else {
+                R.string.setting_no_wearable_api_banner
+            })
+            shown.isVisible = true
+        }
+    }
+
+    /** Puts the area's one-line description under the rail; swiping to another area updates it. */
+    private fun describeSection(index: Int) {
+        val item = SECTIONS.getOrNull(index) ?: return
+        _binding?.watchSectionDescription?.setText(item.description)
     }
 
     /** Creates Home's preference page the first time Home is shown; a rotation restores it. */
@@ -1085,12 +1136,12 @@ class WatchFaceFragment : Fragment() {
         val context = context ?: return
         val packageName = mediaController?.packageName
         if (packageName == null) {
-            previews { it.setSourceGlyph(null, tintable = true) }
+            showSourceGlyph(null, tintable = true)
             return
         }
         val template = AppGlyphStore.drawable(context, packageName)
         if (template != null) {
-            previews { it.setSourceGlyph(template.toBitmapOrNull(), tintable = true) }
+            showSourceGlyph(template.toBitmapOrNull(), tintable = true)
             return
         }
         val launcher = try {
@@ -1098,7 +1149,13 @@ class WatchFaceFragment : Fragment() {
         } catch (e: PackageManager.NameNotFoundException) {
             null
         }
-        previews { it.setSourceGlyph(launcher?.toBitmapOrNull(), tintable = false) }
+        showSourceGlyph(launcher?.toBitmapOrNull(), tintable = false)
+    }
+
+    /** The mark on every preview, and on the pictures drawn by the same renderer. */
+    private fun showSourceGlyph(glyph: Bitmap?, tintable: Boolean) {
+        previews { it.setSourceGlyph(glyph, tintable) }
+        if (thumbnailer?.setSourceGlyph(glyph, tintable) == true) looksAdapter?.redrawAll()
     }
 
     private fun Drawable.toBitmapOrNull(): Bitmap? {
