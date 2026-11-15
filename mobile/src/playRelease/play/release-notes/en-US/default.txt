@@ -1,3 +1,8 @@
-Fixes in 4.3.1
-• English on Android 12 or older no longer makes dialog buttons huge or hides the Delete button in the action editor
-• SoundCloud shortcuts saved with Share now play
+New in 4.4
+• The Watch tab opens on a Home with your themes as pictures and quick adjustments
+• Style pickers show your own watch
+• Themes button on the notification, which now shows the next track
+• YouTube Music playlists list their songs on the watch
+• New app icons: Coral, Ocean and Violet
+• Quick panel with the app's own like, shuffle and repeat
+Fixed: shortcuts playing the wrong music; long titles over the controls.

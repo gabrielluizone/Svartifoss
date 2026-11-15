@@ -36,8 +36,8 @@ android {
         // Wear OS has a separate API-35 requirement and remains configured in wear/build.gradle.
         targetSdkVersion 36
         compileSdk 36
-        versionCode 93
-        versionName "4.3.1"
+        versionCode 95
+        versionName "4.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true

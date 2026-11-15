@@ -1,80 +1,52 @@
 # Changelog
 
-## Unreleased
+## 4.4
 
 ### Added
 
-- **A Watch themes button on the Svartifoss notification.** It opens a small window over whatever you are doing, with your saved themes first and the built-in ones after; tap one to change the watch's theme without opening the app.
+- **The Watch tab opens on a Home.** Every watch theme is drawn as a picture, your saved themes first and a **Store** tile for the community gallery at the end; tap one to apply it, with **Undo**. Quick adjustments hold the settings most people change, and the seven pages sit below.
+
+- **Style pickers show your watch.** Base layout, album art style, always-on style, progress, volume, seek, quick panel and queue styles, panel backgrounds and the mini buttons open as a grid in which every choice is drawn on your own watch, with your cover while music plays.
+
+- **A Themes button on the Svartifoss notification.** It opens a small window with your saved themes and the built-in ones, so you can change the watch's theme without opening the app.
+
+- **A playlist's songs on its shortcut screen.** On the watch, a saved YouTube Music playlist or album lists its songs; tap one and it plays, followed by the rest. It is looked up through YouTube while "Fetch shortcut names and artwork online" is on, or when you tap **See songs**. Liked Music and private playlists cannot be listed.
+
+- **A "What's new" screen after an update** (Play build). Shown once, like the Updates screen of the sideloaded build.
+
+- **Three more launcher icons: Coral, Ocean and Violet** (Play build). Cream is now translated into every language too.
 
 ### Changed
 
-- **The Watch tab opens on a Home page.** Before the seven pages there is now a first screen with every watch theme drawn as a picture by the same preview, your saved themes first and the community gallery at the end of the row: tap one to apply it at once, with **Undo** on the message that follows. Below the themes, the seven pages are listed with what each one holds; open one and the row of pages is still there for moving sideways, while Back, or the arrow before the row, returns to Home. A search result still opens its page directly. Between the themes and the pages, **Quick adjustments** gathers the settings most people change - the color treatment, the typeface, the album art style and the always-on style, each opening the same picker as on its page - with switches for what is on screen (title, artist, app icon, clock, progress, controls; a switch the layout cannot honour is not shown), and says which theme the changes are saved to. Under the preview, a caption names the theme your changes are saved to and, when the preview switches to another screen such as the volume control, which screen it is showing. The theme card that sat above the pages is gone: the caption names the theme, and **Manage themes** sits beside the pictures.
+- **The Svartifoss notification shows what is playing and the next track, and tapping it opens the app**, where it used to stop the controls. Stop and Force stop are still buttons on it.
 
-- **Style pickers show the watch instead of a list of names.** Base layout, Album art style, Always-on style, the progress ring style, the volume, seek, quick panel and queue styles and layouts, and the mini buttons' shape and background now open as a grid in which every choice is drawn on your own watch, with your other settings and, while music plays, your cover; tap one to choose it. The grid opens on your current choice. The Watch themes screen also shows each theme as a picture of the watch instead of the same palette icon on every row.
+- **The navigation bar follows the app's colours**, light or dark. On Android 8.0 and older it stays dark.
 
-- **The navigation bar at the bottom of the screen follows the app's colours.** It was a black strip under the app's own bottom bar; it now takes the app's background, light or dark, with the gesture handle or buttons drawn to match. On Android 8.0 and older it stays dark, because those versions cannot draw dark buttons on a light bar.
+- **Settings a face cannot show are no longer offered for it**: the app icon on Chat, Note, Verse and Metadata, the track time on Carousel, Split, Ribbon and Depth, text position on Expressive, and Watch tab settings that changed nothing.
 
-- **Tapping the Svartifoss notification opens the app**, where it used to stop the controls. Stop and Force stop are still buttons on it. Android shows three buttons at most, so opening the app is the notification itself.
+- **The watch is kept up to date with far less Bluetooth and battery.** Covers are sent once, as WebP (about a third smaller), and with YouTube Music only what changed is sent, at most about once a second. The watch stops checking the song position while the screen is dimmed, and the phone ignores media session changes that change nothing.
 
-- **Settings a face cannot show are no longer offered for it.** The app icon is hidden on Chat, Note, Verse and Metadata, and the track time on Carousel, Split, Ribbon and Depth, which have no place for them; the Text page hides those tabs too.
+- **Less memory.** About 15 MB less on the watch and 35 MB less in the community gallery, and fonts are no longer kept in memory after the font picker. The app takes about 22 MB more storage on each device.
 
-- **Text position is no longer offered on Expressive** (or on the archived Eclipse and Aurora faces), where the only room for the text is where it already sits; Bottom put it over the track time. On Poster and Studio, Bottom now means just above the play button or progress ring, or above the mini buttons, the Up Next pill or the track time when those sit higher, and "Center the title" no longer pushes the block lower there.
-
-- **The phone sends the watch fewer bytes of pictures.** Each cover sent ahead for the next songs was sent a second time when the song started; it now goes once. Covers, queue thumbnails and artist pictures also travel as WebP instead of JPEG, about a third smaller at the same quality.
-
-- **The watch no longer checks the song position with the phone while the screen is dimmed.** With the player left open on the always-on display it asked every few seconds after each track change and then about once a minute, for a screen that only redraws once a minute.
-
-- **The watch says "Continue on your phone" when a shortcut needs the phone's screen.** It appears when the phone could not start the music silently and had to open the app instead, so a shortcut that ends on a locked phone no longer looks like it did nothing.
+- **The watch says "Continue on your phone"** when a shortcut needs the phone's screen, so it no longer looks like it did nothing.
 
 ### Fixed
 
-- **A shortcut no longer starts the wrong music.** When a link had to be opened in its app, Svartifoss then pressed play, and an app that was not running resumed whatever it had played last. Play is now pressed only once the app has loaded what was picked. Spotify on a free account still only opens the playlist: it plays nothing it is asked for from outside.
+- **Shortcuts play the right music.** The phone no longer presses play on whatever the app was holding, ends with nothing happening, opens YouTube Music after the music has started, or ignores the first tap after the app was closed. Slow apps are asked again, and Amazon Music links are recognised. Spotify on a free account still only opens the playlist.
 
-- **The first tap after the phone app had been closed in the background works.** The command that woke the app could be cut off half-way, so a shortcut did nothing until it was tried again.
+- **The quick panel shows the playing app's own like, shuffle and repeat, with their icons**, instead of repeating play and skip.
 
-- **A shortcut no longer ends with nothing happening** when the music app took the request but did not play it. The link is opened on the phone instead.
+- **Titles fit every face.** Long or large titles no longer run into the controls or onto their own lines; a scrolling title no longer looks faded while it stands still; large text stays on the screen on Split, Carousel and Ribbon; and the Artist face, the Up Next pill, Classic's track time and the title and artist colours on Classic, Split, Frame and Verse follow their settings.
 
-- **A music app that starts slowly is still asked to play.** Svartifoss stopped asking about three seconds after the pick; it now waits for the app to come up.
+- **The preview shows what the watch shows**, including text effects, mini buttons, the clock, Poster and Studio. Picking an album art style now changes the watch when a shading or layers are set.
 
-- **Amazon Music links in the app's own form (`amznmp3:`) are recognised** as Amazon Music.
+- **The tick and dot progress rings are symmetrical on the open layouts** (60 ticks, 60 dots, 24-hour ticks and Beads).
 
-- **Updating from GitHub no longer downloads the same APK twice.** A download that stopped, because you left the screen or the connection dropped, now continues where it stopped, and a finished one is kept until the update is done, so a failed send to the watch or a dismissed install prompt no longer costs another 25 to 36 MB. The file is checked against GitHub's checksum. The watch also drops the received APK as soon as the install is queued, and an update you left unconfirmed no longer stays staged beside the next one.
+- **Updating from GitHub resumes a download that stopped** instead of starting over, and checks the file against GitHub's checksum.
 
-- **The quick panel's buttons from the playing app leave out what the watch already shows.** When the app's notification offers only play, pause and skip, as YouTube Music's does, the panel takes the app's like, shuffle and repeat instead, and play and skip are only used when the app offers nothing else.
+- **Section titles in Settings follow your accent color.**
 
-- **The quick panel shows the playing app's own icons for its buttons.** When the app's like, shuffle and repeat came from its media controls rather than its notification, the phone could not draw their icons until one of Svartifoss's screens had been opened, so the watch showed its generic icons instead. They are now drawn every time and kept instead of redrawn on every update.
-
-- **A scrolling title no longer looks faded while it stands still.** Both ends stayed faded between passes, eating the first letters; they now fade only while the text moves. On every face, in the queue and in the phone's preview.
-
-- **Long or large titles no longer run into a face's controls.** Wrap to 5 lines, a long title or a big title size pushed the text into the play button on Poster, the progress ring on Studio and the disc on Material, and on Expressive a two-line title hid the artist. The title now stops at an ellipsis where the controls begin, and the artist keeps its line. When the title and artist are set larger than a face has room for (Expressive, Material, Split, Poster and Studio), both stop growing at the largest size that fits, in the proportion chosen, instead of the title being cut. On Material, a long title also stays clear of the progress ring around the edge.
-
-- **Large titles that wrap no longer pile their lines on top of each other.** Above 100% size, the line spacing stayed at its 100% value, so a title that wrapped drew its second line over the first, and a large artist name ran into the title. This happened on every face, but only on the watch: the phone's preview spaced the lines correctly.
-
-- **The Artist face follows the title setting and keeps its text in place.** Its title always wrapped to two lines, even when set to scroll. Its text now stays inside the round screen at any size and stops above the mini buttons and the Up Next pill instead of running under them.
-
-- **The Up Next pill shows on the Artist face.** It is no longer offered on faces that never drew it (Classic, Carousel, Chat, Split, Note, Verse, Metadata, Ribbon and Frame), and the phone's preview no longer draws it on Classic, Carousel and Note. The preview also shows the mini buttons on the Artist face, as the watch does.
-
-- **Classic shows the track time under two-line titles again.** A short title like "Panic Station" was set so large that the time was cut off at the bottom.
-
-- **The title colour works on Classic**, not only after the watch had dozed and woken.
-
-- **The artist colour works on Split, Frame and Verse.** Split and Frame kept their own colour, and Verse's title card (shown when a song has no synced lyrics) ignored every title and artist setting.
-
-- **Split, Carousel and Ribbon keep large text on the screen.** At 160% the title ran into or off the bottom edge, and on Ribbon an artist name above 100% reached down onto the covers. Ribbon's title and artist now stop growing where they still fit.
-
-- **The phone's preview of Poster and Studio matches the watch.** The title there ignored its colour, opacity, outline, background and alignment, choosing a text position moved nothing, the play button was missing, and Studio's progress ring sat higher than on the watch.
-
-- **The phone spends far less Bluetooth, and battery, keeping the watch up to date.** With YouTube Music it re-sent the whole now-playing screen, about 12 KB, for every small update, and once kept doing so every couple of seconds for 25 minutes. It now sends only what changed, at most about once a second, and each button icon once.
-
-- **YouTube Music track changes no longer start an online cover search.** The app publishes a new song a moment before its cover; the phone now waits for it.
-
-- **The watch app needs about 15 MB less memory, and the phone app no longer keeps fonts in memory after the font picker.** Each font was copied whole into memory every time it was loaded, and the copies were never released; fonts are now read from the installed app as needed. The app takes about 22 MB more storage on each device.
-
-- **The community theme gallery needs about 35 MB less memory.** Each card drew its own copy of the same sample covers; the cards now share one.
-
-- **The watch keeps fewer covers in memory.** The covers it holds ready for the next and previous tracks are let go when the track changes with the screen off, and tracks that share a cover share one copy of it.
-
-- **The tick and dot progress rings are symmetrical on the open layouts.** On Open at top and the other open layouts, 60 watch ticks, 60 watch dots, 24-hour ticks and Beads began on a long mark at one end, ended on a short one at the other and put the mark at the bottom off centre. Both ends and the middle are now long marks, so the ring reads the same on both sides of the gap; the scale has one more mark, and the last one lights up when the track ends.
+- **YouTube Music track changes no longer start an online cover search.**
 
 ## 4.3.1
 

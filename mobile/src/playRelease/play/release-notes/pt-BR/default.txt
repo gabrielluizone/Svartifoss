@@ -1,3 +1,8 @@
-Correções do 4.3.1
-• Inglês no Android 12 ou anterior não deixa mais os botões dos diálogos enormes nem esconde o botão Excluir do editor de ações
-• Atalhos do SoundCloud salvos com Compartilhar agora tocam
+Novidades do 4.4
+• A aba Relógio abre numa Home com seus temas em imagens e ajustes rápidos
+• Seletores de estilo mostram o seu relógio
+• Botão Temas na notificação, que agora mostra a próxima faixa
+• Playlists do YouTube Music listam as músicas no relógio
+• Novos ícones do app: Coral, Oceano e Violeta
+• Painel rápido com curtir, aleatório e repetir do próprio app
+Corrigidos: atalhos que tocavam a música errada; títulos longos sobre os controles.
