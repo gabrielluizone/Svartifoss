@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Det finns redan ett tema med det här namnet</string>
 
     <string name="online_themes_title">Communityteman</string>
+    <string name="online_themes_title_short">Butik</string>
     <string name="online_theme_intro">Upptäck utseenden skapade av communityn. När du öppnar det här galleriet laddas dess offentliga katalog ned.</string>
     <string name="online_theme_refresh">Uppdatera communityteman</string>
     <string name="online_theme_list_description">Klockteman skapade av communityn</string>

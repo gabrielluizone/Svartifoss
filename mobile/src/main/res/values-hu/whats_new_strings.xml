@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">A(z) „%1$s” lapon egy új kezdőoldal képként mutatja a témáidat, gyors beállításokkal.</string>
+    <string name="whats_new_item_pickers">A stílusválasztók mostantól a saját órádat mutatják a nevek listája helyett.</string>
+    <string name="whats_new_item_notification">A Svartifoss értesítésének van egy „%1$s” gombja, és megmutatja a következő számot.</string>
+    <string name="whats_new_item_songs">Egy YouTube Music-lejátszási lista felsorolja a dalait az óra parancsikon-képernyőjén.</string>
+    <string name="whats_new_item_icons">Három új alkalmazásikon: %1$s, %2$s és %3$s.</string>
+    <string name="whats_new_item_quick_panel">A gyorspanel használhatja a lejátszó alkalmazás saját kedvelés, keverés és ismétlés gombjait.</string>
+    <string name="whats_new_item_fixes">Javítva: rossz zenét indító parancsikonok és a vezérlőkre rálógó hosszú címek.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” 탭에서 새 홈 화면이 테마를 이미지로 보여 주고 빠른 조정도 제공합니다.</string>
+    <string name="whats_new_item_pickers">스타일 선택기가 이제 이름 목록 대신 내 시계를 보여 줍니다.</string>
+    <string name="whats_new_item_notification">Svartifoss 알림에 “%1$s” 버튼이 생기고 다음 곡이 표시됩니다.</string>
+    <string name="whats_new_item_songs">YouTube Music 재생목록의 곡이 시계의 바로가기 화면에 목록으로 표시됩니다.</string>
+    <string name="whats_new_item_icons">새 앱 아이콘 3개: %1$s, %2$s, %3$s.</string>
+    <string name="whats_new_item_quick_panel">빠른 패널에서 재생 중인 앱의 좋아요, 셔플, 반복 버튼을 사용할 수 있습니다.</string>
+    <string name="whats_new_item_fixes">수정됨: 엉뚱한 음악을 재생하던 바로가기와 컨트롤을 가리던 긴 제목.</string>
+</resources>

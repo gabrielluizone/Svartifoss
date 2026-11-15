@@ -45,6 +45,11 @@
     <string name="watch_theme_name_duplicate">A theme with this name already exists</string>
 
     <string name="online_themes_title">Community themes</string>
+    <!-- The Watch tab's Home strip draws its tiles 88dp wide, with the name on one line of 12sp. The
+         community gallery's tile therefore carries this one short word instead of the full name
+         above, which stays the tile's accessibility description. Keep every translation one short
+         word (CommunityThemeTranslationTest caps it). -->
+    <string name="online_themes_title_short">Store</string>
     <string name="online_theme_intro">Discover looks made by the community. Search, filter and compare their preview screens before adding one.</string>
     <string name="online_theme_refresh">Refresh community themes</string>
     <string name="online_theme_list_description">Community-created watch themes</string>

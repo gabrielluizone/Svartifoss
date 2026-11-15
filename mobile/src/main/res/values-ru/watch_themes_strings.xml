@@ -40,6 +40,7 @@
     <string name="watch_theme_name_duplicate">Тема с таким названием уже существует</string>
 
     <string name="online_themes_title">Темы сообщества</string>
+    <string name="online_themes_title_short">Магазин</string>
     <string name="online_theme_intro">Откройте для себя оформления, созданные сообществом. При открытии этой галереи загружается её публичный каталог.</string>
     <string name="online_theme_refresh">Обновить темы сообщества</string>
     <string name="online_theme_list_description">Темы для часов, созданные сообществом</string>

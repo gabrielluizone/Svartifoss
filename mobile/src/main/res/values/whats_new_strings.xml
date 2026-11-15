@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">In the “%1$s” tab, a new Home page shows your themes as pictures, with quick adjustments.</string>
+    <string name="whats_new_item_pickers">Style pickers now show your own watch instead of a list of names.</string>
+    <string name="whats_new_item_notification">The Svartifoss notification has a “%1$s” button and shows the next track.</string>
+    <string name="whats_new_item_songs">A YouTube Music playlist lists its songs on the watch’s shortcut screen.</string>
+    <string name="whats_new_item_icons">Three new app icons: %1$s, %2$s and %3$s.</string>
+    <string name="whats_new_item_quick_panel">The quick panel can use the playing app’s own like, shuffle and repeat buttons.</string>
+    <string name="whats_new_item_fixes">Fixed: shortcuts starting the wrong music, and long titles running into the controls.</string>
+</resources>

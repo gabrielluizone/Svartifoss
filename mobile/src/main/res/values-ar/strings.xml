@@ -367,6 +367,8 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="setting_always_show_time_on_description">سيظهر الوقت الحالي دائمًا. لن تظهر أيقونة الإجراء العلوية (سيحل محلها الوقت)، لكن الإجراء سيظل يعمل بشكل طبيعي.</string>
     <string name="notification_action_stop">إيقاف</string>
     <string name="notification_action_force_stop">إيقاف إجباري</string>
+    <string name="notification_action_themes">سمات</string>
+    <string name="notification_up_next">المسار التالي: %1$s</string>
     <string name="error_notification_access">لا يوجد إذن للوصول إلى الإشعارات. تحقّق من الهاتف.</string>
     <string name="error_notifications">إشعارات الأخطاء</string>
     <string name="notification_access_notification_title">يحتاج Svartifoss إلى إذن الوصول إلى الإشعارات</string>
@@ -2074,7 +2076,7 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="setting_playlist_shortcuts">اختصارات خدمات البث</string>
     <string name="setting_playlist_shortcuts_description">فتح روابط المشاركة من الساعة في YouTube Music وSpotify وتطبيقات البث الأخرى</string>
     <string name="setting_shortcut_artwork">جلب صور الاختصارات عبر الإنترنت</string>
-    <string name="setting_shortcut_artwork_description">تنزيل صورة مصغرة لكل اختصار محفوظ من الخدمة، لتظهر في قائمة الهاتف وقائمة الساعة والأزرار المعيّنة. يتم جلب كل صورة مرة واحدة؛ ولا يُرسل إلا رابط المشاركة العام. متوقف افتراضيًا.</string>
+    <string name="setting_shortcut_artwork_description">تنزيل صورة مصغرة لكل اختصار محفوظ من الخدمة، لتظهر في قائمة الهاتف وقائمة الساعة والأزرار المعيّنة. يتم جلب كل صورة مرة واحدة؛ ولا يُرسل إلا رابط المشاركة العام. متوقف افتراضيًا. وفي شاشة الاختصار على الساعة، تعرض قوائم تشغيل YouTube Music وألبوماته أغانيها أيضًا، ويتم جلبها عبر YouTube؛ وعند إيقافه، لا يحدث ذلك إلا عند النقر على «عرض الأغاني».</string>
     <string name="setting_queue_local_artwork">أغلفة قائمة الانتظار من مكتبتك</string>
     <string name="setting_queue_local_artwork_description">تنشر مشغلات الموسيقى المحلية أغلفة قائمة الانتظار كمراجع للمكتبة. امنح إذن الوصول إلى الوسائط حتى تظهر في قائمة الانتظار على الساعة. لا يتم استخدام الإنترنت.</string>
     <string name="setting_queue_local_artwork_granted">تم منح إذن الوصول إلى الوسائط — ستظهر أغلفة قائمة الانتظار المحلية</string>
@@ -2991,8 +2993,11 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="action_symfonium_sync">مزامنة مزوّد Symfonium</string>
     <string name="app_icon_style_gradient">تدرّج لوني</string>
     <string name="app_icon_style_solid">لون موحّد</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">كريمي</string>
     <string name="app_icon_style_feather">ريشة الفحم</string>
+    <string name="app_icon_style_coral">مرجاني</string>
+    <string name="app_icon_style_ocean">محيطي</string>
+    <string name="app_icon_style_violet">بنفسجي</string>
     <string name="dev_show_rating_card">إظهار بطاقة التقييم</string>
     <string name="dev_show_rating_card_description">يطلب فورًا من Google Play بطاقة المراجعة المدمجة في التطبيق متجاوزًا الحدود المعتادة. لا تظهر إلا في إصدار مثبّت من Google Play (ويُحتسب الاختبار الداخلي)</string>
     <string name="dev_show_rating_card_unavailable">لا توجد بطاقة مراجعة من Google Play لهذا الإصدار. ثبّته من Google Play، بما في ذلك الاختبار الداخلي، ثم حاول مجددًا</string>

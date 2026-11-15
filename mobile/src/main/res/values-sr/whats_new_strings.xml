@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">На картици „%1$s“ нова почетна страница приказује ваше теме као слике, уз брза подешавања.</string>
+    <string name="whats_new_item_pickers">Бирачи стила сада приказују ваш сопствени сат уместо листе назива.</string>
+    <string name="whats_new_item_notification">Обавештење Svartifoss-а има дугме „%1$s“ и приказује следећу песму.</string>
+    <string name="whats_new_item_songs">Плејлиста са YouTube Music-а наводи своје песме на екрану пречице на сату.</string>
+    <string name="whats_new_item_icons">Три нове иконе апликације: %1$s, %2$s и %3$s.</string>
+    <string name="whats_new_item_quick_panel">Брзи панел може да користи сопствена дугмад за свиђање, насумично и понављање апликације која свира.</string>
+    <string name="whats_new_item_fixes">Исправљено: пречице које су покретале погрешну музику и дугачки наслови који су залазили у контроле.</string>
+</resources>

@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Мұндай атауы бар тақырып бұрыннан бар</string>
 
     <string name="online_themes_title">Қауымдастық тақырыптары</string>
+    <string name="online_themes_title_short">Дүкен</string>
     <string name="online_theme_intro">Қауымдастық жасаған көріністерді ашыңыз. Бұл галереяны ашу оның ашық каталогын жүктейді.</string>
     <string name="online_theme_refresh">Қауымдастық тақырыптарын жаңарту</string>
     <string name="online_theme_list_description">Қауымдастық жасаған сағат тақырыптары</string>

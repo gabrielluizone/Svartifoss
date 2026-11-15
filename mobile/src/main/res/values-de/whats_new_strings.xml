@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Auf dem Tab „%1$s“ zeigt eine neue Startseite deine Themes als Bilder, mit schnellen Anpassungen.</string>
+    <string name="whats_new_item_pickers">Stilauswahlen zeigen jetzt deine eigene Uhr statt einer Namensliste.</string>
+    <string name="whats_new_item_notification">Die Svartifoss-Benachrichtigung hat eine „%1$s“-Taste und zeigt den nächsten Titel.</string>
+    <string name="whats_new_item_songs">Eine YouTube-Music-Playlist listet ihre Songs auf dem Verknüpfungsbildschirm der Uhr auf.</string>
+    <string name="whats_new_item_icons">Drei neue App-Symbole: %1$s, %2$s und %3$s.</string>
+    <string name="whats_new_item_quick_panel">Das Schnellpanel kann die eigenen Tasten für Gefällt mir, Zufallswiedergabe und Wiederholen der laufenden App verwenden.</string>
+    <string name="whats_new_item_fixes">Behoben: Verknüpfungen, die die falsche Musik starteten, und lange Titel, die in die Bedienelemente ragten.</string>
+</resources>

@@ -80,6 +80,9 @@
     <string name="menu_header_search_history">Pesquisas recentes</string>
     <string name="menu_header_library">Biblioteca</string>
     <string name="shortcut_open_on_phone">Abrir no telemóvel</string>
+    <string name="shortcut_tracks_heading">Músicas</string>
+    <string name="shortcut_tracks_show">Ver músicas</string>
+    <string name="shortcut_tracks_failed">Não foi possível carregar as músicas. Toca para tentar novamente.</string>
     <string name="shortcut_continue_on_phone">Continue no telemóvel</string>
     <string name="chat_face_today">Hoje</string>
 

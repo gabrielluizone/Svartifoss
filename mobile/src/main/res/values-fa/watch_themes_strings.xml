@@ -40,6 +40,7 @@
     <string name="watch_theme_name_duplicate">تمی با این نام از قبل وجود دارد</string>
 
     <string name="online_themes_title">تم‌های انجمن</string>
+    <string name="online_themes_title_short">فروشگاه</string>
     <string name="online_theme_intro">ظاهرهای ساخته‌شده توسط انجمن را کشف کنید. با باز کردن این گالری، فهرست عمومی آن دانلود می‌شود.</string>
     <string name="online_theme_refresh">به‌روزرسانی تم‌های انجمن</string>
     <string name="online_theme_list_description">تم‌های ساعت ساخته‌شده توسط انجمن</string>

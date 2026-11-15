@@ -344,6 +344,8 @@
     <string name="setting_always_show_time_on_description">Masa semasa akan sentiasa dipaparkan. Ikon tindakan atas tidak akan kelihatan (digantikan oleh jam), tetapi tindakan masih berfungsi seperti biasa.</string>
     <string name="notification_action_stop">Henti</string>
     <string name="notification_action_force_stop">Paksa henti</string>
+    <string name="notification_action_themes">Tema</string>
+    <string name="notification_up_next">Trek seterusnya: %1$s</string>
     <string name="error_notification_access">Tiada akses pemberitahuan. Semak telefon.</string>
     <string name="error_notifications">Pemberitahuan ralat</string>
     <string name="notification_access_notification_title">Svartifoss memerlukan akses pemberitahuan</string>
@@ -2041,7 +2043,7 @@
     <string name="setting_playlist_shortcuts">Pintasan penstriman</string>
     <string name="setting_playlist_shortcuts_description">Buka pautan kongsi dari jam dalam YouTube Music, Spotify dan aplikasi penstriman lain</string>
     <string name="setting_shortcut_artwork">Dapatkan karya seni pintasan dalam talian</string>
-    <string name="setting_shortcut_artwork_description">Muat turun imej kecil daripada perkhidmatan untuk setiap pintasan disimpan, ditunjukkan pada senarai telefon, menu jam dan butang yang ditetapkan. Setiap imej kecil diperoleh sekali sahaja; hanya pautan kongsi awam dihantar. Dimatikan secara lalai.</string>
+    <string name="setting_shortcut_artwork_description">Muat turun imej kecil daripada perkhidmatan untuk setiap pintasan disimpan, ditunjukkan pada senarai telefon, menu jam dan butang yang ditetapkan. Setiap imej kecil diperoleh sekali sahaja; hanya pautan kongsi awam dihantar. Dimatikan secara lalai. Pada skrin pintasan jam tangan, senarai main dan album YouTube Music turut memaparkan lagunya, yang diperoleh melalui YouTube; apabila dimatikan, hanya selepas anda mengetik “Lihat lagu”.</string>
     <string name="setting_queue_local_artwork">Kulit giliran daripada pustaka anda</string>
     <string name="setting_queue_local_artwork_description">Pemain muzik tempatan menerbitkan kulit giliran sebagai rujukan pustaka. Berikan akses media supaya ia boleh dipaparkan dalam giliran jam. Tiada akses internet terlibat.</string>
     <string name="setting_queue_local_artwork_granted">Akses media diberikan — kulit giliran tempatan akan dipaparkan</string>
@@ -2943,8 +2945,11 @@
     <string name="action_symfonium_sync">Segerakkan penyedia Symfonium</string>
     <string name="app_icon_style_gradient">Kecerunan</string>
     <string name="app_icon_style_solid">Warna pepejal</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krim</string>
     <string name="app_icon_style_feather">Bulu Arang</string>
+    <string name="app_icon_style_coral">Karang</string>
+    <string name="app_icon_style_ocean">Lautan</string>
+    <string name="app_icon_style_violet">Ungu</string>
     <string name="dev_show_rating_card">Tunjukkan kad penilaian</string>
     <string name="dev_show_rating_card_description">Meminta kad ulasan dalam apl daripada Google Play sekarang juga, tanpa mengambil kira had biasa. Ia hanya muncul dalam binaan yang dipasang daripada Google Play (ujian dalaman turut dikira)</string>
     <string name="dev_show_rating_card_unavailable">Google Play tidak mempunyai kad ulasan untuk binaan ini. Pasangnya daripada Google Play, termasuk ujian dalaman, dan cuba lagi</string>

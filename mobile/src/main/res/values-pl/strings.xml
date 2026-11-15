@@ -350,6 +350,8 @@
     <string name="setting_always_show_time_on_description">Bieżący czas będzie zawsze wyświetlany. Górna ikona akcji nie będzie widoczna (zastąpi ją zegar), ale akcja nadal będzie działać normalnie.</string>
     <string name="notification_action_stop">Zatrzymaj</string>
     <string name="notification_action_force_stop">Wymuś zatrzymanie</string>
+    <string name="notification_action_themes">Motywy</string>
+    <string name="notification_up_next">Następny utwór: %1$s</string>
     <string name="error_notification_access">Brak dostępu do powiadomień. Sprawdź telefon.</string>
     <string name="error_notifications">Powiadomienia o błędach</string>
     <string name="notification_access_notification_title">Svartifoss wymaga dostępu do powiadomień</string>
@@ -2047,7 +2049,7 @@
     <string name="setting_playlist_shortcuts">Skróty strumieniowe</string>
     <string name="setting_playlist_shortcuts_description">Otwieraj udostępnione linki z zegarka w YouTube Music, Spotify i innych aplikacjach strumieniowych</string>
     <string name="setting_shortcut_artwork">Pobieraj grafikę skrótów online</string>
-    <string name="setting_shortcut_artwork_description">Pobiera z usługi miniaturę dla każdego zapisanego skrótu i pokazuje ją na liście telefonu, w menu zegarka oraz na przypisanych przyciskach. Każda miniatura jest pobierana tylko raz; wysyłany jest wyłącznie publiczny link udostępniania. Domyślnie wyłączone.</string>
+    <string name="setting_shortcut_artwork_description">Pobiera z usługi miniaturę dla każdego zapisanego skrótu i pokazuje ją na liście telefonu, w menu zegarka oraz na przypisanych przyciskach. Każda miniatura jest pobierana tylko raz; wysyłany jest wyłącznie publiczny link udostępniania. Domyślnie wyłączone. Na ekranie skrótu w zegarku playlisty i albumy YouTube Music pokazują też swoje utwory, pobierane przez YouTube; gdy opcja jest wyłączona, dopiero po dotknięciu „Pokaż utwory”.</string>
     <string name="setting_queue_local_artwork">Okładki kolejki z biblioteki</string>
     <string name="setting_queue_local_artwork_description">Lokalne odtwarzacze muzyki publikują okładki kolejki jako odwołania do biblioteki. Przyznaj dostęp do multimediów, aby można je było wyświetlać w kolejce zegarka. Internet nie jest używany.</string>
     <string name="setting_queue_local_artwork_granted">Dostęp do multimediów przyznany — lokalne okładki kolejki będą wyświetlane</string>
@@ -2958,8 +2960,11 @@
     <string name="action_symfonium_sync">Synchronizuj dostawcę Symfonium</string>
     <string name="app_icon_style_gradient">Gradient</string>
     <string name="app_icon_style_solid">Jednolity kolor</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Kremowy</string>
     <string name="app_icon_style_feather">Węglowe pióro</string>
+    <string name="app_icon_style_coral">Koralowy</string>
+    <string name="app_icon_style_ocean">Oceaniczny</string>
+    <string name="app_icon_style_violet">Fioletowy</string>
     <string name="dev_show_rating_card">Pokaż kartę oceny</string>
     <string name="dev_show_rating_card_description">Od razu prosi Google Play o wbudowaną kartę opinii, pomijając zwykłe limity. Pojawia się tylko w wersji zainstalowanej z Google Play (test wewnętrzny też się liczy)</string>
     <string name="dev_show_rating_card_unavailable">Google Play nie ma karty opinii dla tej wersji. Zainstaluj ją z Google Play, także z testu wewnętrznego, i spróbuj ponownie</string>

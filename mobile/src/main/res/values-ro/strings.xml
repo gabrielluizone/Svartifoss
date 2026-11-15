@@ -301,6 +301,8 @@
     <string name="setting_always_show_time_on_description">Ora curentă va fi afișată întotdeauna. Pictograma de acțiune de sus nu va fi vizibilă (va fi înlocuită de ceas), dar acțiunea va continua să funcționeze normal.</string>
     <string name="notification_action_stop">Oprește</string>
     <string name="notification_action_force_stop">Oprire forțată</string>
+    <string name="notification_action_themes">Teme</string>
+    <string name="notification_up_next">Următoarea piesă: %1$s</string>
     <string name="error_notification_access">Fără acces la notificări. Verificați telefonul.</string>
     <string name="error_notifications">Notificări de eroare</string>
     <string name="notification_access_notification_title">Svartifoss are nevoie de acces la notificări</string>
@@ -1387,7 +1389,7 @@
     <string name="setting_playlist_shortcuts">Scurtături de streaming</string>
     <string name="setting_playlist_shortcuts_description">Deschideți linkuri partajate de pe ceas în YouTube Music, Spotify și alte aplicații de streaming</string>
     <string name="setting_shortcut_artwork">Preia coperte de scurtături online</string>
-    <string name="setting_shortcut_artwork_description">Descarcă o miniatură pentru fiecare scurtătură salvată de la serviciu, afișată în lista de pe telefon, meniul ceasului și butoanele asignate. Fiecare miniatură este preluată o singură dată. Acesta este singurul acces online în afară de verificarea actualizărilor; se trimite doar linkul public de partajare. Dezactivat implicit.</string>
+    <string name="setting_shortcut_artwork_description">Descarcă o miniatură pentru fiecare scurtătură salvată de la serviciu, afișată în lista de pe telefon, meniul ceasului și butoanele asignate. Fiecare miniatură este preluată o singură dată. Acesta este singurul acces online în afară de verificarea actualizărilor; se trimite doar linkul public de partajare. Dezactivat implicit. Pe ecranul comenzii rapide de pe ceas, playlisturile și albumele YouTube Music își afișează și melodiile, obținute prin YouTube; când este dezactivat, doar după ce atingi „Vezi melodiile”.</string>
     <string name="watch_streaming_shortcuts_empty">Adăugați piese, albume sau liste de redare pentru Acțiuni Rapide și meniul ceasului</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d scurtătură salvată · Disponibilă în Acțiuni Rapide și meniul ceasului</item>
@@ -2936,8 +2938,11 @@
     <string name="action_symfonium_sync">Sincronizează furnizorul Symfonium</string>
     <string name="app_icon_style_gradient">Gradient</string>
     <string name="app_icon_style_solid">Culoare uniformă</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Crem</string>
     <string name="app_icon_style_feather">Pană de cărbune</string>
+    <string name="app_icon_style_coral">Coral</string>
+    <string name="app_icon_style_ocean">Ocean</string>
+    <string name="app_icon_style_violet">Violet</string>
     <string name="dev_show_rating_card">Afișează cardul de evaluare</string>
     <string name="dev_show_rating_card_description">Cere imediat de la Google Play cardul său de recenzie din aplicație, ignorând limitele obișnuite. Apare doar într-o versiune instalată din Google Play (testarea internă contează)</string>
     <string name="dev_show_rating_card_unavailable">Google Play nu are card de recenzie pentru această versiune. Instaleaz-o din Google Play, inclusiv din testarea internă, și încearcă din nou</string>

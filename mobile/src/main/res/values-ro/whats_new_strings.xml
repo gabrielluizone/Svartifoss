@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">În fila „%1$s”, o pagină de pornire nouă îți arată temele ca imagini, cu ajustări rapide.</string>
+    <string name="whats_new_item_pickers">Selectoarele de stil îți arată acum propriul ceas, în loc de o listă de nume.</string>
+    <string name="whats_new_item_notification">Notificarea Svartifoss are un buton „%1$s” și arată melodia următoare.</string>
+    <string name="whats_new_item_songs">O listă de redare YouTube Music își afișează melodiile pe ecranul de comenzi rapide al ceasului.</string>
+    <string name="whats_new_item_icons">Trei pictograme noi pentru aplicație: %1$s, %2$s și %3$s.</string>
+    <string name="whats_new_item_quick_panel">Panoul rapid poate folosi butoanele proprii de apreciere, amestecare și repetare ale aplicației care redă.</string>
+    <string name="whats_new_item_fixes">Remediat: comenzi rapide care porneau muzica greșită și titluri lungi care ajungeau peste comenzi.</string>
+</resources>

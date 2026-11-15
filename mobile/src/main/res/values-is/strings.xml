@@ -324,6 +324,8 @@
     <string name="setting_always_show_time_on_description">Núverandi tími birtist alltaf. Táknmynd efstu aðgerðar sést ekki (henni er skipt út fyrir klukku), en aðgerðin virkar samt eðlilega.</string>
     <string name="notification_action_stop">Stöðva</string>
     <string name="notification_action_force_stop">Þvinga stöðvun</string>
+    <string name="notification_action_themes">Þemu</string>
+    <string name="notification_up_next">Næsta lag: %1$s</string>
     <string name="error_notification_access">Enginn aðgangur að tilkynningum. Athugaðu símann.</string>
     <string name="error_notifications">Villutilkynningar</string>
     <string name="notification_access_notification_title">Svartifoss þarf aðgang að tilkynningum</string>
@@ -2002,7 +2004,7 @@
     <string name="setting_playlist_shortcuts">Streymisflýtileiðir</string>
     <string name="setting_playlist_shortcuts_description">Opna deilda tengla frá úrinu í YouTube Music, Spotify og öðrum streymisöppum</string>
     <string name="setting_shortcut_artwork">Sækja myndverk flýtileiða á netinu</string>
-    <string name="setting_shortcut_artwork_description">Sækja smámynd fyrir hverja vistaða flýtileið frá þjónustunni, sýnd í símalistanum, úravalmyndinni og úthlutuðum hnöppum. Hver smámynd er sótt einu sinni; aðeins opinberi deilingartengillinn er sendur. Slökkt sjálfgefið.</string>
+    <string name="setting_shortcut_artwork_description">Sækja smámynd fyrir hverja vistaða flýtileið frá þjónustunni, sýnd í símalistanum, úravalmyndinni og úthlutuðum hnöppum. Hver smámynd er sótt einu sinni; aðeins opinberi deilingartengillinn er sendur. Slökkt sjálfgefið. Á flýtileiðaskjá úrsins sýna spilunarlistar og plötur á YouTube Music einnig lögin sín, sótt í gegnum YouTube; þegar slökkt er á þessu, aðeins eftir að þú ýtir á „Sjá lög“.</string>
     <string name="setting_queue_local_artwork">Biðraðarumslög úr safninu þínu</string>
     <string name="setting_queue_local_artwork_description">Staðbundnir tónlistarspilarar birta biðraðarumslög sem tilvísanir í safn. Veittu aðgang að efni svo þau geti birst í biðröð úrsins. Enginn nettengingu þarf.</string>
     <string name="setting_queue_local_artwork_granted">Aðgangur að efni veittur — staðbundin biðraðarumslög munu birtast</string>
@@ -2942,8 +2944,11 @@
     <string name="action_symfonium_sync">Samstilla Symfonium-veitu</string>
     <string name="app_icon_style_gradient">Litstigull</string>
     <string name="app_icon_style_solid">Einlitur</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Rjómalitur</string>
     <string name="app_icon_style_feather">Kolfjöður</string>
+    <string name="app_icon_style_coral">Kórall</string>
+    <string name="app_icon_style_ocean">Úthaf</string>
+    <string name="app_icon_style_violet">Fjólublátt</string>
     <string name="dev_show_rating_card">Sýna einkunnaspjaldið</string>
     <string name="dev_show_rating_card_description">Biður Google Play strax um umsagnarspjaldið sitt í forritinu og hunsar venjuleg takmörk. Það birtist aðeins í útgáfu sem sett var upp frá Google Play (innri prófun telst með)</string>
     <string name="dev_show_rating_card_unavailable">Google Play er ekki með umsagnarspjald fyrir þessa útgáfu. Settu hana upp frá Google Play, þar með talið innri prófun, og reyndu aftur</string>

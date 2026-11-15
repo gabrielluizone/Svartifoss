@@ -344,6 +344,8 @@
     <string name="setting_always_show_time_on_description">เวลาปัจจุบันจะแสดงเสมอ ไอคอนการทำงานด้านบนจะไม่ปรากฏ (ถูกแทนที่ด้วยนาฬิกา) แต่การทำงานยังทำงานตามปกติ</string>
     <string name="notification_action_stop">หยุด</string>
     <string name="notification_action_force_stop">บังคับหยุด</string>
+    <string name="notification_action_themes">ธีม</string>
+    <string name="notification_up_next">แทร็กถัดไป: %1$s</string>
     <string name="error_notification_access">ไม่มีสิทธิ์เข้าถึงการแจ้งเตือน ตรวจสอบโทรศัพท์</string>
     <string name="error_notifications">การแจ้งเตือนข้อผิดพลาด</string>
     <string name="notification_access_notification_title">Svartifoss ต้องการสิทธิ์เข้าถึงการแจ้งเตือน</string>
@@ -2041,7 +2043,7 @@
     <string name="setting_playlist_shortcuts">ทางลัดสตรีมมิง</string>
     <string name="setting_playlist_shortcuts_description">เปิดลิงก์แชร์จากนาฬิกาใน YouTube Music, Spotify และแอปสตรีมมิงอื่น ๆ</string>
     <string name="setting_shortcut_artwork">ดึงภาพทางลัดออนไลน์</string>
-    <string name="setting_shortcut_artwork_description">ดาวน์โหลดภาพขนาดย่อจากบริการสำหรับทางลัดที่บันทึกไว้แต่ละรายการ โดยแสดงในรายการบนโทรศัพท์ เมนูนาฬิกา และปุ่มที่กำหนด ภาพขนาดย่อแต่ละภาพจะดึงเพียงครั้งเดียว; ส่งเฉพาะลิงก์แชร์สาธารณะ ปิดไว้โดยค่าเริ่มต้น</string>
+    <string name="setting_shortcut_artwork_description">ดาวน์โหลดภาพขนาดย่อจากบริการสำหรับทางลัดที่บันทึกไว้แต่ละรายการ โดยแสดงในรายการบนโทรศัพท์ เมนูนาฬิกา และปุ่มที่กำหนด ภาพขนาดย่อแต่ละภาพจะดึงเพียงครั้งเดียว; ส่งเฉพาะลิงก์แชร์สาธารณะ ปิดไว้โดยค่าเริ่มต้น ในหน้าจอทางลัดบนนาฬิกา เพลย์ลิสต์และอัลบั้มของ YouTube Music จะแสดงรายชื่อเพลงด้วย โดยดึงผ่าน YouTube; เมื่อปิดไว้ จะดึงเฉพาะเมื่อแตะ “ดูเพลง”</string>
     <string name="setting_queue_local_artwork">ภาพปกคิวจากคลังของคุณ</string>
     <string name="setting_queue_local_artwork_description">เครื่องเล่นเพลงในเครื่องเผยแพร่ภาพปกคิวเป็นการอ้างอิงคลัง อนุญาตการเข้าถึงสื่อเพื่อให้แสดงในคิวบนนาฬิกาได้ โดยไม่ใช้อินเทอร์เน็ต</string>
     <string name="setting_queue_local_artwork_granted">อนุญาตการเข้าถึงสื่อแล้ว — จะแสดงภาพปกคิวในเครื่อง</string>
@@ -2943,8 +2945,11 @@
     <string name="action_symfonium_sync">ซิงค์ผู้ให้บริการ Symfonium</string>
     <string name="app_icon_style_gradient">ไล่เฉดสี</string>
     <string name="app_icon_style_solid">สีเดียว</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">ครีม</string>
     <string name="app_icon_style_feather">ขนนกสีถ่าน</string>
+    <string name="app_icon_style_coral">ปะการัง</string>
+    <string name="app_icon_style_ocean">มหาสมุทร</string>
+    <string name="app_icon_style_violet">สีม่วง</string>
     <string name="dev_show_rating_card">แสดงการ์ดให้คะแนน</string>
     <string name="dev_show_rating_card_description">ขอการ์ดรีวิวในแอปจาก Google Play ทันที โดยไม่สนขีดจำกัดตามปกติ การ์ดจะปรากฏเฉพาะในบิลด์ที่ติดตั้งจาก Google Play เท่านั้น (การทดสอบภายในก็นับ)</string>
     <string name="dev_show_rating_card_unavailable">Google Play ไม่มีการ์ดรีวิวสำหรับบิลด์นี้ ติดตั้งจาก Google Play รวมถึงการทดสอบภายใน แล้วลองอีกครั้ง</string>

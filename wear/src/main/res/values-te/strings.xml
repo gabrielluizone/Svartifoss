@@ -67,6 +67,9 @@
     <string name="menu_header_search_history">ఇటీవలి శోధనలు</string>
     <string name="menu_header_library">లైబ్రరీ</string>
     <string name="shortcut_open_on_phone">ఫోన్‌లో తెరువు</string>
+    <string name="shortcut_tracks_heading">పాటలు</string>
+    <string name="shortcut_tracks_show">పాటలను చూడండి</string>
+    <string name="shortcut_tracks_failed">పాటలను లోడ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నించడానికి నొక్కండి.</string>
     <string name="shortcut_continue_on_phone">మీ ఫోన్‌లో కొనసాగించండి</string>
     <string name="chat_face_today">ఈ రోజు</string>
     <string name="face_picker_title">వాచ్ ఫేస్</string>

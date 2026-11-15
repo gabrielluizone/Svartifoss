@@ -59,6 +59,9 @@
     <string name="menu_header_search_history">Недавние запросы</string>
     <string name="menu_header_library">Медиатека</string>
     <string name="shortcut_open_on_phone">Открыть на телефоне</string>
+    <string name="shortcut_tracks_heading">Песни</string>
+    <string name="shortcut_tracks_show">Показать песни</string>
+    <string name="shortcut_tracks_failed">Не удалось загрузить песни. Нажмите, чтобы повторить.</string>
     <string name="shortcut_continue_on_phone">Продолжите на телефоне</string>
     <string name="chat_face_today">Сегодня</string>
 

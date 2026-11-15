@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">已有相同名稱的主題</string>
 
     <string name="online_themes_title">社群主題</string>
+    <string name="online_themes_title_short">商店</string>
     <string name="online_theme_intro">探索由社群打造的外觀。開啟此圖庫會下載其公開目錄。</string>
     <string name="online_theme_refresh">重新整理社群主題</string>
     <string name="online_theme_list_description">社群建立的手錶主題</string>

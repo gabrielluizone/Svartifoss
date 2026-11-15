@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Στην καρτέλα «%1$s», μια νέα αρχική σελίδα δείχνει τα θέματά σας ως εικόνες, με γρήγορες ρυθμίσεις.</string>
+    <string name="whats_new_item_pickers">Οι επιλογείς στυλ δείχνουν πλέον το δικό σας ρολόι αντί για μια λίστα ονομάτων.</string>
+    <string name="whats_new_item_notification">Η ειδοποίηση του Svartifoss έχει κουμπί «%1$s» και δείχνει το επόμενο κομμάτι.</string>
+    <string name="whats_new_item_songs">Μια λίστα αναπαραγωγής του YouTube Music εμφανίζει τα τραγούδια της στην οθόνη συντόμευσης του ρολογιού.</string>
+    <string name="whats_new_item_icons">Τρία νέα εικονίδια εφαρμογής: %1$s, %2$s και %3$s.</string>
+    <string name="whats_new_item_quick_panel">Ο γρήγορος πίνακας μπορεί να χρησιμοποιεί τα κουμπιά «Μου αρέσει», τυχαίας σειράς και επανάληψης της εφαρμογής που παίζει.</string>
+    <string name="whats_new_item_fixes">Διορθώθηκε: συντομεύσεις που ξεκινούσαν λάθος μουσική και μεγάλοι τίτλοι που έπεφταν πάνω στα χειριστήρια.</string>
+</resources>

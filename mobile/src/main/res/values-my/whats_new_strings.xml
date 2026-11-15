@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” တက်ဘ်တွင် ပင်မစာမျက်နှာအသစ်က သင့် Themes များကို ပုံများအဖြစ် မြန်ဆန်သော ချိန်ညှိမှုများနှင့်အတူ ပြသသည်။</string>
+    <string name="whats_new_item_pickers">ပုံစံရွေးချယ်သူများက အမည်စာရင်းအစား သင့်ကိုယ်ပိုင်နာရီကို ယခု ပြသသည်။</string>
+    <string name="whats_new_item_notification">Svartifoss သတိပေးချက်တွင် “%1$s” ခလုတ်ပါပြီး နောက်သီချင်းကို ပြသသည်။</string>
+    <string name="whats_new_item_songs">YouTube Music playlist တစ်ခုက ၎င်း၏သီချင်းများကို နာရီ၏ shortcut မျက်နှာပြင်တွင် စာရင်းပြသည်။</string>
+    <string name="whats_new_item_icons">အက်ပ်အိုင်ကွန်သစ်သုံးခု- %1$s၊ %2$s နှင့် %3$s။</string>
+    <string name="whats_new_item_quick_panel">အမြန်ပန်နယ်သည် ဖွင့်နေသောအက်ပ်၏ ကိုယ်ပိုင် လိုက်ခ်၊ shuffle နှင့် ထပ်ခါတလဲလဲ ခလုတ်များကို သုံးနိုင်သည်။</string>
+    <string name="whats_new_item_fixes">ပြင်ဆင်ပြီး- မှားယွင်းသောသီချင်းကို ဖွင့်သည့် shortcut များနှင့် ထိန်းချုပ်မှုများပေါ် ထပ်နေသော ခေါင်းစဉ်ရှည်များ။</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">בלשונית “%1$s”, דף בית חדש מציג את ערכות הנושא שלך כתמונות, עם התאמות מהירות.</string>
+    <string name="whats_new_item_pickers">בוררי הסגנון מציגים עכשיו את השעון שלך במקום רשימת שמות.</string>
+    <string name="whats_new_item_notification">להתראה של Svartifoss יש כפתור “%1$s”, והיא מציגה את הרצועה הבאה.</string>
+    <string name="whats_new_item_songs">פלייליסט של YouTube Music מציג את השירים שלו במסך הקיצור בשעון.</string>
+    <string name="whats_new_item_icons">שלושה סמלי אפליקציה חדשים: %1$s, %2$s ו%3$s.</string>
+    <string name="whats_new_item_quick_panel">הלוח המהיר יכול להשתמש בכפתורי הלייק, האקראי והחזרה של האפליקציה המנגנת.</string>
+    <string name="whats_new_item_fixes">תוקן: קיצורי דרך שהפעילו מוזיקה שגויה, וכותרות ארוכות שנכנסו לפקדים.</string>
+</resources>

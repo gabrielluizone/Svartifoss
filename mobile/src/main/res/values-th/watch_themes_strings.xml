@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">มีธีมชื่อนี้อยู่แล้ว</string>
 
     <string name="online_themes_title">ธีมจากชุมชน</string>
+    <string name="online_themes_title_short">ร้านค้า</string>
     <string name="online_theme_intro">ค้นหารูปแบบที่สร้างโดยชุมชน การเปิดแกลเลอรีนี้จะดาวน์โหลดแคตตาล็อกสาธารณะ</string>
     <string name="online_theme_refresh">รีเฟรชธีมจากชุมชน</string>
     <string name="online_theme_list_description">ธีมนาฬิกาที่สร้างโดยชุมชน</string>

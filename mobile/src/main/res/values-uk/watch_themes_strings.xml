@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Тема з такою назвою вже існує</string>
 
     <string name="online_themes_title">Теми спільноти</string>
+    <string name="online_themes_title_short">Магазин</string>
     <string name="online_theme_intro">Відкрийте для себе оформлення, створені спільнотою. Відкриття цієї галереї завантажує її публічний каталог.</string>
     <string name="online_theme_refresh">Оновити теми спільноти</string>
     <string name="online_theme_list_description">Теми годинника, створені спільнотою</string>

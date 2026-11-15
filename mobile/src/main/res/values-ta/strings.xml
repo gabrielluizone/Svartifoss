@@ -763,6 +763,8 @@
     <string name="setting_always_show_time_on_description">தற்போதைய நேரம் எப்போதும் காட்டப்படும். மேல் செயல் ஐகான் தெரியாது (அதற்குப் பதில் கடிகாரம் வரும்), ஆனால் செயல் வழக்கம்போல வேலை செய்யும்.</string>
     <string name="notification_action_stop">நிறுத்து</string>
     <string name="notification_action_force_stop">கட்டாயமாக நிறுத்து</string>
+    <string name="notification_action_themes">தீம்கள்</string>
+    <string name="notification_up_next">அடுத்த பாடல்: %1$s</string>
     <string name="error_notification_access">அறிவிப்பு அணுகல் இல்லை. தொலைபேசியைப் பாருங்கள்.</string>
     <string name="error_notifications">பிழை அறிவிப்புகள்</string>
     <string name="notification_access_notification_title">Svartifoss-க்கு அறிவிப்பு அணுகல் தேவை</string>
@@ -1990,7 +1992,7 @@
     <string name="setting_playlist_shortcuts">Streaming குறுக்குவழிகள்</string>
     <string name="setting_playlist_shortcuts_description">கடிகாரத்திலிருந்து share link-களை YouTube Music, Spotify மற்றும் பிற streaming apps-இல் திறக்கவும்</string>
     <string name="setting_shortcut_artwork">Shortcut artwork-ஐ online-இல் பெறு</string>
-    <string name="setting_shortcut_artwork_description">சேவை public preview artwork வழங்கினால் thumbnail-ஐப் பதிவிறக்கும்; அது phone list, watch menu மற்றும் ஒதுக்கப்பட்ட button-களில் காட்டப்படும். கிடைக்கும் ஒவ்வொரு thumbnail-மும் ஒருமுறை மட்டுமே பெறப்படும்; public share link மட்டும் அனுப்பப்படும். இயல்பாக முடக்கப்பட்டுள்ளது.</string>
+    <string name="setting_shortcut_artwork_description">சேவை public preview artwork வழங்கினால் thumbnail-ஐப் பதிவிறக்கும்; அது phone list, watch menu மற்றும் ஒதுக்கப்பட்ட button-களில் காட்டப்படும். கிடைக்கும் ஒவ்வொரு thumbnail-மும் ஒருமுறை மட்டுமே பெறப்படும்; public share link மட்டும் அனுப்பப்படும். இயல்பாக முடக்கப்பட்டுள்ளது. கடிகாரத்தின் shortcut திரையில் YouTube Music playlist-களும் album-களும் அவற்றின் பாடல்களையும் காட்டும், அவை YouTube வழியாகப் பெறப்படும்; முடக்கப்பட்டிருந்தால், “பாடல்களைக் காட்டு” என்பதைத் தட்டும்போது மட்டும்.</string>
     <string name="setting_queue_local_artwork">Queue cover-கள் உங்கள் library-இலிருந்து</string>
     <string name="setting_queue_local_artwork_description">Local music player-கள் queue cover-களை library reference-களாக வெளியிடுகின்றன. அவை watch queue-இல் காட்ட media access வழங்கவும். இணைய அணுகல் பயன்படுத்தப்படாது.</string>
     <string name="setting_queue_local_artwork_granted">Media access வழங்கப்பட்டது — local queue cover-கள் காட்டப்படும்</string>
@@ -2327,8 +2329,11 @@
     <string name="action_symfonium_sync">Symfonium வழங்குநரை ஒத்திசை</string>
     <string name="app_icon_style_gradient">கிரேடியன்ட்</string>
     <string name="app_icon_style_solid">ஒற்றை நிறம்</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">கிரீம்</string>
     <string name="app_icon_style_feather">கரி இறகு</string>
+    <string name="app_icon_style_coral">பவளம்</string>
+    <string name="app_icon_style_ocean">பெருங்கடல்</string>
+    <string name="app_icon_style_violet">ஊதா</string>
     <string name="dev_show_rating_card">மதிப்பீட்டு அட்டையைக் காட்டு</string>
     <string name="dev_show_rating_card_description">வழக்கமான வரம்புகளைப் புறக்கணித்து, Google Play இடம் அதன் ஆப்-இல் மதிப்பாய்வு அட்டையை இப்போதே கேட்கிறது. Google Play இலிருந்து நிறுவிய பதிப்பில் மட்டுமே இது தோன்றும் (உள் சோதனையும் கணக்கில் வரும்)</string>
     <string name="dev_show_rating_card_unavailable">இந்தப் பதிப்புக்கு Google Play இல் மதிப்பாய்வு அட்டை இல்லை. உள் சோதனை உட்பட Google Play இலிருந்து நிறுவி, மீண்டும் முயலவும்</string>

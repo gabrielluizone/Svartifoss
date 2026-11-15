@@ -103,6 +103,9 @@
     <!-- A streaming shortcut's own screen (cover, Play, Shuffle). Play and Shuffle reuse
          action_name_play and quick_action_shuffle. -->
     <string name="shortcut_open_on_phone">Open on phone</string>
+    <string name="shortcut_tracks_heading">Songs</string>
+    <string name="shortcut_tracks_show">See songs</string>
+    <string name="shortcut_tracks_failed">Couldn\'t load the songs. Tap to try again.</string>
     <!-- System confirmation shown after the shortcut was sent to the phone to open there. -->
     <string name="shortcut_continue_on_phone">Continue on your phone</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->

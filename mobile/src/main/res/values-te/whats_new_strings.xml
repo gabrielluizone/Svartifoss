@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” ట్యాబ్‌లో, కొత్త హోమ్ పేజీ మీ థీమ్‌లను చిత్రాలుగా, శీఘ్ర సర్దుబాట్లతో చూపుతుంది.</string>
+    <string name="whats_new_item_pickers">శైలి ఎంపికలు ఇప్పుడు పేర్ల జాబితాకు బదులుగా మీ స్వంత వాచ్‌ను చూపుతాయి.</string>
+    <string name="whats_new_item_notification">Svartifoss నోటిఫికేషన్‌లో “%1$s” బటన్ ఉంది, ఇది తదుపరి ట్రాక్‌ను కూడా చూపుతుంది.</string>
+    <string name="whats_new_item_songs">YouTube Music ప్లేలిస్ట్ తన పాటలను వాచ్ షార్ట్‌కట్ స్క్రీన్‌పై జాబితా చేస్తుంది.</string>
+    <string name="whats_new_item_icons">మూడు కొత్త యాప్ చిహ్నాలు: %1$s, %2$s మరియు %3$s.</string>
+    <string name="whats_new_item_quick_panel">శీఘ్ర ప్యానెల్ ప్లే అవుతున్న యాప్ యొక్క స్వంత లైక్, షఫుల్, రిపీట్ బటన్‌లను ఉపయోగించగలదు.</string>
+    <string name="whats_new_item_fixes">సరిదిద్దబడింది: తప్పు సంగీతాన్ని ప్రారంభించిన షార్ట్‌కట్‌లు, నియంత్రణలపైకి వచ్చిన పొడవైన శీర్షికలు.</string>
+</resources>

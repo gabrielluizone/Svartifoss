@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Bu adla bir tema zaten var</string>
 
     <string name="online_themes_title">Topluluk temaları</string>
+    <string name="online_themes_title_short">Mağaza</string>
     <string name="online_theme_intro">Topluluğun oluşturduğu görünümleri keşfedin. Bu galeriyi açmak herkese açık kataloğunu indirir.</string>
     <string name="online_theme_refresh">Topluluk temalarını yenile</string>
     <string name="online_theme_list_description">Topluluk tarafından oluşturulan saat temaları</string>

@@ -344,6 +344,8 @@
     <string name="setting_always_show_time_on_description">目前時間會一律顯示。頂部動作圖示將不再可見（會由時鐘取代），但動作本身仍會正常運作。</string>
     <string name="notification_action_stop">停止</string>
     <string name="notification_action_force_stop">強制停止</string>
+    <string name="notification_action_themes">主題</string>
+    <string name="notification_up_next">下一曲目：%1$s</string>
     <string name="error_notification_access">沒有通知存取權限。請檢查手機。</string>
     <string name="error_notifications">錯誤通知</string>
     <string name="notification_access_notification_title">Svartifoss 需要通知存取權限</string>
@@ -2041,7 +2043,7 @@
     <string name="setting_playlist_shortcuts">串流捷徑</string>
     <string name="setting_playlist_shortcuts_description">將手錶上的分享連結開啟於 YouTube Music、Spotify 與其他串流應用程式</string>
     <string name="setting_shortcut_artwork">在線取得捷徑圖片</string>
-    <string name="setting_shortcut_artwork_description">為每個已儲存捷徑從服務下載縮圖，顯示於手機清單、手錶選單與已指派按鈕。每張縮圖只擷取一次；只會傳送公開分享連結。預設關閉。</string>
+    <string name="setting_shortcut_artwork_description">為每個已儲存捷徑從服務下載縮圖，顯示於手機清單、手錶選單與已指派按鈕。每張縮圖只擷取一次；只會傳送公開分享連結。預設關閉。在手錶的捷徑畫面中，YouTube Music 的播放清單和專輯也會列出其中的歌曲（透過 YouTube 取得）；關閉此項時，只有在輕觸「查看歌曲」後才會取得。</string>
     <string name="setting_queue_local_artwork">來自媒體庫的佇列封面</string>
     <string name="setting_queue_local_artwork_description">本機音樂播放器會以媒體庫參照的方式提供佇列封面。授予媒體存取權後即可顯示於手錶佇列。此功能不使用網際網路。</string>
     <string name="setting_queue_local_artwork_granted">已授予媒體存取權 — 將顯示本機佇列封面</string>
@@ -2943,8 +2945,11 @@
     <string name="action_symfonium_sync">同步 Symfonium 提供者</string>
     <string name="app_icon_style_gradient">漸層</string>
     <string name="app_icon_style_solid">純色</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">奶油色</string>
     <string name="app_icon_style_feather">灰羽</string>
+    <string name="app_icon_style_coral">珊瑚色</string>
+    <string name="app_icon_style_ocean">海洋</string>
+    <string name="app_icon_style_violet">紫羅蘭色</string>
     <string name="dev_show_rating_card">顯示評分卡片</string>
     <string name="dev_show_rating_card_description">立即向 Google Play 要求其應用程式內評論卡片，忽略平常的限制。只會在從 Google Play 安裝的版本中顯示（內部測試也算）</string>
     <string name="dev_show_rating_card_unavailable">Google Play 沒有適用於此版本的評論卡片。請從 Google Play 安裝（包括內部測試），然後再試一次</string>

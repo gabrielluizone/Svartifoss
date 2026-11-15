@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">عمليات البحث الأخيرة</string>
     <string name="menu_header_library">المكتبة</string>
     <string name="shortcut_open_on_phone">فتح على الهاتف</string>
+    <string name="shortcut_tracks_heading">الأغاني</string>
+    <string name="shortcut_tracks_show">عرض الأغاني</string>
+    <string name="shortcut_tracks_failed">تعذّر تحميل الأغاني. انقر للمحاولة مجددًا.</string>
     <string name="shortcut_continue_on_phone">تابع على هاتفك</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">اليوم</string>

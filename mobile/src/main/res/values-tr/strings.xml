@@ -357,6 +357,8 @@ Bazı simge paketleri uygulamaların depolama iznine sahip olmasını gerektirir
     <string name="setting_always_show_time_on_description">Geçerli saat her zaman gösterilir. Üst eylem simgesi görünmez (yerine saat gelir), ancak eylem normal biçimde çalışmaya devam eder.</string>
     <string name="notification_action_stop">Durdur</string>
     <string name="notification_action_force_stop">Zorla durdur</string>
+    <string name="notification_action_themes">Temalar</string>
+    <string name="notification_up_next">Sonraki parça: %1$s</string>
     <string name="error_notification_access">Bildirim erişimi yok. Telefonu kontrol edin.</string>
     <string name="error_notifications">Hata bildirimleri</string>
     <string name="notification_access_notification_title">Svartifoss’un bildirim erişimine ihtiyacı var</string>
@@ -2064,7 +2066,7 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="setting_playlist_shortcuts">Yayın kısayolları</string>
     <string name="setting_playlist_shortcuts_description">Saatten paylaşım bağlantılarını YouTube Music, Spotify ve diğer yayın uygulamalarında aç</string>
     <string name="setting_shortcut_artwork">Kısayol görselini çevrimiçi getir</string>
-    <string name="setting_shortcut_artwork_description">Her kaydedilmiş kısayol için hizmetten bir küçük resim indirin; telefon listesinde, saat menüsünde ve atanmış düğmelerde gösterilir. Her küçük resim bir kez getirilir; yalnızca herkese açık paylaşım bağlantısı gönderilir. Varsayılan olarak kapalıdır.</string>
+    <string name="setting_shortcut_artwork_description">Her kaydedilmiş kısayol için hizmetten bir küçük resim indirin; telefon listesinde, saat menüsünde ve atanmış düğmelerde gösterilir. Her küçük resim bir kez getirilir; yalnızca herkese açık paylaşım bağlantısı gönderilir. Varsayılan olarak kapalıdır. Saatin kısayol ekranında YouTube Music çalma listeleri ve albümleri şarkılarını da gösterir; şarkılar YouTube üzerinden getirilir. Kapalıyken yalnızca “Şarkıları gör”e dokunduğunda.</string>
     <string name="setting_queue_local_artwork">Kitaplığınızdan kuyruk kapakları</string>
     <string name="setting_queue_local_artwork_description">Yerel müzik oynatıcıları kuyruk kapaklarını kitaplık başvuruları olarak yayımlar. Saat kuyruğunda gösterilebilmeleri için medya erişimi verin. İnternet erişimi kullanılmaz.</string>
     <string name="setting_queue_local_artwork_granted">Medya erişimi verildi — yerel kuyruk kapakları gösterilecek</string>
@@ -2966,8 +2968,11 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="action_symfonium_sync">Symfonium sağlayıcısını senkronize et</string>
     <string name="app_icon_style_gradient">Gradyan</string>
     <string name="app_icon_style_solid">Düz renk</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krem</string>
     <string name="app_icon_style_feather">Kömür Tüyü</string>
+    <string name="app_icon_style_coral">Mercan</string>
+    <string name="app_icon_style_ocean">Okyanus</string>
+    <string name="app_icon_style_violet">Menekşe</string>
     <string name="dev_show_rating_card">Puanlama kartını göster</string>
     <string name="dev_show_rating_card_description">Olağan sınırları yok sayarak Google Play\'den uygulama içi inceleme kartını hemen ister. Yalnızca Google Play\'den yüklenen bir sürümde görünür (dahili test de sayılır)</string>
     <string name="dev_show_rating_card_unavailable">Google Play\'in bu sürüm için bir inceleme kartı yok. Dahili test dahil Google Play\'den yükleyin ve tekrar deneyin</string>

@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">এই নামে একটি থিম ইতিমধ্যে আছে</string>
 
     <string name="online_themes_title">কমিউনিটি থিম</string>
+    <string name="online_themes_title_short">স্টোর</string>
     <string name="online_theme_intro">কমিউনিটির তৈরি লুক আবিষ্কার করুন। এই গ্যালারি খুললে এর সর্বজনীন ক্যাটালগ ডাউনলোড হবে।</string>
     <string name="online_theme_refresh">কমিউনিটি থিম রিফ্রেশ করুন</string>
     <string name="online_theme_list_description">কমিউনিটির তৈরি ঘড়ির থিম</string>

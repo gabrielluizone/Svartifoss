@@ -67,6 +67,9 @@
     <string name="menu_header_search_history">گەڕانە تازەکان</string>
     <string name="menu_header_library">کتێبخانە</string>
     <string name="shortcut_open_on_phone">لە مۆبایل بیکەرەوە</string>
+    <string name="shortcut_tracks_heading">گۆرانییەکان</string>
+    <string name="shortcut_tracks_show">گۆرانییەکان ببینە</string>
+    <string name="shortcut_tracks_failed">نەتوانرا گۆرانییەکان باربکرێن. دەستلێدە بۆ هەوڵدانەوە.</string>
     <string name="shortcut_continue_on_phone">لەسەر مۆبایلەکەت بەردەوام بە</string>
     <string name="chat_face_today">ئەمڕۆ</string>
     <string name="face_picker_title">ڕووخساری کاتژمێر</string>

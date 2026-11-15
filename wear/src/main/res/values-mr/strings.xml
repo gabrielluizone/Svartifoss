@@ -67,6 +67,9 @@
     <string name="menu_header_search_history">अलीकडील शोध</string>
     <string name="menu_header_library">लायब्ररी</string>
     <string name="shortcut_open_on_phone">फोनवर उघडा</string>
+    <string name="shortcut_tracks_heading">गाणी</string>
+    <string name="shortcut_tracks_show">गाणी पहा</string>
+    <string name="shortcut_tracks_failed">गाणी लोड करता आली नाहीत. पुन्हा प्रयत्न करण्यासाठी टॅप करा.</string>
     <string name="shortcut_continue_on_phone">तुमच्या फोनवर सुरू ठेवा</string>
     <string name="chat_face_today">आज</string>
     <string name="face_picker_title">घड्याळाचा डायल</string>

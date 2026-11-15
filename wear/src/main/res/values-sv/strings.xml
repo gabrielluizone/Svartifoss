@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">Senaste sökningar</string>
     <string name="menu_header_library">Bibliotek</string>
     <string name="shortcut_open_on_phone">Öppna på telefonen</string>
+    <string name="shortcut_tracks_heading">Låtar</string>
+    <string name="shortcut_tracks_show">Visa låtar</string>
+    <string name="shortcut_tracks_failed">Det gick inte att läsa in låtarna. Tryck för att försöka igen.</string>
     <string name="shortcut_continue_on_phone">Fortsätt på telefonen</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">I dag</string>

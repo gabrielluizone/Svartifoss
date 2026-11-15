@@ -59,6 +59,9 @@
     <string name="menu_header_search_history">Recente zoekopdrachten</string>
     <string name="menu_header_library">Bibliotheek</string>
     <string name="shortcut_open_on_phone">Openen op telefoon</string>
+    <string name="shortcut_tracks_heading">Nummers</string>
+    <string name="shortcut_tracks_show">Nummers bekijken</string>
+    <string name="shortcut_tracks_failed">De nummers konden niet worden geladen. Tik om het opnieuw te proberen.</string>
     <string name="shortcut_continue_on_phone">Ga verder op je telefoon</string>
     <string name="chat_face_today">Vandaag</string>
 

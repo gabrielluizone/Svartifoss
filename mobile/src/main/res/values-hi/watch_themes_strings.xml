@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">इस नाम की थीम पहले से मौजूद है</string>
 
     <string name="online_themes_title">कम्युनिटी थीम</string>
+    <string name="online_themes_title_short">स्टोर</string>
     <string name="online_theme_intro">कम्युनिटी द्वारा बनाए गए लुक खोजें। इस गैलरी को खोलने पर इसका सार्वजनिक कैटलॉग डाउनलोड होता है।</string>
     <string name="online_theme_refresh">कम्युनिटी थीम रीफ़्रेश करें</string>
     <string name="online_theme_list_description">कम्युनिटी द्वारा बनाई गई घड़ी की थीम</string>

@@ -206,6 +206,7 @@
     <string name="watch_theme_name_required">థీమ్ పేరు నమోదు చేయండి</string>
     <string name="watch_theme_name_duplicate">ఈ పేరుతో థీమ్ ఇప్పటికే ఉంది</string>
     <string name="online_themes_title">Community themes</string>
+    <string name="online_themes_title_short">స్టోర్</string>
     <string name="online_theme_intro">Community రూపొందించిన రూపాలను కనుగొనండి. ఒకదాన్ని జోడించే ముందు వాటి preview screens‌ను search, filter మరియు compare చేయండి.</string>
     <string name="online_theme_refresh">Community themes‌ను రిఫ్రెష్ చేయండి</string>
     <string name="online_theme_list_description">Community రూపొందించిన watch themes</string>

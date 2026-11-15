@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Đã có chủ đề khác dùng tên này</string>
 
     <string name="online_themes_title">Chủ đề cộng đồng</string>
+    <string name="online_themes_title_short">Cửa hàng</string>
     <string name="online_theme_intro">Khám phá các giao diện do cộng đồng tạo. Việc mở thư viện này sẽ tải xuống danh mục công khai của thư viện.</string>
     <string name="online_theme_refresh">Làm mới chủ đề cộng đồng</string>
     <string name="online_theme_list_description">Chủ đề đồng hồ do cộng đồng tạo</string>

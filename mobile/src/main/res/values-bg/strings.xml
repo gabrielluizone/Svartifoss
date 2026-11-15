@@ -346,6 +346,8 @@
     <string name="setting_always_show_time_on_description">Текущият час ще се показва винаги. Горната икона за действие няма да се вижда (ще бъде заменена от часовника), но действието ще продължи да работи нормално.</string>
     <string name="notification_action_stop">Спиране</string>
     <string name="notification_action_force_stop">Принудително спиране</string>
+    <string name="notification_action_themes">Теми</string>
+    <string name="notification_up_next">Следваща песен: %1$s</string>
     <string name="error_notification_access">Няма достъп до известия. Проверете телефона.</string>
     <string name="error_notifications">Известия за грешки</string>
     <string name="notification_access_notification_title">Svartifoss се нуждае от достъп до известия</string>
@@ -2043,7 +2045,7 @@
     <string name="setting_playlist_shortcuts">Преки пътища за стрийминг</string>
     <string name="setting_playlist_shortcuts_description">Отваряне на споделени връзки от часовника в YouTube Music, Spotify и други приложения за стрийминг</string>
     <string name="setting_shortcut_artwork">Изтегляне на изображения за преките пътища онлайн</string>
-    <string name="setting_shortcut_artwork_description">Изтегля миниатюра от услугата за всеки запазен пряк път и я показва в списъка на телефона, менюто на часовника и върху зададените бутони. Всяка миниатюра се изтегля само веднъж; изпраща се само публичната връзка за споделяне. Изключено по подразбиране.</string>
+    <string name="setting_shortcut_artwork_description">Изтегля миниатюра от услугата за всеки запазен пряк път и я показва в списъка на телефона, менюто на часовника и върху зададените бутони. Всяка миниатюра се изтегля само веднъж; изпраща се само публичната връзка за споделяне. Изключено по подразбиране. На екрана на прекия път в часовника плейлистите и албумите в YouTube Music показват и песните си, изтеглени чрез YouTube; когато е изключено – само след докосване на „Покажи песните“.</string>
     <string name="setting_queue_local_artwork">Обложки на опашката от библиотеката</string>
     <string name="setting_queue_local_artwork_description">Локалните музикални плейъри публикуват обложките на опашката като препратки към библиотеката. Разрешете достъп до медия, за да се показват в опашката на часовника. Не се използва интернет.</string>
     <string name="setting_queue_local_artwork_granted">Достъпът до медия е разрешен — локалните обложки на опашката ще се показват</string>
@@ -2948,8 +2950,11 @@
     <string name="action_symfonium_sync">Синхронизиране на доставчика на Symfonium</string>
     <string name="app_icon_style_gradient">Градиент</string>
     <string name="app_icon_style_solid">Плътен цвят</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Кремав</string>
     <string name="app_icon_style_feather">Перо от въглен</string>
+    <string name="app_icon_style_coral">Коралов</string>
+    <string name="app_icon_style_ocean">Океан</string>
+    <string name="app_icon_style_violet">Виолетов</string>
     <string name="dev_show_rating_card">Показване на картата за оценка</string>
     <string name="dev_show_rating_card_description">Моментално иска от Google Play вградената му карта за отзив, без да се съобразява с обичайните ограничения. Появява се само в версия, инсталирана от Google Play (вътрешното тестване също се брои)</string>
     <string name="dev_show_rating_card_unavailable">Google Play няма карта за отзив за тази версия. Инсталирайте я от Google Play, включително от вътрешното тестване, и опитайте отново</string>

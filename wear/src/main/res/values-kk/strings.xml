@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">Соңғы іздеулер</string>
     <string name="menu_header_library">Кітапхана</string>
     <string name="shortcut_open_on_phone">Телефонда ашу</string>
+    <string name="shortcut_tracks_heading">Әндер</string>
+    <string name="shortcut_tracks_show">Әндерді көру</string>
+    <string name="shortcut_tracks_failed">Әндерді жүктеу мүмкін болмады. Қайталап көру үшін түртіңіз.</string>
     <string name="shortcut_continue_on_phone">Телефонда жалғастырыңыз</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Бүгін</string>

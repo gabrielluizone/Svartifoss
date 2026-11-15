@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">”%1$s”-välilehdellä uusi aloitussivu näyttää teemasi kuvina, pikasäätöjen kanssa.</string>
+    <string name="whats_new_item_pickers">Tyylivalitsimet näyttävät nyt oman kellosi nimilistan sijaan.</string>
+    <string name="whats_new_item_notification">Svartifossin ilmoituksessa on ”%1$s”-painike, ja se näyttää seuraavan kappaleen.</string>
+    <string name="whats_new_item_songs">YouTube Music -soittolista näyttää kappaleensa kellon pikakuvakenäytöllä.</string>
+    <string name="whats_new_item_icons">Kolme uutta sovelluskuvaketta: %1$s, %2$s ja %3$s.</string>
+    <string name="whats_new_item_quick_panel">Pikapaneeli voi käyttää soittavan sovelluksen omia tykkäys-, sekoitus- ja toistopainikkeita.</string>
+    <string name="whats_new_item_fixes">Korjattu: pikakuvakkeet, jotka käynnistivät väärää musiikkia, ja pitkät otsikot, jotka ulottuivat painikkeiden päälle.</string>
+</resources>

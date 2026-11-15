@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Já existe um tema com este nome</string>
 
     <string name="online_themes_title">Temas da comunidade</string>
+    <string name="online_themes_title_short">Loja</string>
     <string name="online_theme_intro">Descubra visuais criados pela comunidade. Pesquise, filtre e compare as prévias antes de adicionar um.</string>
     <string name="online_theme_refresh">Atualizar temas da comunidade</string>
     <string name="online_theme_list_description">Temas de relógio criados pela comunidade</string>

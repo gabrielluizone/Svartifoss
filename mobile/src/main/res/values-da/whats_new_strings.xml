@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">På fanen “%1$s” viser en ny startside dine temaer som billeder, med hurtige justeringer.</string>
+    <string name="whats_new_item_pickers">Stilvælgerne viser nu dit eget ur i stedet for en liste med navne.</string>
+    <string name="whats_new_item_notification">Svartifoss-notifikationen har en “%1$s”-knap og viser det næste nummer.</string>
+    <string name="whats_new_item_songs">En YouTube Music-playliste viser sine sange på urets genvejsskærm.</string>
+    <string name="whats_new_item_icons">Tre nye app-ikoner: %1$s, %2$s og %3$s.</string>
+    <string name="whats_new_item_quick_panel">Hurtigpanelet kan bruge den afspillende apps egne knapper til synes godt om, bland og gentag.</string>
+    <string name="whats_new_item_fixes">Rettet: genveje, der startede den forkerte musik, og lange titler, der stødte ind i knapperne.</string>
+</resources>

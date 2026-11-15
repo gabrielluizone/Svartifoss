@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Et tema med dette navn findes allerede</string>
 
     <string name="online_themes_title">Fællesskabstemaer</string>
+    <string name="online_themes_title_short">Butik</string>
     <string name="online_theme_intro">Opdag udseender skabt af fællesskabet. Når du åbner dette galleri, downloades dets offentlige katalog.</string>
     <string name="online_theme_refresh">Opdater fællesskabstemaer</string>
     <string name="online_theme_list_description">Fællesskabsskabte urtemaer</string>

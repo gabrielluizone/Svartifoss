@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">In het tabblad “%1$s” toont een nieuwe startpagina je thema’s als afbeeldingen, met snelle aanpassingen.</string>
+    <string name="whats_new_item_pickers">Stijlkiezers tonen nu je eigen horloge in plaats van een lijst met namen.</string>
+    <string name="whats_new_item_notification">De melding van Svartifoss heeft een knop “%1$s” en toont het volgende nummer.</string>
+    <string name="whats_new_item_songs">Een YouTube Music-afspeellijst toont zijn nummers op het snelkoppelingsscherm van het horloge.</string>
+    <string name="whats_new_item_icons">Drie nieuwe app-iconen: %1$s, %2$s en %3$s.</string>
+    <string name="whats_new_item_quick_panel">Het snelle paneel kan de eigen knoppen voor leuk vinden, willekeurig en herhalen van de spelende app gebruiken.</string>
+    <string name="whats_new_item_fixes">Opgelost: snelkoppelingen die de verkeerde muziek startten, en lange titels die over de bediening liepen.</string>
+</resources>

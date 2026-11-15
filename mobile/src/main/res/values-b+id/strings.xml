@@ -297,6 +297,8 @@
     <string name="setting_always_show_time_on_description">Waktu saat ini akan selalu ditampilkan. Ikon aksi atas tidak akan terlihat (akan digantikan oleh jam), tetapi aksi akan tetap berfungsi normal.</string>
     <string name="notification_action_stop">Hentikan</string>
     <string name="notification_action_force_stop">Paksa berhenti</string>
+    <string name="notification_action_themes">Tema</string>
+    <string name="notification_up_next">Lagu berikutnya: %1$s</string>
     <string name="error_notification_access">Tidak ada akses notifikasi. Periksa ponsel.</string>
     <string name="error_notifications">Notifikasi kesalahan</string>
     <string name="notification_access_notification_title">Svartifoss memerlukan akses notifikasi</string>
@@ -1383,7 +1385,7 @@
     <string name="setting_playlist_shortcuts">Pintasan streaming</string>
     <string name="setting_playlist_shortcuts_description">Buka tautan berbagi dari jam tangan di YouTube Music, Spotify, dan aplikasi streaming lainnya</string>
     <string name="setting_shortcut_artwork">Ambil sampul pintasan secara online</string>
-    <string name="setting_shortcut_artwork_description">Unduh thumbnail untuk setiap pintasan tersimpan dari layanan, ditampilkan di daftar ponsel, menu jam tangan, dan tombol yang ditetapkan. Setiap thumbnail diambil sekali. Ini adalah satu-satunya akses online selain pemeriksaan pembaruan; hanya tautan berbagi publik yang dikirim. Mati secara default.</string>
+    <string name="setting_shortcut_artwork_description">Unduh thumbnail untuk setiap pintasan tersimpan dari layanan, ditampilkan di daftar ponsel, menu jam tangan, dan tombol yang ditetapkan. Setiap thumbnail diambil sekali. Ini adalah satu-satunya akses online selain pemeriksaan pembaruan; hanya tautan berbagi publik yang dikirim. Mati secara default. Di layar pintasan jam, playlist dan album YouTube Music juga menampilkan lagunya, yang diambil melalui YouTube; jika nonaktif, hanya setelah kamu mengetuk “Lihat lagu”.</string>
     <string name="watch_streaming_shortcuts_empty">Tambahkan trek, album, atau daftar putar untuk Aksi Cepat dan menu jam tangan</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="other">%1$d pintasan tersimpan · Tersedia di Aksi Cepat dan menu jam tangan</item>
@@ -2926,8 +2928,11 @@
     <string name="action_symfonium_sync">Sinkronkan penyedia Symfonium</string>
     <string name="app_icon_style_gradient">Gradasi</string>
     <string name="app_icon_style_solid">Warna solid</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krem</string>
     <string name="app_icon_style_feather">Bulu Arang</string>
+    <string name="app_icon_style_coral">Koral</string>
+    <string name="app_icon_style_ocean">Samudra</string>
+    <string name="app_icon_style_violet">Ungu</string>
     <string name="dev_show_rating_card">Tampilkan kartu penilaian</string>
     <string name="dev_show_rating_card_description">Langsung meminta kartu ulasan dalam aplikasi dari Google Play, mengabaikan batas yang biasa. Kartu hanya muncul pada versi yang dipasang dari Google Play (uji coba internal juga dihitung)</string>
     <string name="dev_show_rating_card_unavailable">Google Play tidak memiliki kartu ulasan untuk versi ini. Pasang dari Google Play, termasuk uji coba internal, lalu coba lagi</string>

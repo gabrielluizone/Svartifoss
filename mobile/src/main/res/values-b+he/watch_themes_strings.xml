@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">ערכת נושא בשם הזה כבר קיימת</string>
 
     <string name="online_themes_title">ערכות נושא מהקהילה</string>
+    <string name="online_themes_title_short">חנות</string>
     <string name="online_theme_intro">גלו עיצובים שנוצרו בידי הקהילה. פתיחת גלריה זו מורידה את הקטלוג הציבורי שלה.</string>
     <string name="online_theme_refresh">רענון ערכות נושא מהקהילה</string>
     <string name="online_theme_list_description">ערכות נושא לשעון שנוצרו בידי הקהילה</string>

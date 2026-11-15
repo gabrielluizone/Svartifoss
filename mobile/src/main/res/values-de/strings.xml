@@ -300,6 +300,8 @@
     <string name="setting_always_show_time_on_description">Die aktuelle Uhrzeit wird immer angezeigt. Das obere Aktionssymbol ist nicht sichtbar (es wird durch die Uhr ersetzt), die Aktion funktioniert aber weiterhin normal.</string>
     <string name="notification_action_stop">Stopp</string>
     <string name="notification_action_force_stop">Erzwungen stoppen</string>
+    <string name="notification_action_themes">Themes</string>
+    <string name="notification_up_next">Nächster Titel: %1$s</string>
     <string name="error_notification_access">Kein Benachrichtigungszugriff. Prüfe das Telefon.</string>
     <string name="error_notifications">Fehlerbenachrichtigungen</string>
     <string name="notification_access_notification_title">Svartifoss braucht Benachrichtigungszugriff</string>
@@ -1386,7 +1388,7 @@
     <string name="setting_playlist_shortcuts">Streaming-Verknüpfungen</string>
     <string name="setting_playlist_shortcuts_description">Öffne Freigabelinks von der Uhr in YouTube Music, Spotify und anderen Streaming-Apps</string>
     <string name="setting_shortcut_artwork">Verknüpfungs-Artwork online holen</string>
-    <string name="setting_shortcut_artwork_description">Lädt für jede gespeicherte Verknüpfung ein Vorschaubild vom Dienst, angezeigt in der Telefonliste, im Uhrenmenü und auf zugewiesenen Tasten. Jedes Vorschaubild wird einmal geholt. Das ist der einzige Online-Zugriff neben der Update-Prüfung; nur der öffentliche Freigabelink wird gesendet. Standardmäßig aus.</string>
+    <string name="setting_shortcut_artwork_description">Lädt für jede gespeicherte Verknüpfung ein Vorschaubild vom Dienst, angezeigt in der Telefonliste, im Uhrenmenü und auf zugewiesenen Tasten. Jedes Vorschaubild wird einmal geholt. Das ist der einzige Online-Zugriff neben der Update-Prüfung; nur der öffentliche Freigabelink wird gesendet. Standardmäßig aus. Auf dem Verknüpfungsbildschirm der Uhr zeigen Playlists und Alben von YouTube Music außerdem ihre Titel, abgerufen über YouTube; ist die Option aus, nur nach Tippen auf „Titel anzeigen“.</string>
     <string name="watch_streaming_shortcuts_empty">Füge Titel, Alben oder Playlists für Schnellaktionen und das Uhrenmenü hinzu</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d gespeicherte Verknüpfung · Verfügbar in Schnellaktionen und im Uhrenmenü</item>
@@ -2932,8 +2934,11 @@
     <string name="action_symfonium_sync">Symfonium-Anbieter synchronisieren</string>
     <string name="app_icon_style_gradient">Farbverlauf</string>
     <string name="app_icon_style_solid">Einfarbig</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Creme</string>
     <string name="app_icon_style_feather">Kohlefeder</string>
+    <string name="app_icon_style_coral">Koralle</string>
+    <string name="app_icon_style_ocean">Ozean</string>
+    <string name="app_icon_style_violet">Violett</string>
     <string name="dev_show_rating_card">Bewertungskarte anzeigen</string>
     <string name="dev_show_rating_card_description">Fordert sofort die In-App-Bewertungskarte von Google Play an und ignoriert die üblichen Grenzen. Sie erscheint nur in einer Version, die über Google Play installiert wurde (der interne Test zählt mit)</string>
     <string name="dev_show_rating_card_unavailable">Google Play hat für diese Version keine Bewertungskarte. Installiere sie über Google Play, auch der interne Test zählt, und versuche es erneut</string>

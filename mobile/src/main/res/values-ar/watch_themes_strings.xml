@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">توجد سمة بهذا الاسم بالفعل</string>
 
     <string name="online_themes_title">سمات المجتمع</string>
+    <string name="online_themes_title_short">المتجر</string>
     <string name="online_theme_intro">اكتشف تصميمات أنشأها المجتمع. يؤدي فتح هذا المعرض إلى تنزيل كتالوجه العام.</string>
     <string name="online_theme_refresh">تحديث سمات المجتمع</string>
     <string name="online_theme_list_description">سمات ساعة أنشأها المجتمع</string>

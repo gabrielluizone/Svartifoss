@@ -67,6 +67,9 @@
     <string name="menu_header_search_history">சமீபத்திய தேடல்கள்</string>
     <string name="menu_header_library">நூலகம்</string>
     <string name="shortcut_open_on_phone">phone-இல் திற</string>
+    <string name="shortcut_tracks_heading">பாடல்கள்</string>
+    <string name="shortcut_tracks_show">பாடல்களைக் காட்டு</string>
+    <string name="shortcut_tracks_failed">பாடல்களை ஏற்ற முடியவில்லை. மீண்டும் முயல தட்டவும்.</string>
     <string name="shortcut_continue_on_phone">உங்கள் phone-இல் தொடரவும்</string>
     <string name="chat_face_today">இன்று</string>
     <string name="face_picker_title">கடிகார முகப்பு</string>

@@ -299,6 +299,8 @@
     <string name="setting_always_show_time_on_description">زمان فعلی همیشه نمایش داده می‌شود. نماد اقدام بالا قابل‌مشاهده نخواهد بود (با ساعت جایگزین می‌شود)، اما اقدام همچنان به‌طور عادی کار می‌کند.</string>
     <string name="notification_action_stop">توقف</string>
     <string name="notification_action_force_stop">توقف اجباری</string>
+    <string name="notification_action_themes">تم‌ها</string>
+    <string name="notification_up_next">آهنگ بعدی: %1$s</string>
     <string name="error_notification_access">دسترسی به اعلان‌ها وجود ندارد. گوشی را بررسی کنید.</string>
     <string name="error_notifications">اعلان‌های خطا</string>
     <string name="notification_access_notification_title">Svartifoss به دسترسی اعلان‌ها نیاز دارد</string>
@@ -1385,7 +1387,7 @@
     <string name="setting_playlist_shortcuts">میان‌برهای پخش</string>
     <string name="setting_playlist_shortcuts_description">پیوندهای اشتراک‌گذاری‌شده از ساعت را در YouTube Music، Spotify و سایر برنامه‌های پخش باز کنید</string>
     <string name="setting_shortcut_artwork">دریافت جلد میان‌برها به‌صورت آنلاین</string>
-    <string name="setting_shortcut_artwork_description">یک بندانگشتی برای هر میان‌بر ذخیره‌شده از سرویس دانلود می‌کند که در فهرست گوشی، منوی ساعت و دکمه‌های تخصیص‌داده‌شده نمایش داده می‌شود. هر بندانگشتی یک بار دریافت می‌شود. این تنها دسترسی آنلاین به‌جز بررسی به‌روزرسانی است؛ فقط پیوند عمومی اشتراک‌گذاری ارسال می‌شود. به‌طور پیش‌فرض خاموش است.</string>
+    <string name="setting_shortcut_artwork_description">یک بندانگشتی برای هر میان‌بر ذخیره‌شده از سرویس دانلود می‌کند که در فهرست گوشی، منوی ساعت و دکمه‌های تخصیص‌داده‌شده نمایش داده می‌شود. هر بندانگشتی یک بار دریافت می‌شود. این تنها دسترسی آنلاین به‌جز بررسی به‌روزرسانی است؛ فقط پیوند عمومی اشتراک‌گذاری ارسال می‌شود. به‌طور پیش‌فرض خاموش است. در صفحهٔ میان‌بر ساعت، فهرست‌های پخش و آلبوم‌های YouTube Music آهنگ‌هایشان را هم نشان می‌دهند که از طریق YouTube دریافت می‌شوند؛ وقتی خاموش است، فقط پس از ضربه زدن روی «دیدن آهنگ‌ها».</string>
     <string name="watch_streaming_shortcuts_empty">آهنگ‌ها، آلبوم‌ها یا لیست‌های پخش را برای اقدامات سریع و منوی ساعت اضافه کنید</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d میان‌بر ذخیره‌شده · در اقدامات سریع و منوی ساعت در دسترس است</item>
@@ -2931,8 +2933,11 @@
     <string name="action_symfonium_sync">همگام‌سازی ارائه‌دهندهٔ Symfonium</string>
     <string name="app_icon_style_gradient">گرادیان</string>
     <string name="app_icon_style_solid">رنگ ساده</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">کرمی</string>
     <string name="app_icon_style_feather">پر ذغال</string>
+    <string name="app_icon_style_coral">مرجانی</string>
+    <string name="app_icon_style_ocean">اقیانوسی</string>
+    <string name="app_icon_style_violet">بنفش</string>
     <string name="dev_show_rating_card">نمایش کارت امتیازدهی</string>
     <string name="dev_show_rating_card_description">بلافاصله کارت نقد و بررسی درون‌برنامه‌ای را از Google Play می‌خواهد و محدودیت‌های معمول را نادیده می‌گیرد. این کارت فقط در نسخه‌ای نمایش داده می‌شود که از Google Play نصب شده باشد (آزمون داخلی هم حساب می‌شود)</string>
     <string name="dev_show_rating_card_unavailable">Google Play برای این نسخه کارت نقد و بررسی ندارد. آن را از Google Play نصب کنید، از جمله از طریق آزمون داخلی، و دوباره امتحان کنید</string>

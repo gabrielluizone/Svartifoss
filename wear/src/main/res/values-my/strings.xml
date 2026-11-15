@@ -67,6 +67,9 @@
     <string name="menu_header_search_history">မကြာသေးမီက ရှာဖွေမှုများ</string>
     <string name="menu_header_library">စာကြည့်တိုက်</string>
     <string name="shortcut_open_on_phone">ဖုန်းတွင် ဖွင့်ရန်</string>
+    <string name="shortcut_tracks_heading">သီချင်းများ</string>
+    <string name="shortcut_tracks_show">သီချင်းများ ကြည့်ရန်</string>
+    <string name="shortcut_tracks_failed">သီချင်းများကို ဖွင့်မရပါ။ ထပ်စမ်းရန် တို့ပါ။</string>
     <string name="shortcut_continue_on_phone">သင့်ဖုန်းတွင် ဆက်လုပ်ပါ</string>
     <string name="chat_face_today">ယနေ့</string>
     <string name="face_picker_title">နာရီမျက်နှာပြင်</string>

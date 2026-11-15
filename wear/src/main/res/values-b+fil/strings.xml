@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">Mga kamakailang paghahanap</string>
     <string name="menu_header_library">Library</string>
     <string name="shortcut_open_on_phone">Buksan sa phone</string>
+    <string name="shortcut_tracks_heading">Mga kanta</string>
+    <string name="shortcut_tracks_show">Tingnan ang mga kanta</string>
+    <string name="shortcut_tracks_failed">Hindi ma-load ang mga kanta. I-tap para subukan ulit.</string>
     <string name="shortcut_continue_on_phone">Ituloy sa phone mo</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Ngayon</string>

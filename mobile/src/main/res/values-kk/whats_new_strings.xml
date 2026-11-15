@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” қойындысында жаңа басты бет тақырыптарыңызды суреттер түрінде және жылдам баптаулармен көрсетеді.</string>
+    <string name="whats_new_item_pickers">Стиль таңдағыштар енді атаулар тізімінің орнына өз сағатыңызды көрсетеді.</string>
+    <string name="whats_new_item_notification">Svartifoss хабарландыруында “%1$s” түймесі бар және келесі әнді көрсетеді.</string>
+    <string name="whats_new_item_songs">YouTube Music ойнату тізімі әндерін сағаттың төте жол экранында көрсетеді.</string>
+    <string name="whats_new_item_icons">Үш жаңа қолданба белгішесі: %1$s, %2$s және %3$s.</string>
+    <string name="whats_new_item_quick_panel">Жылдам панель ойнап тұрған қолданбаның өз “ұнайды”, “араластыру” және “қайталау” түймелерін қолдана алады.</string>
+    <string name="whats_new_item_fixes">Түзетілді: қате музыканы қосатын төте жолдар және басқару элементтерінің үстіне шыққан ұзын атаулар.</string>
+</resources>

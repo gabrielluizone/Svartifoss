@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">En la pestaña “%1$s”, una nueva página de inicio muestra tus temas como imágenes, con ajustes rápidos.</string>
+    <string name="whats_new_item_pickers">Los selectores de estilo ahora muestran tu propio reloj en lugar de una lista de nombres.</string>
+    <string name="whats_new_item_notification">La notificación de Svartifoss tiene un botón “%1$s” y muestra la siguiente canción.</string>
+    <string name="whats_new_item_songs">Una lista de reproducción de YouTube Music muestra sus canciones en la pantalla de accesos directos del reloj.</string>
+    <string name="whats_new_item_icons">Tres nuevos iconos de la app: %1$s, %2$s y %3$s.</string>
+    <string name="whats_new_item_quick_panel">El panel rápido puede usar los botones de me gusta, aleatorio y repetir de la app que está sonando.</string>
+    <string name="whats_new_item_fixes">Corregido: accesos directos que ponían la música equivocada y títulos largos que invadían los controles.</string>
+</resources>

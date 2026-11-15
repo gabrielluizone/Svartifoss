@@ -348,6 +348,8 @@
     <string name="setting_always_show_time_on_description">Trenutačno vrijeme uvijek će se prikazivati. Gornja ikona radnje neće biti vidljiva (zamijenit će je sat), ali će radnja i dalje normalno funkcionirati.</string>
     <string name="notification_action_stop">Zaustavi</string>
     <string name="notification_action_force_stop">Prisilno zaustavi</string>
+    <string name="notification_action_themes">Teme</string>
+    <string name="notification_up_next">Sljedeća pjesma: %1$s</string>
     <string name="error_notification_access">Nema pristupa obavijestima. Provjerite telefon.</string>
     <string name="error_notifications">Obavijesti o pogreškama</string>
     <string name="notification_access_notification_title">Svartifoss treba pristup obavijestima</string>
@@ -2045,7 +2047,7 @@
     <string name="setting_playlist_shortcuts">Prečaci za streaming</string>
     <string name="setting_playlist_shortcuts_description">Otvaraj dijeljene veze sa sata u YouTube Musicu, Spotifyju i drugim aplikacijama za streaming</string>
     <string name="setting_shortcut_artwork">Dohvati slike prečaca online</string>
-    <string name="setting_shortcut_artwork_description">Dohvaća sličicu sa servisa za svaki spremljeni prečac i prikazuje je na popisu telefona, u izborniku sata i na dodijeljenim gumbima. Svaka se sličica dohvaća samo jednom; šalje se samo javna poveznica za dijeljenje. Zadano isključeno.</string>
+    <string name="setting_shortcut_artwork_description">Dohvaća sličicu sa servisa za svaki spremljeni prečac i prikazuje je na popisu telefona, u izborniku sata i na dodijeljenim gumbima. Svaka se sličica dohvaća samo jednom; šalje se samo javna poveznica za dijeljenje. Zadano isključeno. Na zaslonu prečaca na satu popisi za reprodukciju i albumi s YouTube Musica prikazuju i svoje pjesme, dohvaćene putem YouTubea; kad je isključeno, tek nakon dodira na „Prikaži pjesme”.</string>
     <string name="setting_queue_local_artwork">Naslovnice reda čekanja iz biblioteke</string>
     <string name="setting_queue_local_artwork_description">Lokalni glazbeni reproduktori objavljuju naslovnice reda čekanja kao reference biblioteke. Dopustite pristup medijima kako bi se prikazale u redu čekanja na satu. Internet se ne koristi.</string>
     <string name="setting_queue_local_artwork_granted">Pristup medijima je dopušten — lokalne naslovnice reda čekanja bit će prikazane</string>
@@ -2953,8 +2955,11 @@
     <string name="action_symfonium_sync">Sinkroniziraj pružatelja Symfonium</string>
     <string name="app_icon_style_gradient">Gradijent</string>
     <string name="app_icon_style_solid">Jednobojna</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krem</string>
     <string name="app_icon_style_feather">Ugljeno pero</string>
+    <string name="app_icon_style_coral">Koralna</string>
+    <string name="app_icon_style_ocean">Oceanska</string>
+    <string name="app_icon_style_violet">Ljubičasta</string>
     <string name="dev_show_rating_card">Prikaži karticu za ocjenjivanje</string>
     <string name="dev_show_rating_card_description">Odmah traži od Google Playa njegovu karticu za recenziju u aplikaciji, zanemarujući uobičajena ograničenja. Pojavljuje se samo u verziji instaliranoj iz Google Playa (računa se i interno testiranje)</string>
     <string name="dev_show_rating_card_unavailable">Google Play nema karticu za recenziju za ovu verziju. Instalirajte je iz Google Playa, uključujući interno testiranje, i pokušajte ponovno</string>

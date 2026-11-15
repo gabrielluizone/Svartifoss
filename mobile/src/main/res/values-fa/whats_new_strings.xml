@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">در برگهٔ «%1$s»، یک صفحهٔ خانهٔ جدید تم‌های شما را به‌صورت تصویر و با تنظیمات سریع نشان می‌دهد.</string>
+    <string name="whats_new_item_pickers">انتخابگرهای سبک اکنون ساعت خودتان را نشان می‌دهند، نه فهرستی از نام‌ها.</string>
+    <string name="whats_new_item_notification">اعلان Svartifoss یک دکمهٔ «%1$s» دارد و آهنگ بعدی را نشان می‌دهد.</string>
+    <string name="whats_new_item_songs">یک پلی‌لیست YouTube Music آهنگ‌هایش را در صفحهٔ میان‌بر ساعت فهرست می‌کند.</string>
+    <string name="whats_new_item_icons">سه نماد جدید برنامه: %1$s، %2$s و %3$s.</string>
+    <string name="whats_new_item_quick_panel">پنل سریع می‌تواند از دکمه‌های پسندیدن، پخش تصادفی و تکرار خودِ برنامهٔ در حال پخش استفاده کند.</string>
+    <string name="whats_new_item_fixes">رفع شد: میان‌برهایی که موسیقی اشتباه پخش می‌کردند و عنوان‌های بلندی که روی کنترل‌ها می‌افتادند.</string>
+</resources>

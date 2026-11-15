@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” टैब में, एक नया होम पेज आपकी थीम्स को तस्वीरों के रूप में दिखाता है, साथ में त्वरित समायोजन भी।</string>
+    <string name="whats_new_item_pickers">स्टाइल चुनने वाले विकल्प अब नामों की सूची के बजाय आपकी अपनी घड़ी दिखाते हैं।</string>
+    <string name="whats_new_item_notification">Svartifoss की सूचना में “%1$s” बटन है और यह अगला ट्रैक दिखाती है।</string>
+    <string name="whats_new_item_songs">YouTube Music की प्लेलिस्ट घड़ी की शॉर्टकट स्क्रीन पर अपने गाने सूचीबद्ध करती है।</string>
+    <string name="whats_new_item_icons">तीन नए ऐप आइकन: %1$s, %2$s और %3$s।</string>
+    <string name="whats_new_item_quick_panel">क्विक पैनल अब चल रहे ऐप के अपने लाइक, शफल और रिपीट बटन इस्तेमाल कर सकता है।</string>
+    <string name="whats_new_item_fixes">ठीक किया गया: गलत संगीत शुरू करने वाले शॉर्टकट और नियंत्रणों पर चढ़ने वाले लंबे शीर्षक।</string>
+</resources>

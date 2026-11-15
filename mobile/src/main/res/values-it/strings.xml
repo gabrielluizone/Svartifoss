@@ -299,6 +299,8 @@
     <string name="setting_always_show_time_on_description">L\'ora attuale verrà sempre mostrata. L\'icona dell\'azione superiore non sarà visibile (sarà sostituita dall\'orologio), ma l\'azione continuerà a funzionare normalmente.</string>
     <string name="notification_action_stop">Ferma</string>
     <string name="notification_action_force_stop">Forza arresto</string>
+    <string name="notification_action_themes">Temi</string>
+    <string name="notification_up_next">Traccia successiva: %1$s</string>
     <string name="error_notification_access">Nessun accesso alle notifiche. Controlla il telefono.</string>
     <string name="error_notifications">Notifiche di errore</string>
     <string name="notification_access_notification_title">Svartifoss richiede l\'accesso alle notifiche</string>
@@ -1385,7 +1387,7 @@
     <string name="setting_playlist_shortcuts">Scorciatoie streaming</string>
     <string name="setting_playlist_shortcuts_description">Apri link condivisi dall\'orologio in YouTube Music, Spotify e altre app di streaming</string>
     <string name="setting_shortcut_artwork">Recupera copertine scorciatoie online</string>
-    <string name="setting_shortcut_artwork_description">Scarica una miniatura per ogni scorciatoia salvata dal servizio, mostrata nell\'elenco del telefono, nel menu dell\'orologio e sui pulsanti assegnati. Ogni miniatura viene recuperata una volta. Questo è l\'unico accesso online oltre al controllo aggiornamenti; viene inviato solo il link di condivisione pubblico. Disattivato per impostazione predefinita.</string>
+    <string name="setting_shortcut_artwork_description">Scarica una miniatura per ogni scorciatoia salvata dal servizio, mostrata nell\'elenco del telefono, nel menu dell\'orologio e sui pulsanti assegnati. Ogni miniatura viene recuperata una volta. Questo è l\'unico accesso online oltre al controllo aggiornamenti; viene inviato solo il link di condivisione pubblico. Disattivato per impostazione predefinita. Nella schermata della scorciatoia sull’orologio, le playlist e gli album di YouTube Music mostrano anche i loro brani, recuperati tramite YouTube; se disattivato, solo dopo aver toccato «Mostra i brani».</string>
     <string name="watch_streaming_shortcuts_empty">Aggiungi tracce, album o playlist per le Azioni Rapide e il menu dell\'orologio</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d scorciatoia salvata · Disponibile nelle Azioni Rapide e nel menu dell\'orologio</item>
@@ -2931,8 +2933,11 @@
     <string name="action_symfonium_sync">Sincronizza il provider Symfonium</string>
     <string name="app_icon_style_gradient">Gradiente</string>
     <string name="app_icon_style_solid">Tinta unita</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Crema</string>
     <string name="app_icon_style_feather">Piuma di carbone</string>
+    <string name="app_icon_style_coral">Corallo</string>
+    <string name="app_icon_style_ocean">Oceano</string>
+    <string name="app_icon_style_violet">Viola</string>
     <string name="dev_show_rating_card">Mostra la scheda di valutazione</string>
     <string name="dev_show_rating_card_description">Chiede subito a Google Play la sua scheda di recensione integrata, ignorando i consueti limiti. Compare solo in una build installata da Google Play (il test interno conta)</string>
     <string name="dev_show_rating_card_unavailable">Google Play non ha una scheda di recensione per questa build. Installala da Google Play, test interno incluso, e riprova</string>

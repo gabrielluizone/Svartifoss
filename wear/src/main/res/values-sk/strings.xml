@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">Nedávne vyhľadávania</string>
     <string name="menu_header_library">Knižnica</string>
     <string name="shortcut_open_on_phone">Otvoriť v telefóne</string>
+    <string name="shortcut_tracks_heading">Skladby</string>
+    <string name="shortcut_tracks_show">Zobraziť skladby</string>
+    <string name="shortcut_tracks_failed">Skladby sa nepodarilo načítať. Klepnutím to skúste znova.</string>
     <string name="shortcut_continue_on_phone">Pokračujte v telefóne</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Dnes</string>

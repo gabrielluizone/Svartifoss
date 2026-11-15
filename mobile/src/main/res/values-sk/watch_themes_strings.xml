@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Téma s týmto názvom už existuje</string>
 
     <string name="online_themes_title">Komunitné motívy</string>
+    <string name="online_themes_title_short">Obchod</string>
     <string name="online_theme_intro">Objavte vzhľady vytvorené komunitou. Otvorením tejto galérie sa stiahne jej verejný katalóg.</string>
     <string name="online_theme_refresh">Obnoviť komunitné motívy</string>
     <string name="online_theme_list_description">Komunitou vytvorené motívy hodiniek</string>

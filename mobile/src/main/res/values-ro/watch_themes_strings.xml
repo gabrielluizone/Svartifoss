@@ -40,6 +40,7 @@
     <string name="watch_theme_name_duplicate">Există deja o temă cu acest nume</string>
 
     <string name="online_themes_title">Teme ale comunității</string>
+    <string name="online_themes_title_short">Magazin</string>
     <string name="online_theme_intro">Descoperă aspecte create de comunitate. Deschiderea acestei galerii descarcă catalogul său public.</string>
     <string name="online_theme_refresh">Reîmprospătează temele comunității</string>
     <string name="online_theme_list_description">Teme de ceas create de comunitate</string>

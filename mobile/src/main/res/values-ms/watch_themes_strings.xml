@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Tema dengan nama ini sudah wujud</string>
 
     <string name="online_themes_title">Tema komuniti</string>
+    <string name="online_themes_title_short">Kedai</string>
     <string name="online_theme_intro">Temui gaya yang dicipta oleh komuniti. Membuka galeri ini memuat turun katalog awamnya.</string>
     <string name="online_theme_refresh">Segarkan tema komuniti</string>
     <string name="online_theme_list_description">Tema jam tangan ciptaan komuniti</string>

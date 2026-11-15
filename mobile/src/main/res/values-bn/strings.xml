@@ -346,6 +346,8 @@
     <string name="setting_always_show_time_on_description">বর্তমান সময় সবসময় দেখানো হবে। উপরের অ্যাকশন আইকন দৃশ্যমান থাকবে না (ঘড়ি দিয়ে বদলে যাবে), তবে অ্যাকশন স্বাভাবিকভাবেই কাজ করবে।</string>
     <string name="notification_action_stop">বন্ধ</string>
     <string name="notification_action_force_stop">জোর করে বন্ধ করুন</string>
+    <string name="notification_action_themes">থিম</string>
+    <string name="notification_up_next">পরবর্তী ট্র্যাক: %1$s</string>
     <string name="error_notification_access">নোটিফিকেশন অ্যাক্সেস নেই। ফোন পরীক্ষা করুন।</string>
     <string name="error_notifications">ত্রুটি নোটিফিকেশন</string>
     <string name="notification_access_notification_title">Svartifoss-এর নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
@@ -2043,7 +2045,7 @@
     <string name="setting_playlist_shortcuts">স্ট্রিমিং শর্টকাট</string>
     <string name="setting_playlist_shortcuts_description">ঘড়ি থেকে শেয়ার করা লিংক YouTube Music, Spotify ও অন্যান্য স্ট্রিমিং অ্যাপে খুলুন</string>
     <string name="setting_shortcut_artwork">শর্টকাট আর্টওয়ার্ক অনলাইনে আনুন</string>
-    <string name="setting_shortcut_artwork_description">প্রতিটি সংরক্ষিত শর্টকাটের জন্য সার্ভিস থেকে থাম্বনেইল ডাউনলোড করে ফোনের তালিকা, ঘড়ির মেনু ও নির্ধারিত বোতামে দেখায়। প্রতিটি থাম্বনেইল একবারই আনা হয়; শুধু পাবলিক শেয়ার লিংক পাঠানো হয়। ডিফল্টভাবে বন্ধ।</string>
+    <string name="setting_shortcut_artwork_description">প্রতিটি সংরক্ষিত শর্টকাটের জন্য সার্ভিস থেকে থাম্বনেইল ডাউনলোড করে ফোনের তালিকা, ঘড়ির মেনু ও নির্ধারিত বোতামে দেখায়। প্রতিটি থাম্বনেইল একবারই আনা হয়; শুধু পাবলিক শেয়ার লিংক পাঠানো হয়। ডিফল্টভাবে বন্ধ। ঘড়ির শর্টকাট স্ক্রিনে YouTube Music-এর প্লেলিস্ট ও অ্যালবাম তাদের গানগুলোও দেখায়, যা YouTube থেকে আনা হয়; বন্ধ থাকলে শুধু “গানগুলো দেখুন” ট্যাপ করলে।</string>
     <string name="setting_queue_local_artwork">লাইব্রেরি থেকে কিউ কভার</string>
     <string name="setting_queue_local_artwork_description">লোকাল মিউজিক প্লেয়ার কিউ কভারকে লাইব্রেরি রেফারেন্স হিসেবে প্রকাশ করে। মিডিয়া অ্যাকসেস দিন যাতে ঘড়ির কিউতে দেখানো যায়। ইন্টারনেট ব্যবহৃত হয় না।</string>
     <string name="setting_queue_local_artwork_granted">মিডিয়া অ্যাকসেস দেওয়া হয়েছে — লোকাল কিউ কভার দেখানো হবে</string>
@@ -2948,8 +2950,11 @@
     <string name="action_symfonium_sync">Symfonium প্রোভাইডার সিঙ্ক করুন</string>
     <string name="app_icon_style_gradient">গ্র্যাডিয়েন্ট</string>
     <string name="app_icon_style_solid">একরঙা</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">ক্রিম</string>
     <string name="app_icon_style_feather">চারকোল পালক</string>
+    <string name="app_icon_style_coral">প্রবাল</string>
+    <string name="app_icon_style_ocean">মহাসাগর</string>
+    <string name="app_icon_style_violet">বেগুনি</string>
     <string name="dev_show_rating_card">রেটিং কার্ড দেখান</string>
     <string name="dev_show_rating_card_description">স্বাভাবিক সীমা উপেক্ষা করে এখনই Google Play-র কাছে তার অ্যাপ-মধ্যস্থ রিভিউ কার্ড চায়। এটি কেবল Google Play থেকে ইনস্টল করা বিল্ডে দেখা যায় (অভ্যন্তরীণ টেস্টিংও গণ্য)</string>
     <string name="dev_show_rating_card_unavailable">এই বিল্ডের জন্য Google Play-র কোনো রিভিউ কার্ড নেই। Google Play থেকে ইনস্টল করুন, অভ্যন্তরীণ টেস্টিং সহ, তারপর আবার চেষ্টা করুন</string>

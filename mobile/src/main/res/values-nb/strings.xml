@@ -359,6 +359,8 @@ Noen ikonpakker krever at apper har lagringstillatelse. Du må tillate dette for
     <string name="setting_always_show_time_on_description">Gjeldende tid vises alltid. Ikonet for den øvre handlingen vil ikke være synlig (det erstattes av klokken), men handlingen fungerer fortsatt normalt.</string>
     <string name="notification_action_stop">Stopp</string>
     <string name="notification_action_force_stop">Tving stopp</string>
+    <string name="notification_action_themes">Temaer</string>
+    <string name="notification_up_next">Neste spor: %1$s</string>
     <string name="error_notification_access">Ingen tilgang til varsler. Sjekk telefonen.</string>
     <string name="error_notifications">Feilvarsler</string>
     <string name="notification_access_notification_title">Svartifoss trenger tilgang til varsler</string>
@@ -2066,7 +2068,7 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="setting_playlist_shortcuts">Strømmesnarveier</string>
     <string name="setting_playlist_shortcuts_description">Åpne delingslenker fra klokken i YouTube Music, Spotify og andre strømmeapper</string>
     <string name="setting_shortcut_artwork">Hent snarveisbilder på nettet</string>
-    <string name="setting_shortcut_artwork_description">Last ned et miniatyrbilde for hver lagrede snarvei fra tjenesten, som vises i telefonlisten, klokkemenyen og tilordnede knapper. Hvert miniatyrbilde hentes én gang; bare den offentlige delingslenken sendes. Av som standard.</string>
+    <string name="setting_shortcut_artwork_description">Last ned et miniatyrbilde for hver lagrede snarvei fra tjenesten, som vises i telefonlisten, klokkemenyen og tilordnede knapper. Hvert miniatyrbilde hentes én gang; bare den offentlige delingslenken sendes. Av som standard. På klokkens snarveisskjerm viser spillelister og album fra YouTube Music også sangene sine, hentet via YouTube; når den er av, bare når du trykker på «Se sanger».</string>
     <string name="setting_queue_local_artwork">Køomslag fra biblioteket ditt</string>
     <string name="setting_queue_local_artwork_description">Lokale musikkspillere publiserer køomslag som bibliotekreferanser. Gi medietilgang slik at de kan vises i køen på klokken. Ingen internettilgang er involvert.</string>
     <string name="setting_queue_local_artwork_granted">Medietilgang gitt — lokale køomslag vises</string>
@@ -2971,8 +2973,11 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="action_symfonium_sync">Synkroniser Symfonium-leverandør</string>
     <string name="app_icon_style_gradient">Fargeovergang</string>
     <string name="app_icon_style_solid">Ensfarget</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krem</string>
     <string name="app_icon_style_feather">Kullfjær</string>
+    <string name="app_icon_style_coral">Korall</string>
+    <string name="app_icon_style_ocean">Hav</string>
+    <string name="app_icon_style_violet">Fiolett</string>
     <string name="dev_show_rating_card">Vis vurderingskortet</string>
     <string name="dev_show_rating_card_description">Ber Google Play om sitt anmeldelseskort i appen med én gang og ignorerer de vanlige grensene. Det vises bare i en versjon installert fra Google Play (intern testing teller med)</string>
     <string name="dev_show_rating_card_unavailable">Google Play har ikke noe anmeldelseskort for denne versjonen. Installer den fra Google Play, inkludert intern testing, og prøv igjen</string>

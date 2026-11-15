@@ -291,6 +291,8 @@
     <string name="setting_always_show_time_on_description">La hora actual se mostrará siempre. El icono de acción superior no será visible (se sustituirá por el reloj), pero la acción seguirá funcionando con normalidad.</string>
     <string name="notification_action_stop">Detener</string>
     <string name="notification_action_force_stop">Forzar detención</string>
+    <string name="notification_action_themes">Temas</string>
+    <string name="notification_up_next">Siguiente pista: %1$s</string>
     <string name="error_notification_access">Sin acceso a notificaciones. Revisa el teléfono.</string>
     <string name="error_notifications">Notificaciones de error</string>
     <string name="notification_access_notification_title">Svartifoss necesita acceso a notificaciones</string>
@@ -1377,7 +1379,7 @@
     <string name="setting_playlist_shortcuts">Accesos directos de streaming</string>
     <string name="setting_playlist_shortcuts_description">Abre enlaces compartidos desde el reloj en YouTube Music, Spotify y otras apps de streaming</string>
     <string name="setting_shortcut_artwork">Obtener carátulas de accesos directos en línea</string>
-    <string name="setting_shortcut_artwork_description">Descarga una miniatura de cada acceso directo guardado desde el servicio, mostrada en la lista del teléfono, el menú del reloj y los botones asignados. Cada miniatura se obtiene una vez. Este es el único acceso en línea además de la comprobación de actualizaciones; solo se envía el enlace público. Desactivado por defecto.</string>
+    <string name="setting_shortcut_artwork_description">Descarga una miniatura de cada acceso directo guardado desde el servicio, mostrada en la lista del teléfono, el menú del reloj y los botones asignados. Cada miniatura se obtiene una vez. Este es el único acceso en línea además de la comprobación de actualizaciones; solo se envía el enlace público. Desactivado por defecto. En la pantalla del acceso directo del reloj, las listas y álbumes de YouTube Music también muestran sus canciones, obtenidas a través de YouTube; si está desactivado, solo cuando tocas «Ver canciones».</string>
     <string name="watch_streaming_shortcuts_empty">Añade pistas, álbumes o listas para Acciones Rápidas y el menú del reloj</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d acceso directo guardado · Disponible en Acciones Rápidas y en el menú del reloj</item>
@@ -2930,8 +2932,11 @@
     <string name="action_symfonium_sync">Sincronizar el proveedor de Symfonium</string>
     <string name="app_icon_style_gradient">Degradado</string>
     <string name="app_icon_style_solid">Color sólido</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Crema</string>
     <string name="app_icon_style_feather">Pluma de carbón</string>
+    <string name="app_icon_style_coral">Coral</string>
+    <string name="app_icon_style_ocean">Océano</string>
+    <string name="app_icon_style_violet">Violeta</string>
     <string name="dev_show_rating_card">Mostrar la tarjeta de valoración</string>
     <string name="dev_show_rating_card_description">Pide ahora a Google Play su tarjeta de reseña integrada, sin tener en cuenta los límites habituales. Solo aparece en una versión instalada desde Google Play (la prueba interna cuenta)</string>
     <string name="dev_show_rating_card_unavailable">Google Play no tiene tarjeta de reseña para esta versión. Instálala desde Google Play, prueba interna incluida, e inténtalo de nuevo</string>

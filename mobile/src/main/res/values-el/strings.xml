@@ -299,6 +299,8 @@
     <string name="setting_always_show_time_on_description">Η τρέχουσα ώρα θα εμφανίζεται πάντα. Το πάνω εικονίδιο ενέργειας δεν θα είναι ορατό (θα αντικατασταθεί από το ρολόι), αλλά η ενέργεια θα εξακολουθεί να λειτουργεί κανονικά.</string>
     <string name="notification_action_stop">Διακοπή</string>
     <string name="notification_action_force_stop">Εξαναγκασμένη διακοπή</string>
+    <string name="notification_action_themes">Θέματα</string>
+    <string name="notification_up_next">Επόμενο κομμάτι: %1$s</string>
     <string name="error_notification_access">Δεν υπάρχει πρόσβαση σε ειδοποιήσεις. Ελέγξτε το τηλέφωνο.</string>
     <string name="error_notifications">Ειδοποιήσεις σφαλμάτων</string>
     <string name="notification_access_notification_title">Το Svartifoss χρειάζεται πρόσβαση σε ειδοποιήσεις</string>
@@ -1385,7 +1387,7 @@
     <string name="setting_playlist_shortcuts">Συντομεύσεις streaming</string>
     <string name="setting_playlist_shortcuts_description">Άνοιγμα συνδέσμων κοινοποίησης από το ρολόι στο YouTube Music, Spotify και άλλες εφαρμογές streaming</string>
     <string name="setting_shortcut_artwork">Λήψη εξωφύλλων συντόμευσης διαδικτυακά</string>
-    <string name="setting_shortcut_artwork_description">Λήψη μικρογραφίας για κάθε αποθηκευμένη συντόμευση από την υπηρεσία, εμφανίζεται στη λίστα τηλεφώνου, το μενού ρολογιού και τα ανατεθειμένα κουμπιά. Κάθε μικρογραφία λαμβάνεται μία φορά. Αυτή είναι η μόνη διαδικτυακή πρόσβαση εκτός από τον έλεγχο ενημερώσεων· αποστέλλεται μόνο ο δημόσιος σύνδεσμος κοινοποίησης. Απενεργοποιημένο από προεπιλογή.</string>
+    <string name="setting_shortcut_artwork_description">Λήψη μικρογραφίας για κάθε αποθηκευμένη συντόμευση από την υπηρεσία, εμφανίζεται στη λίστα τηλεφώνου, το μενού ρολογιού και τα ανατεθειμένα κουμπιά. Κάθε μικρογραφία λαμβάνεται μία φορά. Αυτή είναι η μόνη διαδικτυακή πρόσβαση εκτός από τον έλεγχο ενημερώσεων· αποστέλλεται μόνο ο δημόσιος σύνδεσμος κοινοποίησης. Απενεργοποιημένο από προεπιλογή. Στην οθόνη συντόμευσης του ρολογιού, οι λίστες αναπαραγωγής και τα άλμπουμ του YouTube Music δείχνουν και τα τραγούδια τους, που λαμβάνονται μέσω του YouTube· όταν είναι απενεργοποιημένο, μόνο αφού πατήσεις «Προβολή τραγουδιών».</string>
     <string name="watch_streaming_shortcuts_empty">Προσθέστε κομμάτια, άλμπουμ ή λίστες αναπαραγωγής για Γρήγορες Ενέργειες και το μενού ρολογιού</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d αποθηκευμένη συντόμευση · Διαθέσιμη στις Γρήγορες Ενέργειες και το μενού ρολογιού</item>
@@ -2931,8 +2933,11 @@
     <string name="action_symfonium_sync">Συγχρονισμός παρόχου Symfonium</string>
     <string name="app_icon_style_gradient">Διαβάθμιση</string>
     <string name="app_icon_style_solid">Μονόχρωμο</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Κρεμ</string>
     <string name="app_icon_style_feather">Φτερό κάρβουνου</string>
+    <string name="app_icon_style_coral">Κοραλλί</string>
+    <string name="app_icon_style_ocean">Ωκεανός</string>
+    <string name="app_icon_style_violet">Βιολετί</string>
     <string name="dev_show_rating_card">Εμφάνιση κάρτας αξιολόγησης</string>
     <string name="dev_show_rating_card_description">Ζητά αμέσως από το Google Play την ενσωματωμένη κάρτα αξιολόγησης, αγνοώντας τα συνήθη όρια. Εμφανίζεται μόνο σε έκδοση που εγκαταστάθηκε από το Google Play (μετράει και η εσωτερική δοκιμή)</string>
     <string name="dev_show_rating_card_unavailable">Το Google Play δεν έχει κάρτα αξιολόγησης για αυτή την έκδοση. Εγκαταστήστε την από το Google Play, συμπεριλαμβανομένης της εσωτερικής δοκιμής, και δοκιμάστε ξανά</string>

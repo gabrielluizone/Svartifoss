@@ -359,6 +359,8 @@ Certains packs d’icônes exigent que les applications disposent de l’autoris
     <string name="setting_always_show_time_on_description">L’heure actuelle sera toujours affichée. L’icône d’action supérieure ne sera pas visible (elle sera remplacée par l’horloge), mais l’action continuera de fonctionner normalement.</string>
     <string name="notification_action_stop">Arrêter</string>
     <string name="notification_action_force_stop">Forcer l’arrêt</string>
+    <string name="notification_action_themes">Thèmes</string>
+    <string name="notification_up_next">Piste suivante : %1$s</string>
     <string name="error_notification_access">Pas d’accès aux notifications. Vérifiez le téléphone.</string>
     <string name="error_notifications">Notifications d’erreur</string>
     <string name="notification_access_notification_title">Svartifoss a besoin d’accéder aux notifications</string>
@@ -2066,7 +2068,7 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="setting_playlist_shortcuts">Raccourcis de streaming</string>
     <string name="setting_playlist_shortcuts_description">Ouvrir depuis la montre les liens partagés dans YouTube Music, Spotify et d’autres applications de streaming</string>
     <string name="setting_shortcut_artwork">Récupérer en ligne l’illustration des raccourcis</string>
-    <string name="setting_shortcut_artwork_description">Télécharger une vignette pour chaque raccourci enregistré depuis le service, affichée dans la liste du téléphone, le menu de la montre et les boutons attribués. Chaque vignette n’est récupérée qu’une fois ; seul le lien de partage public est envoyé. Désactivé par défaut.</string>
+    <string name="setting_shortcut_artwork_description">Télécharger une vignette pour chaque raccourci enregistré depuis le service, affichée dans la liste du téléphone, le menu de la montre et les boutons attribués. Chaque vignette n’est récupérée qu’une fois ; seul le lien de partage public est envoyé. Désactivé par défaut. Sur l’écran du raccourci de la montre, les playlists et albums YouTube Music affichent aussi leurs titres, récupérés via YouTube ; désactivé, seulement après avoir touché « Voir les titres ».</string>
     <string name="setting_queue_local_artwork">Pochettes de la file d’attente depuis votre bibliothèque</string>
     <string name="setting_queue_local_artwork_description">Les lecteurs de musique locaux publient les pochettes de file d’attente sous forme de références de bibliothèque. Accordez l’accès aux médias pour qu’elles puissent être affichées dans la file d’attente de la montre. Aucun accès Internet n’est utilisé.</string>
     <string name="setting_queue_local_artwork_granted">Accès aux médias accordé — les pochettes locales de la file d’attente seront affichées</string>
@@ -2971,8 +2973,11 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="action_symfonium_sync">Synchroniser le fournisseur Symfonium</string>
     <string name="app_icon_style_gradient">Dégradé</string>
     <string name="app_icon_style_solid">Couleur unie</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Crème</string>
     <string name="app_icon_style_feather">Plume de charbon</string>
+    <string name="app_icon_style_coral">Corail</string>
+    <string name="app_icon_style_ocean">Océan</string>
+    <string name="app_icon_style_violet">Violet</string>
     <string name="dev_show_rating_card">Afficher la carte d’évaluation</string>
     <string name="dev_show_rating_card_description">Demande tout de suite à Google Play sa carte d’avis intégrée, sans tenir compte des limites habituelles. Elle n’apparaît que dans une version installée depuis Google Play (le test interne compte)</string>
     <string name="dev_show_rating_card_unavailable">Google Play n’a pas de carte d’avis pour cette version. Installez-la depuis Google Play, test interne compris, puis réessayez</string>

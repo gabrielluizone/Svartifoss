@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Вече съществува тема с това име</string>
 
     <string name="online_themes_title">Теми на общността</string>
+    <string name="online_themes_title_short">Магазин</string>
     <string name="online_theme_intro">Открийте визии, създадени от общността. Отварянето на тази галерия изтегля публичния ѝ каталог.</string>
     <string name="online_theme_refresh">Обновяване на темите на общността</string>
     <string name="online_theme_list_description">Създадени от общността теми за часовника</string>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Di tab “%1$s”, halaman Beranda baru menampilkan tema Anda sebagai gambar, dengan penyesuaian cepat.</string>
+    <string name="whats_new_item_pickers">Pemilih gaya kini menampilkan jam tangan Anda sendiri, bukan daftar nama.</string>
+    <string name="whats_new_item_notification">Notifikasi Svartifoss memiliki tombol “%1$s” dan menampilkan lagu berikutnya.</string>
+    <string name="whats_new_item_songs">Playlist YouTube Music menampilkan daftar lagunya di layar pintasan jam tangan.</string>
+    <string name="whats_new_item_icons">Tiga ikon aplikasi baru: %1$s, %2$s, dan %3$s.</string>
+    <string name="whats_new_item_quick_panel">Panel cepat dapat memakai tombol suka, acak, dan ulangi milik aplikasi yang sedang memutar.</string>
+    <string name="whats_new_item_fixes">Diperbaiki: pintasan yang memutar musik yang salah, dan judul panjang yang menabrak kontrol.</string>
+</resources>

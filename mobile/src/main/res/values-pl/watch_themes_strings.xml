@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Motyw o tej nazwie już istnieje</string>
 
     <string name="online_themes_title">Motywy społeczności</string>
+    <string name="online_themes_title_short">Sklep</string>
     <string name="online_theme_intro">Odkrywaj wyglądy stworzone przez społeczność. Otwarcie tej galerii pobiera jej publiczny katalog.</string>
     <string name="online_theme_refresh">Odśwież motywy społeczności</string>
     <string name="online_theme_list_description">Motywy zegarka stworzone przez społeczność</string>

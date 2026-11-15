@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">في تبويب “%1$s”، صفحة رئيسية جديدة تعرض سماتك كصور مع تعديلات سريعة.</string>
+    <string name="whats_new_item_pickers">أصبحت أدوات اختيار النمط تعرض ساعتك بدلًا من قائمة أسماء.</string>
+    <string name="whats_new_item_notification">يحتوي إشعار Svartifoss على زر “%1$s” ويعرض المقطع التالي.</string>
+    <string name="whats_new_item_songs">قائمة تشغيل YouTube Music تعرض أغانيها على شاشة الاختصار في الساعة.</string>
+    <string name="whats_new_item_icons">ثلاث أيقونات جديدة للتطبيق: %1$s و%2$s و%3$s.</string>
+    <string name="whats_new_item_quick_panel">يمكن للوحة السريعة استخدام أزرار الإعجاب والتشغيل العشوائي والتكرار الخاصة بالتطبيق الذي يعمل.</string>
+    <string name="whats_new_item_fixes">تم الإصلاح: اختصارات كانت تشغّل موسيقى خاطئة، وعناوين طويلة كانت تتداخل مع عناصر التحكم.</string>
+</resources>

@@ -297,6 +297,8 @@
     <string name="setting_always_show_time_on_description">当前时间将始终显示。顶部操作图标将不可见（会被时钟取代），但操作仍会正常运行。</string>
     <string name="notification_action_stop">停止</string>
     <string name="notification_action_force_stop">强制停止</string>
+    <string name="notification_action_themes">主题</string>
+    <string name="notification_up_next">下一曲目：%1$s</string>
     <string name="error_notification_access">无通知访问权限。请检查手机。</string>
     <string name="error_notifications">错误通知</string>
     <string name="notification_access_notification_title">Svartifoss 需要通知访问权限</string>
@@ -1383,7 +1385,7 @@
     <string name="setting_playlist_shortcuts">流媒体快捷方式</string>
     <string name="setting_playlist_shortcuts_description">在 YouTube Music、Spotify 和其他流媒体应用中打开来自手表的分享链接</string>
     <string name="setting_shortcut_artwork">在线获取快捷方式封面</string>
-    <string name="setting_shortcut_artwork_description">从服务获取每个已保存快捷方式的缩略图，并在手机列表、手表菜单和已分配按钮中显示。每个缩略图只获取一次。这是除更新检查之外唯一的在线访问；仅发送公开的分享链接。默认关闭。</string>
+    <string name="setting_shortcut_artwork_description">从服务获取每个已保存快捷方式的缩略图，并在手机列表、手表菜单和已分配按钮中显示。每个缩略图只获取一次。这是除更新检查之外唯一的在线访问；仅发送公开的分享链接。默认关闭。在手表的快捷方式界面中，YouTube Music 的播放列表和专辑还会列出其中的歌曲（通过 YouTube 获取）；关闭此项时，只有在点按“查看歌曲”后才会获取。</string>
     <string name="watch_streaming_shortcuts_empty">为快捷操作和手表菜单添加曲目、专辑或播放列表</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="other">%1$d 个已保存的快捷方式 · 可在快捷操作和手表菜单中使用</item>
@@ -2926,8 +2928,11 @@
     <string name="action_symfonium_sync">同步 Symfonium 提供方</string>
     <string name="app_icon_style_gradient">渐变</string>
     <string name="app_icon_style_solid">纯色</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">奶油色</string>
     <string name="app_icon_style_feather">灰羽</string>
+    <string name="app_icon_style_coral">珊瑚色</string>
+    <string name="app_icon_style_ocean">海洋</string>
+    <string name="app_icon_style_violet">紫罗兰色</string>
     <string name="dev_show_rating_card">显示评分卡片</string>
     <string name="dev_show_rating_card_description">立即向 Google Play 请求其应用内评价卡片，忽略平时的限制。仅在从 Google Play 安装的版本中才会显示（内部测试也算）</string>
     <string name="dev_show_rating_card_unavailable">Google Play 没有适用于此版本的评价卡片。请从 Google Play 安装（包括内部测试），然后重试</string>

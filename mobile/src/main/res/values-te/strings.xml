@@ -763,6 +763,8 @@
     <string name="setting_always_show_time_on_description">ప్రస్తుత సమయం ఎల్లప్పుడూ చూపబడుతుంది. పై చర్య ఐకాన్ కనిపించదు (దాని స్థానంలో గడియారం ఉంటుంది), కానీ చర్య సాధారణంగానే పనిచేస్తుంది.</string>
     <string name="notification_action_stop">ఆపు</string>
     <string name="notification_action_force_stop">బలవంతంగా ఆపు</string>
+    <string name="notification_action_themes">థీమ్‌లు</string>
+    <string name="notification_up_next">తదుపరి ట్రాక్: %1$s</string>
     <string name="error_notification_access">నోటిఫికేషన్ యాక్సెస్ లేదు. ఫోన్‌ను తనిఖీ చేయండి.</string>
     <string name="error_notifications">లోప నోటిఫికేషన్‌లు</string>
     <string name="notification_access_notification_title">Svartifoss కు నోటిఫికేషన్ యాక్సెస్ అవసరం</string>
@@ -1990,7 +1992,7 @@
     <string name="setting_playlist_shortcuts">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
     <string name="setting_playlist_shortcuts_description">వాచ్ నుండి share links‌ను YouTube Music, Spotify మరియు ఇతర streaming apps‌లో తెరవండి</string>
     <string name="setting_shortcut_artwork">షార్ట్‌కట్ artwork‌ను ఆన్‌లైన్‌లో పొందండి</string>
-    <string name="setting_shortcut_artwork_description">సర్వీస్ public preview artwork అందిస్తే thumbnail‌ను డౌన్‌లోడ్ చేస్తుంది; అది ఫోన్ జాబితా, వాచ్ మెను మరియు కేటాయించిన బటన్‌లలో చూపబడుతుంది. అందుబాటులో ఉన్న ప్రతి thumbnail ఒక్కసారి మాత్రమే తీసుకోబడుతుంది; public share link మాత్రమే పంపబడుతుంది. డిఫాల్ట్‌గా ఆఫ్.</string>
+    <string name="setting_shortcut_artwork_description">సర్వీస్ public preview artwork అందిస్తే thumbnail‌ను డౌన్‌లోడ్ చేస్తుంది; అది ఫోన్ జాబితా, వాచ్ మెను మరియు కేటాయించిన బటన్‌లలో చూపబడుతుంది. అందుబాటులో ఉన్న ప్రతి thumbnail ఒక్కసారి మాత్రమే తీసుకోబడుతుంది; public share link మాత్రమే పంపబడుతుంది. డిఫాల్ట్‌గా ఆఫ్. వాచ్ shortcut స్క్రీన్‌లో YouTube Music playlistలు, albumలు వాటి పాటలను కూడా చూపిస్తాయి, ఇవి YouTube ద్వారా పొందబడతాయి; ఆఫ్‌లో ఉంటే, “పాటలను చూడండి” నొక్కినప్పుడు మాత్రమే.</string>
     <string name="setting_queue_local_artwork">మీ లైబ్రరీ నుండి queue covers</string>
     <string name="setting_queue_local_artwork_description">లోకల్ music players queue covers‌ను లైబ్రరీ references‌గా ప్రచురిస్తాయి. వాటిని వాచ్ queue‌లో చూపించడానికి media access ఇవ్వండి. ఇంటర్నెట్ యాక్సెస్ ఉపయోగించబడదు.</string>
     <string name="setting_queue_local_artwork_granted">Media access అనుమతించబడింది — లోకల్ queue covers చూపబడతాయి</string>
@@ -2327,8 +2329,11 @@
     <string name="action_symfonium_sync">Symfonium ప్రొవైడర్‌ను సింక్ చేయండి</string>
     <string name="app_icon_style_gradient">గ్రేడియెంట్</string>
     <string name="app_icon_style_solid">ఒకే రంగు</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">క్రీమ్</string>
     <string name="app_icon_style_feather">బొగ్గు ఈక</string>
+    <string name="app_icon_style_coral">పగడపు</string>
+    <string name="app_icon_style_ocean">మహాసముద్రం</string>
+    <string name="app_icon_style_violet">ఊదా</string>
     <string name="dev_show_rating_card">రేటింగ్ కార్డ్‌ను చూపండి</string>
     <string name="dev_show_rating_card_description">సాధారణ పరిమితులను పట్టించుకోకుండా Google Play నుండి దాని యాప్‌లోని రివ్యూ కార్డ్‌ను ఇప్పుడే అడుగుతుంది. ఇది Google Play నుండి ఇన్‌స్టాల్ చేసిన బిల్డ్‌లో మాత్రమే కనిపిస్తుంది (అంతర్గత పరీక్ష కూడా లెక్కలోకి వస్తుంది)</string>
     <string name="dev_show_rating_card_unavailable">ఈ బిల్డ్ కోసం Google Playలో రివ్యూ కార్డ్ లేదు. అంతర్గత పరీక్షతో సహా Google Play నుండి ఇన్‌స్టాల్ చేసి, మళ్లీ ప్రయత్నించండి</string>

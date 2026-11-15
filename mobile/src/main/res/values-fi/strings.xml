@@ -346,6 +346,8 @@
     <string name="setting_always_show_time_on_description">Nykyinen aika näytetään aina. Ylätoiminnon kuvake ei näy (kello korvaa sen), mutta toiminto toimii edelleen normaalisti.</string>
     <string name="notification_action_stop">Pysäytä</string>
     <string name="notification_action_force_stop">Pakota pysäytys</string>
+    <string name="notification_action_themes">Teemat</string>
+    <string name="notification_up_next">Seuraava kappale: %1$s</string>
     <string name="error_notification_access">Ei ilmoitusten käyttöoikeutta. Tarkista puhelin.</string>
     <string name="error_notifications">Virheilmoitukset</string>
     <string name="notification_access_notification_title">Svartifoss tarvitsee ilmoitusten käyttöoikeuden</string>
@@ -2043,7 +2045,7 @@
     <string name="setting_playlist_shortcuts">Suoratoiston pikavalinnat</string>
     <string name="setting_playlist_shortcuts_description">Avaa kellon jakolinkit YouTube Musicissa, Spotifyssa ja muissa suoratoistosovelluksissa</string>
     <string name="setting_shortcut_artwork">Hae pikavalintojen kuvat verkosta</string>
-    <string name="setting_shortcut_artwork_description">Lataa palvelusta pikkukuvan jokaiselle tallennetulle pikavalinnalle ja näyttää sen puhelimen luettelossa, kellon valikossa ja määritetyissä painikkeissa. Kukin pikkukuva haetaan vain kerran; vain julkinen jakolinkki lähetetään. Oletuksena pois käytöstä.</string>
+    <string name="setting_shortcut_artwork_description">Lataa palvelusta pikkukuvan jokaiselle tallennetulle pikavalinnalle ja näyttää sen puhelimen luettelossa, kellon valikossa ja määritetyissä painikkeissa. Kukin pikkukuva haetaan vain kerran; vain julkinen jakolinkki lähetetään. Oletuksena pois käytöstä. Kellon pikakuvakenäytössä YouTube Musicin soittolistat ja albumit näyttävät myös kappaleensa, jotka haetaan YouTuben kautta; kun asetus on pois käytöstä, vain kun napautat ”Näytä kappaleet”.</string>
     <string name="setting_queue_local_artwork">Jonon kannet kirjastosta</string>
     <string name="setting_queue_local_artwork_description">Paikalliset musiikkisoittimet julkaisevat jonon kannet kirjastoviitteinä. Myönnä mediakäyttöoikeus, jotta ne voidaan näyttää kellon jonossa. Internet-yhteyttä ei käytetä.</string>
     <string name="setting_queue_local_artwork_granted">Mediakäyttö sallittu — paikallisen jonon kannet näytetään</string>
@@ -2948,8 +2950,11 @@
     <string name="action_symfonium_sync">Synkronoi Symfonium-palveluntarjoaja</string>
     <string name="app_icon_style_gradient">Liukuväri</string>
     <string name="app_icon_style_solid">Yksivärinen</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Kerma</string>
     <string name="app_icon_style_feather">Hiilisulka</string>
+    <string name="app_icon_style_coral">Koralli</string>
+    <string name="app_icon_style_ocean">Valtameri</string>
+    <string name="app_icon_style_violet">Violetti</string>
     <string name="dev_show_rating_card">Näytä arviointikortti</string>
     <string name="dev_show_rating_card_description">Pyytää heti Google Playltä sovelluksen sisäistä arvostelukorttia ja ohittaa tavalliset rajoitukset. Kortti näkyy vain Google Playsta asennetussa versiossa (sisäinen testaus lasketaan mukaan)</string>
     <string name="dev_show_rating_card_unavailable">Google Playlla ei ole arvostelukorttia tälle versiolle. Asenna se Google Playsta, sisäinen testaus mukaan lukien, ja yritä uudelleen</string>

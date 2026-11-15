@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">การค้นหาล่าสุด</string>
     <string name="menu_header_library">คลังเพลง</string>
     <string name="shortcut_open_on_phone">เปิดในโทรศัพท์</string>
+    <string name="shortcut_tracks_heading">เพลง</string>
+    <string name="shortcut_tracks_show">ดูเพลง</string>
+    <string name="shortcut_tracks_failed">โหลดเพลงไม่ได้ แตะเพื่อลองอีกครั้ง</string>
     <string name="shortcut_continue_on_phone">ดำเนินการต่อบนโทรศัพท์</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">วันนี้</string>

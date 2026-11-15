@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Un thème portant ce nom existe déjà</string>
 
     <string name="online_themes_title">Thèmes de la communauté</string>
+    <string name="online_themes_title_short">Boutique</string>
     <string name="online_theme_intro">Découvrez des styles créés par la communauté. L’ouverture de cette galerie télécharge son catalogue public.</string>
     <string name="online_theme_refresh">Actualiser les thèmes de la communauté</string>
     <string name="online_theme_list_description">Thèmes de montre créés par la communauté</string>

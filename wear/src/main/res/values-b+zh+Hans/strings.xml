@@ -59,6 +59,9 @@
     <string name="menu_header_search_history">最近搜索</string>
     <string name="menu_header_library">媒体库</string>
     <string name="shortcut_open_on_phone">在手机上打开</string>
+    <string name="shortcut_tracks_heading">歌曲</string>
+    <string name="shortcut_tracks_show">查看歌曲</string>
+    <string name="shortcut_tracks_failed">无法加载歌曲。点按即可重试。</string>
     <string name="shortcut_continue_on_phone">请在手机上继续</string>
     <string name="chat_face_today">今天</string>
 

@@ -363,6 +363,8 @@ Některé balíčky ikon vyžadují oprávnění aplikace k úložišti. Abyste 
     <string name="setting_always_show_time_on_description">Aktuální čas se zobrazí vždy. Ikona horní akce nebude viditelná (nahradí ji hodiny), ale akce bude dál fungovat normálně.</string>
     <string name="notification_action_stop">Zastavit</string>
     <string name="notification_action_force_stop">Vynutit zastavení</string>
+    <string name="notification_action_themes">Motivy</string>
+    <string name="notification_up_next">Další skladba: %1$s</string>
     <string name="error_notification_access">Chybí přístup k oznámením. Zkontrolujte telefon.</string>
     <string name="error_notifications">Chybová oznámení</string>
     <string name="notification_access_notification_title">Svartifoss potřebuje přístup k oznámením</string>
@@ -2070,7 +2072,7 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     <string name="setting_playlist_shortcuts">Streamovací zkratky</string>
     <string name="setting_playlist_shortcuts_description">Otevírat sdílené odkazy z hodinek v YouTube Music, Spotify a dalších streamovacích aplikacích</string>
     <string name="setting_shortcut_artwork">Načítat obrázky zkratek online</string>
-    <string name="setting_shortcut_artwork_description">Stáhnout náhled každé uložené zkratky ze služby a zobrazovat jej v seznamu v telefonu, nabídce hodinek a přiřazených tlačítkách. Každý náhled se načte pouze jednou; odesílá se jen veřejný odkaz ke sdílení. Ve výchozím nastavení vypnuto.</string>
+    <string name="setting_shortcut_artwork_description">Stáhnout náhled každé uložené zkratky ze služby a zobrazovat jej v seznamu v telefonu, nabídce hodinek a přiřazených tlačítkách. Každý náhled se načte pouze jednou; odesílá se jen veřejný odkaz ke sdílení. Ve výchozím nastavení vypnuto. Na obrazovce zástupce v hodinkách playlisty a alba YouTube Music zobrazí i své skladby, načtené přes YouTube; když je volba vypnutá, jen po klepnutí na „Zobrazit skladby“.</string>
     <string name="setting_queue_local_artwork">Obaly fronty z vaší knihovny</string>
     <string name="setting_queue_local_artwork_description">Lokální hudební přehrávače zveřejňují obaly fronty jako odkazy na knihovnu. Udělte přístup k médiím, aby je bylo možné zobrazit ve frontě na hodinkách. Přístup k internetu se nepoužívá.</string>
     <string name="setting_queue_local_artwork_granted">Přístup k médiím udělen — místní obaly fronty se zobrazí</string>
@@ -2981,8 +2983,11 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     <string name="action_symfonium_sync">Synchronizovat poskytovatele Symfonium</string>
     <string name="app_icon_style_gradient">Přechod</string>
     <string name="app_icon_style_solid">Jednobarevná</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krémová</string>
     <string name="app_icon_style_feather">Uhelné pírko</string>
+    <string name="app_icon_style_coral">Korálová</string>
+    <string name="app_icon_style_ocean">Oceánová</string>
+    <string name="app_icon_style_violet">Fialová</string>
     <string name="dev_show_rating_card">Zobrazit hodnoticí kartu</string>
     <string name="dev_show_rating_card_description">Okamžitě si vyžádá od Google Play jeho kartu pro hodnocení přímo v aplikaci a přitom ignoruje obvyklá omezení. Zobrazí se jen v sestavení nainstalovaném z Google Play (počítá se i interní testování)</string>
     <string name="dev_show_rating_card_unavailable">Google Play pro toto sestavení nemá hodnoticí kartu. Nainstalujte ho z Google Play, včetně interního testování, a zkuste to znovu</string>

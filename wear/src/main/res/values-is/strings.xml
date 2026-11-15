@@ -59,6 +59,9 @@
     <string name="menu_header_search_history">Nýlegar leitir</string>
     <string name="menu_header_library">Safn</string>
     <string name="shortcut_open_on_phone">Opna í símanum</string>
+    <string name="shortcut_tracks_heading">Lög</string>
+    <string name="shortcut_tracks_show">Sjá lög</string>
+    <string name="shortcut_tracks_failed">Ekki tókst að hlaða lögunum. Ýttu til að reyna aftur.</string>
     <string name="shortcut_continue_on_phone">Haltu áfram í símanum</string>
     <string name="chat_face_today">Í dag</string>
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” sekmesinde yeni bir Ana Sayfa temalarınızı resimler halinde ve hızlı ayarlarla gösterir.</string>
+    <string name="whats_new_item_pickers">Stil seçiciler artık bir isim listesi yerine kendi saatinizi gösteriyor.</string>
+    <string name="whats_new_item_notification">Svartifoss bildiriminde “%1$s” düğmesi var ve sonraki parçayı gösteriyor.</string>
+    <string name="whats_new_item_songs">Bir YouTube Music çalma listesi şarkılarını saatin kısayol ekranında listeler.</string>
+    <string name="whats_new_item_icons">Üç yeni uygulama simgesi: %1$s, %2$s ve %3$s.</string>
+    <string name="whats_new_item_quick_panel">Hızlı panel, çalan uygulamanın kendi beğen, karıştır ve tekrarla düğmelerini kullanabilir.</string>
+    <string name="whats_new_item_fixes">Düzeltildi: yanlış müziği başlatan kısayollar ve kontrollerin üzerine taşan uzun başlıklar.</string>
+</resources>

@@ -357,6 +357,8 @@ Svartifoss — Исландиядағы сарқыраманы
     <string name="setting_always_show_time_on_description">Ағымдағы уақыт әрдайым көрсетіледі. Жоғарғы әрекет белгішесі көрінбейді (оның орнына сағат тұрады), бірақ әрекет қалыпты жұмысын жалғастырады.</string>
     <string name="notification_action_stop">Тоқтату</string>
     <string name="notification_action_force_stop">Мәжбүрлі тоқтату</string>
+    <string name="notification_action_themes">Тақырыптар</string>
+    <string name="notification_up_next">Келесі трек: %1$s</string>
     <string name="error_notification_access">Хабарландыруларға рұқсат жоқ. Телефонды тексеріңіз.</string>
     <string name="error_notifications">Қате хабарландырулары</string>
     <string name="notification_access_notification_title">Svartifoss-қа хабарландыруларға қолжетімділік қажет</string>
@@ -2064,7 +2066,7 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="setting_playlist_shortcuts">Стриминг жарлықтары</string>
     <string name="setting_playlist_shortcuts_description">Сағаттан YouTube Music, Spotify және басқа стриминг қолданбаларындағы бөлісу сілтемелерін ашу</string>
     <string name="setting_shortcut_artwork">Жарлық суретін интернеттен алу</string>
-    <string name="setting_shortcut_artwork_description">Қызметтен әр сақталған жарлыққа нобай жүктеңіз; ол телефон тізімінде, сағат мәзірінде және тағайындалған түймелерде көрсетіледі. Әр нобай бір рет алынады; тек жалпыға ашық бөлісу сілтемесі жіберіледі. Әдепкіде өшірулі.</string>
+    <string name="setting_shortcut_artwork_description">Қызметтен әр сақталған жарлыққа нобай жүктеңіз; ол телефон тізімінде, сағат мәзірінде және тағайындалған түймелерде көрсетіледі. Әр нобай бір рет алынады; тек жалпыға ашық бөлісу сілтемесі жіберіледі. Әдепкіде өшірулі. Сағаттың таңбаша экранында YouTube Music ойнату тізімдері мен альбомдары әндерін де көрсетеді, олар YouTube арқылы алынады; өшірулі болса, тек «Әндерді көру» түймесін түрткенде ғана.</string>
     <string name="setting_queue_local_artwork">Кітапханаңыздан кезек мұқабалары</string>
     <string name="setting_queue_local_artwork_description">Жергілікті музыка ойнатқыштары кезек мұқабаларын кітапхана сілтемелері ретінде жариялайды. Сағат кезегінде көрсету үшін медиаға рұқсат беріңіз. Интернетке қатынау қолданылмайды.</string>
     <string name="setting_queue_local_artwork_granted">Медиаға рұқсат берілді — жергілікті кезек мұқабалары көрсетіледі</string>
@@ -2966,8 +2968,11 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="action_symfonium_sync">Symfonium провайдерін синхрондау</string>
     <string name="app_icon_style_gradient">Градиент</string>
     <string name="app_icon_style_solid">Біртекті түс</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Кремді</string>
     <string name="app_icon_style_feather">Көмір қауырсыны</string>
+    <string name="app_icon_style_coral">Маржан</string>
+    <string name="app_icon_style_ocean">Мұхит</string>
+    <string name="app_icon_style_violet">Күлгін</string>
     <string name="dev_show_rating_card">Бағалау картасын көрсету</string>
     <string name="dev_show_rating_card_description">Әдеттегі шектеулерді елемей, Google Play-ден оның қолданба ішіндегі пікір картасын бірден сұрайды. Ол тек Google Play-ден орнатылған құрастырмада көрінеді (ішкі сынақ та есептеледі)</string>
     <string name="dev_show_rating_card_unavailable">Google Play-де бұл құрастырма үшін пікір картасы жоқ. Оны Google Play-ден, ішкі сынақты қоса, орнатып, қайта көріңіз</string>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Nella scheda “%1$s”, una nuova pagina Home mostra i tuoi temi come immagini, con regolazioni rapide.</string>
+    <string name="whats_new_item_pickers">I selettori di stile ora mostrano il tuo orologio invece di un elenco di nomi.</string>
+    <string name="whats_new_item_notification">La notifica di Svartifoss ha un pulsante “%1$s” e mostra il brano successivo.</string>
+    <string name="whats_new_item_songs">Una playlist di YouTube Music elenca i suoi brani nella schermata scorciatoia dell’orologio.</string>
+    <string name="whats_new_item_icons">Tre nuove icone dell’app: %1$s, %2$s e %3$s.</string>
+    <string name="whats_new_item_quick_panel">Il pannello rapido può usare i pulsanti Mi piace, Casuale e Ripeti dell’app in riproduzione.</string>
+    <string name="whats_new_item_fixes">Corretto: scorciatoie che avviavano la musica sbagliata e titoli lunghi che finivano sopra i controlli.</string>
+</resources>

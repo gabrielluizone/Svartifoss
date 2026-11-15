@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">ในแท็บ “%1$s” หน้าหลักใหม่แสดงธีมของคุณเป็นรูปภาพ พร้อมการปรับแต่งด่วน</string>
+    <string name="whats_new_item_pickers">ตัวเลือกสไตล์ตอนนี้แสดงนาฬิกาของคุณเองแทนรายชื่อ</string>
+    <string name="whats_new_item_notification">การแจ้งเตือนของ Svartifoss มีปุ่ม “%1$s” และแสดงแทร็กถัดไป</string>
+    <string name="whats_new_item_songs">เพลย์ลิสต์ YouTube Music แสดงรายการเพลงบนหน้าจอทางลัดของนาฬิกา</string>
+    <string name="whats_new_item_icons">ไอคอนแอปใหม่สามแบบ: %1$s, %2$s และ %3$s</string>
+    <string name="whats_new_item_quick_panel">แผงด่วนใช้ปุ่มถูกใจ สุ่ม และเล่นซ้ำของแอปที่กำลังเล่นอยู่ได้</string>
+    <string name="whats_new_item_fixes">แก้ไขแล้ว: ทางลัดที่เล่นเพลงผิด และชื่อยาวที่ซ้อนทับปุ่มควบคุม</string>
+</resources>

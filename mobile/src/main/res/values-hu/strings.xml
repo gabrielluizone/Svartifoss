@@ -359,6 +359,8 @@ Egyes ikoncsomagok tárhelyengedélyt igényelnek az alkalmazásoktól. A funkci
     <string name="setting_always_show_time_on_description">A pontos idő mindig megjelenik. A felső művelet ikonja nem lesz látható (az óra váltja fel), de a művelet továbbra is normálisan működik.</string>
     <string name="notification_action_stop">Leállítás</string>
     <string name="notification_action_force_stop">Kényszerített leállítás</string>
+    <string name="notification_action_themes">Témák</string>
+    <string name="notification_up_next">Következő szám: %1$s</string>
     <string name="error_notification_access">Nincs értesítés-hozzáférés. Ellenőrizze a telefont.</string>
     <string name="error_notifications">Hibaértesítések</string>
     <string name="notification_access_notification_title">A Svartifossnak értesítés-hozzáférésre van szüksége</string>
@@ -2066,7 +2068,7 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="setting_playlist_shortcuts">Streaming parancsikonok</string>
     <string name="setting_playlist_shortcuts_description">Megosztott hivatkozások megnyitása az óráról a YouTube Musicban, Spotifyban és más streaming alkalmazásokban</string>
     <string name="setting_shortcut_artwork">Parancsikon-kép letöltése online</string>
-    <string name="setting_shortcut_artwork_description">Minden mentett parancsikonhoz bélyegkép letöltése a szolgáltatásból, amely a telefon listájában, az óra menüjében és a hozzárendelt gombokon jelenik meg. Minden bélyegkép csak egyszer töltődik le; csak a nyilvános megosztási hivatkozás kerül elküldésre. Alapértelmezés szerint kikapcsolva.</string>
+    <string name="setting_shortcut_artwork_description">Minden mentett parancsikonhoz bélyegkép letöltése a szolgáltatásból, amely a telefon listájában, az óra menüjében és a hozzárendelt gombokon jelenik meg. Minden bélyegkép csak egyszer töltődik le; csak a nyilvános megosztási hivatkozás kerül elküldésre. Alapértelmezés szerint kikapcsolva. Az óra parancsikonképernyőjén a YouTube Music lejátszási listái és albumai a dalaikat is megjelenítik, a YouTube-on keresztül lekérve; kikapcsolt állapotban csak a „Dalok megtekintése” megérintése után.</string>
     <string name="setting_queue_local_artwork">Lejátszásisor-borítók a könyvtárából</string>
     <string name="setting_queue_local_artwork_description">A helyi zenelejátszók könyvtárhivatkozásként teszik közzé a lejátszási sor borítóit. Adjon médiahozzáférést, hogy megjelenhessenek az óra lejátszási sorában. Nincs szükség internet-hozzáférésre.</string>
     <string name="setting_queue_local_artwork_granted">Médiahozzáférés engedélyezve — a helyi lejátszásisor-borítók megjelennek</string>
@@ -2971,8 +2973,11 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="action_symfonium_sync">Symfonium-szolgáltató szinkronizálása</string>
     <string name="app_icon_style_gradient">Színátmenet</string>
     <string name="app_icon_style_solid">Egyszínű</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krém</string>
     <string name="app_icon_style_feather">Széntoll</string>
+    <string name="app_icon_style_coral">Korall</string>
+    <string name="app_icon_style_ocean">Óceán</string>
+    <string name="app_icon_style_violet">Ibolya</string>
     <string name="dev_show_rating_card">Értékelőkártya megjelenítése</string>
     <string name="dev_show_rating_card_description">Azonnal elkéri a Google Playtől az alkalmazáson belüli véleménykártyát, a szokásos korlátokat figyelmen kívül hagyva. Csak a Google Playből telepített verzióban jelenik meg (a belső tesztelés is számít)</string>
     <string name="dev_show_rating_card_unavailable">A Google Playnek nincs véleménykártyája ehhez a verzióhoz. Telepítse a Google Playből, a belső tesztelést is beleértve, majd próbálja újra</string>

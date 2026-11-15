@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Et tema med dette navnet finnes allerede</string>
 
     <string name="online_themes_title">Fellesskapstemaer</string>
+    <string name="online_themes_title_short">Butikk</string>
     <string name="online_theme_intro">Oppdag utseender laget av fellesskapet. Når du åpner dette galleriet, lastes den offentlige katalogen ned.</string>
     <string name="online_theme_refresh">Oppdater fellesskapstemaer</string>
     <string name="online_theme_list_description">Klokketemaer laget av fellesskapet</string>

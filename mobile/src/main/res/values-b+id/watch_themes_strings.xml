@@ -38,6 +38,7 @@
     <string name="watch_theme_name_required">Masukkan nama tema</string>
     <string name="watch_theme_name_duplicate">Tema dengan nama ini sudah ada</string>
     <string name="online_themes_title">Tema komunitas</string>
+    <string name="online_themes_title_short">Toko</string>
     <string name="online_theme_intro">Temukan tampilan yang dibuat komunitas. Membuka galeri ini mengunduh katalog publiknya.</string>
     <string name="online_theme_refresh">Muat ulang tema komunitas</string>
     <string name="online_theme_list_description">Tema jam tangan buatan komunitas</string>

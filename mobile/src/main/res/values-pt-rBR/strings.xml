@@ -20,8 +20,11 @@
     <string name="setting_app_icon_style">Ícone do app</string>
     <string name="app_icon_style_solid">Cor sólida</string>
     <string name="app_icon_style_gradient">Gradiente</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Creme</string>
     <string name="app_icon_style_feather">Pena de Carvão</string>
+    <string name="app_icon_style_coral">Coral</string>
+    <string name="app_icon_style_ocean">Oceano</string>
+    <string name="app_icon_style_violet">Violeta</string>
 
     <!-- Developer mode -->
     <string name="category_developer">Desenvolvedor</string>
@@ -380,6 +383,8 @@
     <string name="setting_always_show_time_on_description">A hora atual sempre será exibida. O ícone de ação superior não ficará visível (será substituído pelo relógio), mas a ação continuará funcionando normalmente.</string>
     <string name="notification_action_stop">Parar</string>
     <string name="notification_action_force_stop">Forçar parada</string>
+    <string name="notification_action_themes">Temas</string>
+    <string name="notification_up_next">Próxima faixa: %1$s</string>
     <string name="error_notification_access">Sem acesso a notificações. Verifique o celular.</string>
     <string name="error_notifications">Erro nas notificações</string>
     <string name="notification_access_notification_title">O Svartifoss precisa de acesso a notificações</string>
@@ -1606,7 +1611,7 @@
     <string name="setting_playlist_shortcuts">Atalhos de streaming</string>
     <string name="setting_playlist_shortcuts_description">Abra pelo relógio links do YouTube Music, Spotify e outros apps de streaming</string>
     <string name="setting_shortcut_artwork">Buscar nomes e miniaturas dos atalhos online</string>
-    <string name="setting_shortcut_artwork_description">Busca o nome, a capa e o autor ou descrição públicos de cada link salvo nos dados de prévia do serviço. Os detalhes aparecem na tela do atalho; a capa aparece na lista do celular, no menu do relógio e nos botões atribuídos. Cada um é buscado uma vez e só o link público de compartilhamento é enviado. Desligado por padrão: com ele desligado, “Buscar nome pelo link” faz a mesma consulta apenas quando você toca.</string>
+    <string name="setting_shortcut_artwork_description">Busca o nome, a capa e o autor ou descrição públicos de cada link salvo nos dados de prévia do serviço. Os detalhes aparecem na tela do atalho; a capa aparece na lista do celular, no menu do relógio e nos botões atribuídos. Cada um é buscado uma vez e só o link público de compartilhamento é enviado. Desligado por padrão: com ele desligado, “Buscar nome pelo link” faz a mesma consulta apenas quando você toca. Na tela do atalho no relógio, playlists e álbuns do YouTube Music também mostram as músicas, buscadas pelo YouTube; com ele desligado, só quando você toca em “Ver músicas”.</string>
     <string name="watch_streaming_shortcuts_empty">Adicione faixas, álbuns ou playlists para usar nas Ações rápidas e no menu do relógio</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d atalho salvo · Disponível nas Ações rápidas e no menu do relógio</item>

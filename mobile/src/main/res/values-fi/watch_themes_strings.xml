@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Samanniminen teema on jo olemassa</string>
 
     <string name="online_themes_title">Yhteisöteemat</string>
+    <string name="online_themes_title_short">Kauppa</string>
     <string name="online_theme_intro">Löydä yhteisön luomia ulkoasuja. Gallerian avaaminen lataa sen julkisen luettelon.</string>
     <string name="online_theme_refresh">Päivitä yhteisöteemat</string>
     <string name="online_theme_list_description">Yhteisön luomat kelloteemat</string>

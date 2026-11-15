@@ -206,6 +206,7 @@
     <string name="watch_theme_name_required">थीमचे नाव टाका</string>
     <string name="watch_theme_name_duplicate">या नावाची थीम आधीच अस्तित्वात आहे</string>
     <string name="online_themes_title">Community themes</string>
+    <string name="online_themes_title_short">स्टोअर</string>
     <string name="online_theme_intro">community ने तयार केलेले लुक्स शोधा. एक जोडण्यापूर्वी त्यांच्या preview screens शोधा, filter करा आणि तुलना करा.</string>
     <string name="online_theme_refresh">community themes रीफ्रेश करा</string>
     <string name="online_theme_list_description">community ने तयार केलेल्या watch themes</string>

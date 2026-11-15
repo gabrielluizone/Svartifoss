@@ -303,6 +303,8 @@
     <string name="setting_always_show_time_on_description">Текущее время будет отображаться всегда. Верхний значок действия не будет виден (его заменят часы), но действие продолжит работать как обычно.</string>
     <string name="notification_action_stop">Стоп</string>
     <string name="notification_action_force_stop">Принудительная остановка</string>
+    <string name="notification_action_themes">Темы</string>
+    <string name="notification_up_next">Следующий трек: %1$s</string>
     <string name="error_notification_access">Нет доступа к уведомлениям. Проверьте телефон.</string>
     <string name="error_notifications">Уведомления об ошибках</string>
     <string name="notification_access_notification_title">Svartifoss требуется доступ к уведомлениям</string>
@@ -1389,7 +1391,7 @@
     <string name="setting_playlist_shortcuts">Ярлыки стриминга</string>
     <string name="setting_playlist_shortcuts_description">Открывать ссылки, отправленные с часов, в YouTube Music, Spotify и других стриминговых приложениях</string>
     <string name="setting_shortcut_artwork">Получать обложки ярлыков онлайн</string>
-    <string name="setting_shortcut_artwork_description">Скачивает миниатюру для каждого сохранённого ярлыка из сервиса, отображаемую в списке на телефоне, меню часов и назначенных кнопках. Каждая миниатюра получается один раз. Это единственный онлайн-доступ, кроме проверки обновлений; отправляется только публичная ссылка. Отключено по умолчанию.</string>
+    <string name="setting_shortcut_artwork_description">Скачивает миниатюру для каждого сохранённого ярлыка из сервиса, отображаемую в списке на телефоне, меню часов и назначенных кнопках. Каждая миниатюра получается один раз. Это единственный онлайн-доступ, кроме проверки обновлений; отправляется только публичная ссылка. Отключено по умолчанию. На экране ярлыка на часах плейлисты и альбомы YouTube Music также показывают свои песни, полученные через YouTube; когда параметр выключен, — только после нажатия «Показать песни».</string>
     <string name="watch_streaming_shortcuts_empty">Добавьте треки, альбомы или плейлисты для Быстрых действий и меню часов</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d сохранённый ярлык · Доступен в Быстрых действиях и меню часов</item>
@@ -2941,8 +2943,11 @@
     <string name="action_symfonium_sync">Синхронизировать источник Symfonium</string>
     <string name="app_icon_style_gradient">Градиент</string>
     <string name="app_icon_style_solid">Однотонный</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Кремовый</string>
     <string name="app_icon_style_feather">Угольное перо</string>
+    <string name="app_icon_style_coral">Коралловый</string>
+    <string name="app_icon_style_ocean">Океанский</string>
+    <string name="app_icon_style_violet">Фиолетовый</string>
     <string name="dev_show_rating_card">Показать карточку оценки</string>
     <string name="dev_show_rating_card_description">Сразу запрашивает у Google Play встроенную карточку отзыва, не учитывая обычные ограничения. Она появляется только в сборке, установленной из Google Play (внутреннее тестирование тоже подходит)</string>
     <string name="dev_show_rating_card_unavailable">У Google Play нет карточки отзыва для этой сборки. Установите её из Google Play, в том числе из внутреннего тестирования, и повторите попытку</string>

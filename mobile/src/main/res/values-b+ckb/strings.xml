@@ -763,6 +763,8 @@
     <string name="setting_always_show_time_on_description">کاتی ئێستا هەمیشە پیشان دەدرێت. ئایکۆنی کردار لە سەرەوە دیار نابێت (کاتژمێر جێگای دەگرێتەوە)، بەڵام کردارەکە هەر ئاسایی کار دەکات.</string>
     <string name="notification_action_stop">بوەستێنە</string>
     <string name="notification_action_force_stop">بەزۆر بوەستێنە</string>
+    <string name="notification_action_themes">theme ـەکان</string>
+    <string name="notification_up_next">تراکی داهاتوو: %1$s</string>
     <string name="error_notification_access">دەستگەیشتنی ئاگادارکردنەوە نییە. مۆبایل بپشکنە.</string>
     <string name="error_notifications">ئاگادارکردنەوەکانی هەڵە</string>
     <string name="notification_access_notification_title">Svartifoss پێویستی بە دەستگەیشتنی ئاگادارکردنەوە هەیە</string>
@@ -1990,7 +1992,7 @@
     <string name="setting_playlist_shortcuts">Shortcut ـەکانی streaming</string>
     <string name="setting_playlist_shortcuts_description">share link ـەکان لە کاتژمێرەوە لە YouTube Music و Spotify و streaming app ـەکانی تر بکەرەوە</string>
     <string name="setting_shortcut_artwork">artwork ـی shortcut لە online وەربگرە</string>
-    <string name="setting_shortcut_artwork_description">ئەگەر خزمەتگوزارییەکە public preview artwork دابین بکات، thumbnail دابەزێنێت و لە لیستی مۆبایل، menu ـی کاتژمێر و دوگمە دیاریکراوەکان پیشانی دەدات. هەر thumbnail ـێک تەنها جارێک وەردەگیرێت؛ تەنها public share link نێردرێت. بە بنەڕەت ناچالاکە.</string>
+    <string name="setting_shortcut_artwork_description">ئەگەر خزمەتگوزارییەکە public preview artwork دابین بکات، thumbnail دابەزێنێت و لە لیستی مۆبایل، menu ـی کاتژمێر و دوگمە دیاریکراوەکان پیشانی دەدات. هەر thumbnail ـێک تەنها جارێک وەردەگیرێت؛ تەنها public share link نێردرێت. بە بنەڕەت ناچالاکە. لە شاشەی کورتەڕێی کاتژمێر، لیستە و ئەلبومەکانی YouTube Music گۆرانییەکانیشیان پیشان دەدەن، کە لە ڕێگەی YouTube وەردەگیرێن؛ ئەگەر ناچالاک بێت، تەنها کاتێک دەستت لە «گۆرانییەکان ببینە» دا.</string>
     <string name="setting_queue_local_artwork">cover ـەکانی queue لە کتێبخانەکەتەوە</string>
     <string name="setting_queue_local_artwork_description">music player ـە ناوخۆییەکان cover ـەکانی queue وەک library reference بڵاودەکەنەوە. بۆ پیشاندانیان لە queue ـی کاتژمێر media access بدە. هیچ دەستگەیشتنێکی ئینتەرنێت بەکارناهێنرێت.</string>
     <string name="setting_queue_local_artwork_granted">Media access ڕێگەپێدرا — cover ـە ناوخۆییەکانی queue پیشان دەدرێن</string>
@@ -2327,8 +2329,11 @@
     <string name="action_symfonium_sync">هاوکاتکردنی دابینکەری Symfonium</string>
     <string name="app_icon_style_gradient">پلەپلە</string>
     <string name="app_icon_style_solid">ڕەنگی تەخت</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">کرێمی</string>
     <string name="app_icon_style_feather">پەڕی خەڵووز</string>
+    <string name="app_icon_style_coral">مەرجانی</string>
+    <string name="app_icon_style_ocean">زەریایی</string>
+    <string name="app_icon_style_violet">بەنەوشەیی</string>
     <string name="dev_show_rating_card">نیشاندانی کارتی هەڵسەنگاندن</string>
     <string name="dev_show_rating_card_description">یەکسەر کارتی پێداچوونەوەی ناو ئەپی Google Play داوا دەکات و سنوورە ئاساییەکان پشتگوێ دەخات. تەنها لە وەشانێک دەردەکەوێت کە لە Google Play دامەزرابێت (تاقیکردنەوەی ناوخۆیی بەژمار دێت)</string>
     <string name="dev_show_rating_card_unavailable">Google Play کارتی پێداچوونەوەی بۆ ئەم وەشانە نییە. لە Google Play دایبمەزرێنە، تاقیکردنەوەی ناوخۆییش دەگرێتەوە، و دووبارە هەوڵ بدەرەوە</string>

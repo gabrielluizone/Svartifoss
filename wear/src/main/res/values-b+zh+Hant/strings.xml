@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">最近的搜尋</string>
     <string name="menu_header_library">媒體庫</string>
     <string name="shortcut_open_on_phone">在手機上開啟</string>
+    <string name="shortcut_tracks_heading">歌曲</string>
+    <string name="shortcut_tracks_show">查看歌曲</string>
+    <string name="shortcut_tracks_failed">無法載入歌曲。輕觸即可重試。</string>
     <string name="shortcut_continue_on_phone">請在手機上繼續</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">今天</string>

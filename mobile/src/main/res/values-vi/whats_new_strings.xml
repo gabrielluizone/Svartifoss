@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Trong tab “%1$s”, trang Chủ mới hiển thị các chủ đề của bạn dưới dạng hình ảnh, kèm điều chỉnh nhanh.</string>
+    <string name="whats_new_item_pickers">Bộ chọn kiểu giờ đây hiển thị chính chiếc đồng hồ của bạn thay vì danh sách tên.</string>
+    <string name="whats_new_item_notification">Thông báo của Svartifoss có nút “%1$s” và hiển thị bài tiếp theo.</string>
+    <string name="whats_new_item_songs">Danh sách phát YouTube Music liệt kê các bài hát trên màn hình lối tắt của đồng hồ.</string>
+    <string name="whats_new_item_icons">Ba biểu tượng ứng dụng mới: %1$s, %2$s và %3$s.</string>
+    <string name="whats_new_item_quick_panel">Bảng nhanh có thể dùng các nút thích, trộn bài và lặp lại của chính ứng dụng đang phát.</string>
+    <string name="whats_new_item_fixes">Đã sửa: lối tắt phát nhầm nhạc và tiêu đề dài đè lên các nút điều khiển.</string>
+</resources>

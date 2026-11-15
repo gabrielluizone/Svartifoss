@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">同じ名前のテーマがすでに存在します</string>
 
     <string name="online_themes_title">コミュニティテーマ</string>
+    <string name="online_themes_title_short">ストア</string>
     <string name="online_theme_intro">コミュニティが作成したデザインを見つけましょう。このギャラリーを開くと、公開カタログがダウンロードされます。</string>
     <string name="online_theme_refresh">コミュニティテーマを更新</string>
     <string name="online_theme_list_description">コミュニティ作成のウォッチテーマ</string>

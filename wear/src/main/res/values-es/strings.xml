@@ -60,6 +60,9 @@
     <string name="menu_header_search_history">Búsquedas recientes</string>
     <string name="menu_header_library">Biblioteca</string>
     <string name="shortcut_open_on_phone">Abrir en el teléfono</string>
+    <string name="shortcut_tracks_heading">Canciones</string>
+    <string name="shortcut_tracks_show">Ver canciones</string>
+    <string name="shortcut_tracks_failed">No se pudieron cargar las canciones. Toca para volver a intentarlo.</string>
     <string name="shortcut_continue_on_phone">Continúa en tu teléfono</string>
     <string name="chat_face_today">Hoy</string>
 

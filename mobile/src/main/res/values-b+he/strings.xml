@@ -348,6 +348,8 @@
     <string name="setting_always_show_time_on_description">השעה הנוכחית תוצג תמיד. סמל הפעולה העליון לא ייראה (השעון יחליף אותו), אך הפעולה עצמה תמשיך לפעול כרגיל.</string>
     <string name="notification_action_stop">עצור</string>
     <string name="notification_action_force_stop">כפה עצירה</string>
+    <string name="notification_action_themes">ערכות נושא</string>
+    <string name="notification_up_next">הרצועה הבאה: %1$s</string>
     <string name="error_notification_access">אין גישה להתראות. בדוק את הטלפון.</string>
     <string name="error_notifications">התראות שגיאה</string>
     <string name="notification_access_notification_title">Svartifoss זקוק לגישה להתראות</string>
@@ -2045,7 +2047,7 @@
     <string name="setting_playlist_shortcuts">קיצורי דרך לסטרימינג</string>
     <string name="setting_playlist_shortcuts_description">פתח קישורי שיתוף מהשעון ב-YouTube Music, Spotify ובאפליקציות סטרימינג אחרות</string>
     <string name="setting_shortcut_artwork">שלוף תמונת קיצור דרך באינטרנט</string>
-    <string name="setting_shortcut_artwork_description">מוריד תמונה ממוזערת מהשירות לכל קיצור דרך שמור ומציג אותה ברשימה בטלפון, בתפריט השעון ובכפתורים שהוקצו. כל תמונה נשלפת פעם אחת בלבד; רק קישור השיתוף הציבורי נשלח. כבוי כברירת מחדל.</string>
+    <string name="setting_shortcut_artwork_description">מוריד תמונה ממוזערת מהשירות לכל קיצור דרך שמור ומציג אותה ברשימה בטלפון, בתפריט השעון ובכפתורים שהוקצו. כל תמונה נשלפת פעם אחת בלבד; רק קישור השיתוף הציבורי נשלח. כבוי כברירת מחדל. במסך קיצור הדרך בשעון, פלייליסטים ואלבומים של YouTube Music מציגים גם את השירים שלהם, שנשלפים דרך YouTube; כשהאפשרות כבויה, רק כשמקישים על „הצגת השירים“.</string>
     <string name="setting_queue_local_artwork">עטיפות תור מהספרייה שלך</string>
     <string name="setting_queue_local_artwork_description">נגני מוזיקה מקומיים מפרסמים עטיפות תור כהפניות לספרייה. הענק גישה למדיה כדי שניתן יהיה להציג אותן בתור בשעון. אין שימוש באינטרנט.</string>
     <string name="setting_queue_local_artwork_granted">הגישה למדיה אושרה — עטיפות תור מקומיות יוצגו</string>
@@ -2953,8 +2955,11 @@
     <string name="action_symfonium_sync">סנכרון ספק Symfonium</string>
     <string name="app_icon_style_gradient">מעבר צבעים</string>
     <string name="app_icon_style_solid">צבע אחיד</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">קרם</string>
     <string name="app_icon_style_feather">נוצת פחם</string>
+    <string name="app_icon_style_coral">אלמוגי</string>
+    <string name="app_icon_style_ocean">אוקיינוס</string>
+    <string name="app_icon_style_violet">סגול</string>
     <string name="dev_show_rating_card">הצגת כרטיס הדירוג</string>
     <string name="dev_show_rating_card_description">מבקש מיד מ-Google Play את כרטיס הביקורת שלו בתוך האפליקציה, בלי להתחשב במגבלות הרגילות. הוא מופיע רק בגרסה שהותקנה מ-Google Play (הבדיקה הפנימית נחשבת)</string>
     <string name="dev_show_rating_card_unavailable">ל-Google Play אין כרטיס ביקורת לגרסה הזאת. התקינו אותה מ-Google Play, גם דרך הבדיקה הפנימית, ונסו שוב</string>

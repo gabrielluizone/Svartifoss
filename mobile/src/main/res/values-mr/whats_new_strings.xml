@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” टॅबमध्ये, नवीन होम पेज तुमच्या थीम्स चित्रांच्या स्वरूपात आणि जलद समायोजनांसह दाखवते.</string>
+    <string name="whats_new_item_pickers">शैली निवडकर्ते आता नावांच्या यादीऐवजी तुमचे स्वतःचे घड्याळ दाखवतात.</string>
+    <string name="whats_new_item_notification">Svartifoss च्या सूचनेत “%1$s” बटण आहे आणि ती पुढचा ट्रॅक दाखवते.</string>
+    <string name="whats_new_item_songs">YouTube Music प्लेलिस्ट घड्याळाच्या शॉर्टकट स्क्रीनवर तिची गाणी दाखवते.</string>
+    <string name="whats_new_item_icons">तीन नवीन ॲप आयकॉन: %1$s, %2$s आणि %3$s.</string>
+    <string name="whats_new_item_quick_panel">क्विक पॅनेल सुरू असलेल्या ॲपची स्वतःची लाइक, शफल आणि रिपीट बटणे वापरू शकते.</string>
+    <string name="whats_new_item_fixes">दुरुस्त केले: चुकीचे संगीत सुरू करणारे शॉर्टकट आणि नियंत्रणांवर येणारी लांब शीर्षके.</string>
+</resources>

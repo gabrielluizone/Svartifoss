@@ -206,6 +206,7 @@
     <string name="watch_theme_name_required">Theme အမည်ထည့်ပါ</string>
     <string name="watch_theme_name_duplicate">ဤအမည်ဖြင့် theme ရှိပြီးသား</string>
     <string name="online_themes_title">Community themes</string>
+    <string name="online_themes_title_short">ဆိုင်</string>
     <string name="online_theme_intro">Community ကဖန်တီးထားသော looks များကိုရှာပါ။ တစ်ခုမထည့်မီ preview screens များကို search, filter နှင့် compare လုပ်ပါ။</string>
     <string name="online_theme_refresh">Community themes ကို refresh လုပ်ပါ</string>
     <string name="online_theme_list_description">Community ဖန်တီးထားသော watch themes</string>

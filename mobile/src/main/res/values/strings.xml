@@ -21,6 +21,9 @@
     <string name="app_icon_style_gradient">Gradient</string>
     <string name="app_icon_style_cream">Cream</string>
     <string name="app_icon_style_feather">Charcoal Feather</string>
+    <string name="app_icon_style_coral">Coral</string>
+    <string name="app_icon_style_ocean">Ocean</string>
+    <string name="app_icon_style_violet">Violet</string>
 
     <!-- Developer mode -->
     <string name="category_developer">Developer</string>
@@ -505,6 +508,8 @@
     <string name="setting_always_show_time_on_description">Current time will always be displayed. Top action icon will not be visible (it will be replaced by clock), but action will still function normally.</string>
     <string name="notification_action_stop">Stop</string>
     <string name="notification_action_force_stop">Force stop</string>
+    <string name="notification_action_themes">Themes</string>
+    <string name="notification_up_next">Up next: %1$s</string>
     <string name="error_notification_access">No notification access. Check phone.</string>
     <string name="error_notifications">Error notifications</string>
     <string name="notification_access_notification_title">Svartifoss needs notification access</string>
@@ -2612,6 +2617,9 @@
         <item>@string/app_icon_style_gradient</item>
         <item>@string/app_icon_style_cream</item>
         <item>@string/app_icon_style_feather</item>
+        <item>@string/app_icon_style_coral</item>
+        <item>@string/app_icon_style_ocean</item>
+        <item>@string/app_icon_style_violet</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2711,7 +2719,7 @@
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
     <string name="setting_shortcut_artwork">Fetch shortcut names and artwork online</string>
-    <string name="setting_shortcut_artwork_description">Look up each saved link’s name, cover and public creator or description from the service’s preview data. Details appear on the shortcut screen; the thumbnail is shown on the phone list, watch menu and assigned buttons. Each is fetched once, and only the public share link is sent. Off by default: with it off, “Get name from link” makes the same request only when you tap it.</string>
+    <string name="setting_shortcut_artwork_description">Look up each saved link’s name, cover and public creator or description from the service’s preview data. Details appear on the shortcut screen; the thumbnail is shown on the phone list, watch menu and assigned buttons. Each is fetched once, and only the public share link is sent. Off by default: with it off, “Get name from link” makes the same request only when you tap it. On the watch’s shortcut screen, YouTube Music playlists and albums also list their songs, looked up through YouTube; with it off, only when you tap “See songs”.</string>
     <string name="setting_queue_local_artwork">Queue covers from your library</string>
     <string name="setting_queue_local_artwork_description">Local music players publish queue covers as library references. Grant media access so they can be shown on the watch queue. No internet access is involved.</string>
     <string name="setting_queue_local_artwork_granted">Media access granted — local queue covers will be shown</string>

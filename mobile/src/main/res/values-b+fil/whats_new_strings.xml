@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Sa tab na “%1$s”, may bagong Home page na nagpapakita ng iyong mga theme bilang mga larawan, kasama ang mabilisang pag-aayos.</string>
+    <string name="whats_new_item_pickers">Ipinapakita na ng mga style picker ang mismong relo mo sa halip na listahan ng mga pangalan.</string>
+    <string name="whats_new_item_notification">May button na “%1$s” ang notification ng Svartifoss at ipinapakita nito ang susunod na track.</string>
+    <string name="whats_new_item_songs">Inililista ng isang playlist ng YouTube Music ang mga kanta nito sa shortcut screen ng relo.</string>
+    <string name="whats_new_item_icons">Tatlong bagong icon ng app: %1$s, %2$s at %3$s.</string>
+    <string name="whats_new_item_quick_panel">Magagamit na ng quick panel ang sariling like, shuffle at repeat na mga button ng app na nagpapatugtog.</string>
+    <string name="whats_new_item_fixes">Naayos: mga shortcut na nagpapatugtog ng maling musika, at mahahabang pamagat na sumasagi sa mga kontrol.</string>
+</resources>

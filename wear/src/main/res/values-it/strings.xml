@@ -59,6 +59,9 @@
     <string name="menu_header_search_history">Ricerche recenti</string>
     <string name="menu_header_library">Raccolta</string>
     <string name="shortcut_open_on_phone">Apri sul telefono</string>
+    <string name="shortcut_tracks_heading">Brani</string>
+    <string name="shortcut_tracks_show">Mostra i brani</string>
+    <string name="shortcut_tracks_failed">Impossibile caricare i brani. Tocca per riprovare.</string>
     <string name="shortcut_continue_on_phone">Continua sul telefono</string>
     <string name="chat_face_today">Oggi</string>
 

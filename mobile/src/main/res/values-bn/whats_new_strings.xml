@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” ট্যাবে একটি নতুন হোম পেজ আপনার থিমগুলো ছবি হিসেবে দেখায়, সঙ্গে দ্রুত সমন্বয়।</string>
+    <string name="whats_new_item_pickers">স্টাইল পিকারগুলো এখন নামের তালিকার বদলে আপনার নিজের ঘড়ি দেখায়।</string>
+    <string name="whats_new_item_notification">Svartifoss-এর নোটিফিকেশনে এখন একটি “%1$s” বোতাম আছে এবং এটি পরের ট্র্যাক দেখায়।</string>
+    <string name="whats_new_item_songs">YouTube Music-এর একটি প্লেলিস্ট ঘড়ির শর্টকাট স্ক্রিনে এর গানগুলো তালিকাভুক্ত করে।</string>
+    <string name="whats_new_item_icons">তিনটি নতুন অ্যাপ আইকন: %1$s, %2$s ও %3$s।</string>
+    <string name="whats_new_item_quick_panel">দ্রুত প্যানেল এখন চালু থাকা অ্যাপের নিজস্ব লাইক, শাফল ও রিপিট বোতাম ব্যবহার করতে পারে।</string>
+    <string name="whats_new_item_fixes">ঠিক করা হয়েছে: ভুল গান চালানো শর্টকাট এবং নিয়ন্ত্রণের ওপর উঠে আসা লম্বা শিরোনাম।</string>
+</resources>

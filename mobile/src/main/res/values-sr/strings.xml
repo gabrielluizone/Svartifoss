@@ -348,6 +348,8 @@
     <string name="setting_always_show_time_on_description">Тренутно време ће увек бити приказано. Горња икона радње неће бити видљива (замениће је сат), али ће радња и даље нормално функционисати.</string>
     <string name="notification_action_stop">Заустави</string>
     <string name="notification_action_force_stop">Принудно заустави</string>
+    <string name="notification_action_themes">Теме</string>
+    <string name="notification_up_next">Следећа нумера: %1$s</string>
     <string name="error_notification_access">Нема приступа обавештењима. Проверите телефон.</string>
     <string name="error_notifications">Обавештења о грешкама</string>
     <string name="notification_access_notification_title">Svartifoss-у је потребан приступ обавештењима</string>
@@ -2045,7 +2047,7 @@
     <string name="setting_playlist_shortcuts">Пречице за стримовање</string>
     <string name="setting_playlist_shortcuts_description">Отварај дељене линкове са сата у YouTube Music, Spotify и другим апликацијама за стриминг</string>
     <string name="setting_shortcut_artwork">Преузимај слике пречица онлајн</string>
-    <string name="setting_shortcut_artwork_description">Преузима сличицу са услуге за сваку сачувану пречицу и приказује је у листи на телефону, менију сата и на додељеним дугмадима. Свака сличица се преузима само једном; шаље се само јавни линк за дељење. Подразумевано искључено.</string>
+    <string name="setting_shortcut_artwork_description">Преузима сличицу са услуге за сваку сачувану пречицу и приказује је у листи на телефону, менију сата и на додељеним дугмадима. Свака сличица се преузима само једном; шаље се само јавни линк за дељење. Подразумевано искључено. На екрану пречице на сату плејлисте и албуми са YouTube Music-а приказују и своје песме, преузете преко YouTube-а; када је искључено, тек након додира на „Прикажи песме“.</string>
     <string name="setting_queue_local_artwork">Омоти реда из библиотеке</string>
     <string name="setting_queue_local_artwork_description">Локални музички плејери објављују омоте реда као референце библиотеке. Дозволите приступ медијима да би могли да се прикажу у реду на сату. Интернет се не користи.</string>
     <string name="setting_queue_local_artwork_granted">Приступ медијима је дозвољен — локални омоти реда ће се приказивати</string>
@@ -2953,8 +2955,11 @@
     <string name="action_symfonium_sync">Синхронизуј Symfonium добављача</string>
     <string name="app_icon_style_gradient">Градијент</string>
     <string name="app_icon_style_solid">Једнобојна</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Крем</string>
     <string name="app_icon_style_feather">Угљено перо</string>
+    <string name="app_icon_style_coral">Корал</string>
+    <string name="app_icon_style_ocean">Океан</string>
+    <string name="app_icon_style_violet">Љубичаста</string>
     <string name="dev_show_rating_card">Прикажи картицу за оцењивање</string>
     <string name="dev_show_rating_card_description">Одмах тражи од Google Play-а његову картицу за рецензију у апликацији, занемарујући уобичајена ограничења. Појављује се само у верзији инсталираној из Google Play-а (рачуна се и интерно тестирање)</string>
     <string name="dev_show_rating_card_unavailable">Google Play нема картицу за рецензију за ову верзију. Инсталирајте је из Google Play-а, укључујући интерно тестирање, и покушајте поново</string>

@@ -359,6 +359,8 @@ Vissa ikonpaket kräver att appar har lagringsbehörighet. Du måste tillåta de
     <string name="setting_always_show_time_on_description">Aktuell tid visas alltid. Ikonen för den övre åtgärden syns inte (den ersätts av klockan), men åtgärden fungerar fortfarande normalt.</string>
     <string name="notification_action_stop">Stoppa</string>
     <string name="notification_action_force_stop">Tvinga stopp</string>
+    <string name="notification_action_themes">Teman</string>
+    <string name="notification_up_next">Nästa spår: %1$s</string>
     <string name="error_notification_access">Ingen åtkomst till aviseringar. Kontrollera telefonen.</string>
     <string name="error_notifications">Felaviseringar</string>
     <string name="notification_access_notification_title">Svartifoss behöver åtkomst till aviseringar</string>
@@ -2066,7 +2068,7 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="setting_playlist_shortcuts">Streaminggenvägar</string>
     <string name="setting_playlist_shortcuts_description">Öppna delningslänkar från klockan i YouTube Music, Spotify och andra streamingappar</string>
     <string name="setting_shortcut_artwork">Hämta genvägsbilder online</string>
-    <string name="setting_shortcut_artwork_description">Hämta en miniatyrbild för varje sparad genväg från tjänsten, som visas i telefonlistan, klockmenyn och tilldelade knappar. Varje miniatyr hämtas en gång; endast den offentliga delningslänken skickas. Avstängt som standard.</string>
+    <string name="setting_shortcut_artwork_description">Hämta en miniatyrbild för varje sparad genväg från tjänsten, som visas i telefonlistan, klockmenyn och tilldelade knappar. Varje miniatyr hämtas en gång; endast den offentliga delningslänken skickas. Avstängt som standard. På klockans genvägsskärm visar spellistor och album från YouTube Music även sina låtar, hämtade via YouTube; när det är avstängt bara när du trycker på ”Visa låtar”.</string>
     <string name="setting_queue_local_artwork">Köomslag från ditt bibliotek</string>
     <string name="setting_queue_local_artwork_description">Lokala musikspelare publicerar köomslag som biblioteksreferenser. Ge medieåtkomst så att de kan visas i kön på klockan. Ingen internetåtkomst används.</string>
     <string name="setting_queue_local_artwork_granted">Medieåtkomst beviljad — lokala köomslag visas</string>
@@ -2971,8 +2973,11 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="action_symfonium_sync">Synkronisera Symfonium-leverantör</string>
     <string name="app_icon_style_gradient">Toning</string>
     <string name="app_icon_style_solid">Enfärgad</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Kräm</string>
     <string name="app_icon_style_feather">Kolfjäder</string>
+    <string name="app_icon_style_coral">Korall</string>
+    <string name="app_icon_style_ocean">Hav</string>
+    <string name="app_icon_style_violet">Violett</string>
     <string name="dev_show_rating_card">Visa betygskortet</string>
     <string name="dev_show_rating_card_description">Ber Google Play om sitt recensionskort i appen direkt och ignorerar de vanliga gränserna. Det visas bara i en version som installerats från Google Play (intern testning räknas)</string>
     <string name="dev_show_rating_card_unavailable">Google Play har inget recensionskort för den här versionen. Installera den från Google Play, inklusive intern testning, och försök igen</string>

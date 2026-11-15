@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Na kartě „%1$s“ nová domovská stránka ukazuje vaše motivy jako obrázky s rychlými úpravami.</string>
+    <string name="whats_new_item_pickers">Výběry stylu nyní ukazují vaše vlastní hodinky místo seznamu názvů.</string>
+    <string name="whats_new_item_notification">Oznámení Svartifoss má tlačítko „%1$s“ a ukazuje další skladbu.</string>
+    <string name="whats_new_item_songs">Playlist z YouTube Music vypíše své skladby na obrazovce zástupce v hodinkách.</string>
+    <string name="whats_new_item_icons">Tři nové ikony aplikace: %1$s, %2$s a %3$s.</string>
+    <string name="whats_new_item_quick_panel">Rychlý panel může používat tlačítka To se mi líbí, Náhodně a Opakovat přímo z přehrávané aplikace.</string>
+    <string name="whats_new_item_fixes">Opraveno: zástupci, které spouštěly špatnou hudbu, a dlouhé názvy zasahující do ovládacích prvků.</string>
+</resources>

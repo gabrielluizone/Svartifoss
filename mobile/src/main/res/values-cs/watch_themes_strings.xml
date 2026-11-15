@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Motiv s tímto názvem už existuje</string>
 
     <string name="online_themes_title">Komunitní motivy</string>
+    <string name="online_themes_title_short">Obchod</string>
     <string name="online_theme_intro">Objevte vzhledy vytvořené komunitou. Otevřením této galerie se stáhne její veřejný katalog.</string>
     <string name="online_theme_refresh">Obnovit komunitní motivy</string>
     <string name="online_theme_list_description">Komunitou vytvořené motivy hodinek</string>

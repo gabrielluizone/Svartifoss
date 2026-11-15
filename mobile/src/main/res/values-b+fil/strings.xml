@@ -359,6 +359,8 @@ Kinakailangan ng ilang icon pack na may storage permission ang mga app. Kailanga
     <string name="setting_always_show_time_on_description">Palaging ipapakita ang kasalukuyang oras. Hindi makikita ang top action icon (papalitan ito ng clock), pero gagana pa rin nang normal ang action.</string>
     <string name="notification_action_stop">Ihinto</string>
     <string name="notification_action_force_stop">Piliting ihinto</string>
+    <string name="notification_action_themes">Mga theme</string>
+    <string name="notification_up_next">Susunod na track: %1$s</string>
     <string name="error_notification_access">Walang notification access. Tingnan ang phone.</string>
     <string name="error_notifications">Mga error notification</string>
     <string name="notification_access_notification_title">Kailangan ng Svartifoss ng notification access</string>
@@ -2066,7 +2068,7 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="setting_playlist_shortcuts">Mga streaming shortcut</string>
     <string name="setting_playlist_shortcuts_description">Buksan mula sa relo ang share links sa YouTube Music, Spotify at iba pang streaming apps</string>
     <string name="setting_shortcut_artwork">Kunin online ang artwork ng shortcut</string>
-    <string name="setting_shortcut_artwork_description">Mag-download ng thumbnail para sa bawat naka-save na shortcut mula sa service, na ipinapakita sa phone list, watch menu at mga nakatalagang button. Isang beses lang kinukuha ang bawat thumbnail; public share link lang ang ipinapadala. Off bilang default.</string>
+    <string name="setting_shortcut_artwork_description">Mag-download ng thumbnail para sa bawat naka-save na shortcut mula sa service, na ipinapakita sa phone list, watch menu at mga nakatalagang button. Isang beses lang kinukuha ang bawat thumbnail; public share link lang ang ipinapadala. Off bilang default. Sa shortcut screen ng relo, ipinapakita rin ng mga playlist at album ng YouTube Music ang mga kanta nila, na kinukuha sa YouTube; kapag naka-off, kapag na-tap mo lang ang “Tingnan ang mga kanta”.</string>
     <string name="setting_queue_local_artwork">Queue covers mula sa library mo</string>
     <string name="setting_queue_local_artwork_description">Nagpa-publish ang mga local music player ng queue covers bilang library references. Magbigay ng media access para maipakita ang mga ito sa watch queue. Walang internet access na kasama.</string>
     <string name="setting_queue_local_artwork_granted">Ibinigay ang media access — ipapakita ang local queue covers</string>
@@ -2971,8 +2973,11 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="action_symfonium_sync">I-sync ang provider ng Symfonium</string>
     <string name="app_icon_style_gradient">Gradient</string>
     <string name="app_icon_style_solid">Solidong kulay</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krema</string>
     <string name="app_icon_style_feather">Balahibo ng Uling</string>
+    <string name="app_icon_style_coral">Koral</string>
+    <string name="app_icon_style_ocean">Karagatan</string>
+    <string name="app_icon_style_violet">Violet</string>
     <string name="dev_show_rating_card">Ipakita ang rating card</string>
     <string name="dev_show_rating_card_description">Agad na hihingin sa Google Play ang in-app review card nito, nang hindi isinasaalang-alang ang karaniwang mga limitasyon. Lalabas lang ito sa build na na-install mula sa Google Play (kasama ang internal testing)</string>
     <string name="dev_show_rating_card_unavailable">Walang review card ang Google Play para sa build na ito. I-install ito mula sa Google Play, kasama ang internal testing, at subukan muli</string>

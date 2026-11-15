@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">May theme nang may ganitong pangalan</string>
 
     <string name="online_themes_title">Mga theme ng komunidad</string>
+    <string name="online_themes_title_short">Tindahan</string>
     <string name="online_theme_intro">Tuklasin ang mga itsurang ginawa ng komunidad. Ida-download ng pagbubukas sa gallery na ito ang pampublikong katalogo nito.</string>
     <string name="online_theme_refresh">I-refresh ang mga theme ng komunidad</string>
     <string name="online_theme_list_description">Mga watch theme na ginawa ng komunidad</string>

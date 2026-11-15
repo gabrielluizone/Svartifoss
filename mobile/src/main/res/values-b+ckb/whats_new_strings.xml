@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">لە تابی “%1$s”، پەڕەیەکی سەرەکی نوێ theme ـەکانت وەک وێنە پیشان دەدات، لەگەڵ ڕێکخستنی خێرا.</string>
+    <string name="whats_new_item_pickers">هەڵبژێرەرەکانی شێواز ئێستا کاتژمێری خۆت پیشان دەدەن لە جیاتی لیستی ناو.</string>
+    <string name="whats_new_item_notification">ئاگادارکردنەوەی Svartifoss دوگمەی “%1$s”ی هەیە و گۆرانی دواتر پیشان دەدات.</string>
+    <string name="whats_new_item_songs">playlist ێکی YouTube Music گۆرانییەکانی لە شاشەی shortcut ی کاتژمێرەکەدا پیشان دەدات.</string>
+    <string name="whats_new_item_icons">سێ ئایکۆنی نوێی ئەپ: %1$s، %2$s و %3$s.</string>
+    <string name="whats_new_item_quick_panel">پانێڵی خێرا دەتوانێت دوگمەکانی بەدڵبوون، تێکەڵکردن و دووبارەکردنەوەی ئەو ئەپەی دەیلێدات بەکاربهێنێت.</string>
+    <string name="whats_new_item_fixes">چاککرا: shortcut ـەکان کە میوزیکی هەڵەیان دەستپێدەکرد، و ناونیشانە درێژەکان کە دەکەوتنە سەر کۆنتڕۆڵەکان.</string>
+</resources>

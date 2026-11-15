@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Na karcie „%1$s” nowa strona główna pokazuje Twoje motywy jako obrazy, z szybkimi ustawieniami.</string>
+    <string name="whats_new_item_pickers">Selektory stylu pokazują teraz Twój własny zegarek zamiast listy nazw.</string>
+    <string name="whats_new_item_notification">Powiadomienie Svartifoss ma przycisk „%1$s” i pokazuje następny utwór.</string>
+    <string name="whats_new_item_songs">Playlista z YouTube Music wyświetla swoje utwory na ekranie skrótu w zegarku.</string>
+    <string name="whats_new_item_icons">Trzy nowe ikony aplikacji: %1$s, %2$s i %3$s.</string>
+    <string name="whats_new_item_quick_panel">Szybki panel może używać własnych przycisków polubienia, losowego odtwarzania i powtarzania z odtwarzającej aplikacji.</string>
+    <string name="whats_new_item_fixes">Naprawiono: skróty uruchamiające złą muzykę oraz długie tytuły nachodzące na elementy sterujące.</string>
+</resources>

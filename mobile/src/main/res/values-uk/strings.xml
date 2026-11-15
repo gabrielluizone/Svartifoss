@@ -350,6 +350,8 @@
     <string name="setting_always_show_time_on_description">Поточний час відображатиметься завжди. Верхній значок дії не буде видно (його замінить годинник), але сама дія працюватиме як завжди.</string>
     <string name="notification_action_stop">Зупинити</string>
     <string name="notification_action_force_stop">Примусово зупинити</string>
+    <string name="notification_action_themes">Теми</string>
+    <string name="notification_up_next">Наступний трек: %1$s</string>
     <string name="error_notification_access">Немає доступу до сповіщень. Перевірте телефон.</string>
     <string name="error_notifications">Сповіщення про помилки</string>
     <string name="notification_access_notification_title">Svartifoss потрібен доступ до сповіщень</string>
@@ -2047,7 +2049,7 @@
     <string name="setting_playlist_shortcuts">Потокові ярлики</string>
     <string name="setting_playlist_shortcuts_description">Відкривати посилання з годинника в YouTube Music, Spotify та інших стримінгових програмах</string>
     <string name="setting_shortcut_artwork">Завантажувати зображення ярликів онлайн</string>
-    <string name="setting_shortcut_artwork_description">Завантажує мініатюру з сервісу для кожного збереженого ярлика та показує її у списку на телефоні, меню годинника й на призначених кнопках. Кожну мініатюру отримують один раз; надсилається лише публічне посилання. Типово вимкнено.</string>
+    <string name="setting_shortcut_artwork_description">Завантажує мініатюру з сервісу для кожного збереженого ярлика та показує її у списку на телефоні, меню годинника й на призначених кнопках. Кожну мініатюру отримують один раз; надсилається лише публічне посилання. Типово вимкнено. На екрані ярлика на годиннику плейлисти й альбоми YouTube Music також показують свої пісні, отримані через YouTube; коли параметр вимкнено, — лише після натискання «Показати пісні».</string>
     <string name="setting_queue_local_artwork">Обкладинки черги з бібліотеки</string>
     <string name="setting_queue_local_artwork_description">Локальні музичні програвачі публікують обкладинки черги як посилання на бібліотеку. Надайте доступ до медіа, щоб показувати їх у черзі на годиннику. Інтернет не використовується.</string>
     <string name="setting_queue_local_artwork_granted">Доступ до медіа надано — локальні обкладинки черги відображатимуться</string>
@@ -2958,8 +2960,11 @@
     <string name="action_symfonium_sync">Синхронізувати постачальника Symfonium</string>
     <string name="app_icon_style_gradient">Градієнт</string>
     <string name="app_icon_style_solid">Однотонний</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Кремовий</string>
     <string name="app_icon_style_feather">Вугільне перо</string>
+    <string name="app_icon_style_coral">Коралевий</string>
+    <string name="app_icon_style_ocean">Океанський</string>
+    <string name="app_icon_style_violet">Фіолетовий</string>
     <string name="dev_show_rating_card">Показати картку оцінки</string>
     <string name="dev_show_rating_card_description">Негайно просить у Google Play його вбудовану картку відгуку, ігноруючи звичайні обмеження. Вона з’являється лише у збірці, встановленій із Google Play (внутрішнє тестування теж зараховується)</string>
     <string name="dev_show_rating_card_unavailable">У Google Play немає картки відгуку для цієї збірки. Встановіть її з Google Play, зокрема з внутрішнього тестування, і спробуйте ще раз</string>

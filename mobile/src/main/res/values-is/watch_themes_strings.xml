@@ -38,6 +38,7 @@
     <string name="watch_theme_name_required">Sláðu inn nafn á þemað</string>
     <string name="watch_theme_name_duplicate">Þema með þessu nafni er þegar til</string>
     <string name="online_themes_title">Samfélagsþemu</string>
+    <string name="online_themes_title_short">Verslun</string>
     <string name="online_theme_intro">Uppgötvaðu útlit sem samfélagið hefur skapað. Með því að opna þetta safn hleðst niður opinber listi þess.</string>
     <string name="online_theme_refresh">Endurnýja samfélagsþemu</string>
     <string name="online_theme_list_description">Úrþemu búin til af samfélaginu</string>

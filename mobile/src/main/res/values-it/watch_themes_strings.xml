@@ -40,6 +40,7 @@
     <string name="watch_theme_name_duplicate">Esiste già un tema con questo nome</string>
 
     <string name="online_themes_title">Temi della community</string>
+    <string name="online_themes_title_short">Negozio</string>
     <string name="online_theme_intro">Scopri gli stili creati dalla community. L’apertura di questa galleria scarica il suo catalogo pubblico.</string>
     <string name="online_theme_refresh">Aggiorna i temi della community</string>
     <string name="online_theme_list_description">Temi per orologio creati dalla community</string>

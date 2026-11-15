@@ -304,6 +304,8 @@
     <string name="setting_always_show_time_on_description">De huidige tijd wordt altijd getoond. Het bovenste actiepictogram is niet zichtbaar (het wordt vervangen door de klok), maar de actie blijft normaal werken.</string>
     <string name="notification_action_stop">Stoppen</string>
     <string name="notification_action_force_stop">Geforceerd stoppen</string>
+    <string name="notification_action_themes">Thema\'s</string>
+    <string name="notification_up_next">Volgende nummer: %1$s</string>
     <string name="error_notification_access">Geen toegang tot meldingen. Controleer de telefoon.</string>
     <string name="error_notifications">Foutmeldingen</string>
     <string name="notification_access_notification_title">Svartifoss heeft toegang tot meldingen nodig</string>
@@ -1390,7 +1392,7 @@
     <string name="setting_playlist_shortcuts">Streamingsnelkoppelingen</string>
     <string name="setting_playlist_shortcuts_description">Open gedeelde links vanaf het horloge in YouTube Music, Spotify en andere streaming-apps</string>
     <string name="setting_shortcut_artwork">Snelkoppelingshoezen online ophalen</string>
-    <string name="setting_shortcut_artwork_description">Download een miniatuur voor elke opgeslagen snelkoppeling van de dienst, getoond in de telefoonlijst, het horlogemenu en toegewezen knoppen. Elke miniatuur wordt één keer opgehaald. Dit is de enige online toegang naast de updatecontrole; alleen de openbare deellink wordt verzonden. Standaard uitgeschakeld.</string>
+    <string name="setting_shortcut_artwork_description">Download een miniatuur voor elke opgeslagen snelkoppeling van de dienst, getoond in de telefoonlijst, het horlogemenu en toegewezen knoppen. Elke miniatuur wordt één keer opgehaald. Dit is de enige online toegang naast de updatecontrole; alleen de openbare deellink wordt verzonden. Standaard uitgeschakeld. Op het snelkoppelingsscherm van het horloge tonen afspeellijsten en albums van YouTube Music ook hun nummers, opgehaald via YouTube; staat dit uit, dan alleen nadat je op ‘Nummers bekijken’ tikt.</string>
     <string name="watch_streaming_shortcuts_empty">Voeg nummers, albums of afspeellijsten toe voor Snelle Acties en het horlogemenu</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d opgeslagen snelkoppeling · Beschikbaar in Snelle Acties en het horlogemenu</item>
@@ -2931,8 +2933,11 @@
     <string name="action_symfonium_sync">Symfonium-provider synchroniseren</string>
     <string name="app_icon_style_gradient">Kleurverloop</string>
     <string name="app_icon_style_solid">Effen kleur</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Crème</string>
     <string name="app_icon_style_feather">Houtskoolveer</string>
+    <string name="app_icon_style_coral">Koraal</string>
+    <string name="app_icon_style_ocean">Oceaan</string>
+    <string name="app_icon_style_violet">Violet</string>
     <string name="dev_show_rating_card">Beoordelingskaart tonen</string>
     <string name="dev_show_rating_card_description">Vraagt Google Play meteen om de ingebouwde beoordelingskaart en negeert de gebruikelijke limieten. Hij verschijnt alleen in een versie die via Google Play is geïnstalleerd (de interne test telt mee)</string>
     <string name="dev_show_rating_card_unavailable">Google Play heeft geen beoordelingskaart voor deze versie. Installeer hem via Google Play, interne test inbegrepen, en probeer het opnieuw</string>

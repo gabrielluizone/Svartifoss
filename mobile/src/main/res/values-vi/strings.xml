@@ -357,6 +357,8 @@ Một số gói biểu tượng yêu cầu ứng dụng có quyền truy cập b
     <string name="setting_always_show_time_on_description">Giờ hiện tại sẽ luôn được hiển thị. Biểu tượng hành động phía trên sẽ không hiện (được thay bằng đồng hồ), nhưng hành động vẫn hoạt động bình thường.</string>
     <string name="notification_action_stop">Dừng</string>
     <string name="notification_action_force_stop">Buộc dừng</string>
+    <string name="notification_action_themes">Chủ đề</string>
+    <string name="notification_up_next">Bài hát tiếp theo: %1$s</string>
     <string name="error_notification_access">Không có quyền truy cập thông báo. Kiểm tra điện thoại.</string>
     <string name="error_notifications">Thông báo lỗi</string>
     <string name="notification_access_notification_title">Svartifoss cần quyền truy cập thông báo</string>
@@ -2064,7 +2066,7 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="setting_playlist_shortcuts">Phím tắt phát trực tuyến</string>
     <string name="setting_playlist_shortcuts_description">Mở liên kết chia sẻ từ đồng hồ trong YouTube Music, Spotify và các ứng dụng phát trực tuyến khác</string>
     <string name="setting_shortcut_artwork">Tải hình ảnh phím tắt trực tuyến</string>
-    <string name="setting_shortcut_artwork_description">Tải hình thu nhỏ cho từng phím tắt đã lưu từ dịch vụ, hiển thị trong danh sách điện thoại, menu đồng hồ và các nút đã gán. Mỗi hình chỉ được tải một lần; chỉ liên kết chia sẻ công khai được gửi. Tắt theo mặc định.</string>
+    <string name="setting_shortcut_artwork_description">Tải hình thu nhỏ cho từng phím tắt đã lưu từ dịch vụ, hiển thị trong danh sách điện thoại, menu đồng hồ và các nút đã gán. Mỗi hình chỉ được tải một lần; chỉ liên kết chia sẻ công khai được gửi. Tắt theo mặc định. Trên màn hình lối tắt của đồng hồ, danh sách phát và album YouTube Music cũng hiển thị các bài hát, được lấy qua YouTube; khi tắt, chỉ khi bạn nhấn “Xem bài hát”.</string>
     <string name="setting_queue_local_artwork">Ảnh bìa hàng đợi từ thư viện</string>
     <string name="setting_queue_local_artwork_description">Trình phát nhạc cục bộ công bố ảnh bìa hàng đợi dưới dạng tham chiếu thư viện. Cấp quyền truy cập phương tiện để chúng có thể hiển thị trong hàng đợi trên đồng hồ. Không dùng Internet.</string>
     <string name="setting_queue_local_artwork_granted">Đã cấp quyền truy cập phương tiện — ảnh bìa hàng đợi cục bộ sẽ được hiển thị</string>
@@ -2966,8 +2968,11 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="action_symfonium_sync">Đồng bộ nhà cung cấp Symfonium</string>
     <string name="app_icon_style_gradient">Chuyển sắc</string>
     <string name="app_icon_style_solid">Màu đơn sắc</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Màu kem</string>
     <string name="app_icon_style_feather">Lông vũ than</string>
+    <string name="app_icon_style_coral">San hô</string>
+    <string name="app_icon_style_ocean">Đại dương</string>
+    <string name="app_icon_style_violet">Màu tím</string>
     <string name="dev_show_rating_card">Hiện thẻ đánh giá</string>
     <string name="dev_show_rating_card_description">Yêu cầu Google Play hiện thẻ đánh giá trong ứng dụng ngay lập tức, bỏ qua các giới hạn thông thường. Thẻ chỉ xuất hiện trong bản được cài từ Google Play (thử nghiệm nội bộ cũng được tính)</string>
     <string name="dev_show_rating_card_unavailable">Google Play không có thẻ đánh giá cho bản này. Hãy cài từ Google Play, kể cả thử nghiệm nội bộ, rồi thử lại</string>

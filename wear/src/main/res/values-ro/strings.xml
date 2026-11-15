@@ -59,6 +59,9 @@
     <string name="menu_header_search_history">Căutări recente</string>
     <string name="menu_header_library">Bibliotecă</string>
     <string name="shortcut_open_on_phone">Deschide pe telefon</string>
+    <string name="shortcut_tracks_heading">Melodii</string>
+    <string name="shortcut_tracks_show">Vezi melodiile</string>
+    <string name="shortcut_tracks_failed">Melodiile nu au putut fi încărcate. Atinge pentru a încerca din nou.</string>
     <string name="shortcut_continue_on_phone">Continuă pe telefon</string>
     <string name="chat_face_today">Azi</string>
 

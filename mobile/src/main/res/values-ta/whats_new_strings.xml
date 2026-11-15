@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">“%1$s” தாவலில், புதிய முகப்புப் பக்கம் உங்கள் தீம்களைப் படங்களாகவும் விரைவு சரிசெய்தல்களுடனும் காட்டுகிறது.</string>
+    <string name="whats_new_item_pickers">பாணித் தேர்விகள் இப்போது பெயர்ப் பட்டியலுக்குப் பதிலாக உங்கள் சொந்தக் கடிகாரத்தைக் காட்டுகின்றன.</string>
+    <string name="whats_new_item_notification">Svartifoss அறிவிப்பில் “%1$s” பொத்தான் உள்ளது; அது அடுத்த பாடலையும் காட்டுகிறது.</string>
+    <string name="whats_new_item_songs">YouTube Music பிளேலிஸ்ட் தனது பாடல்களைக் கடிகாரத்தின் குறுக்குவழித் திரையில் பட்டியலிடுகிறது.</string>
+    <string name="whats_new_item_icons">மூன்று புதிய ஆப் ஐகான்கள்: %1$s, %2$s மற்றும் %3$s.</string>
+    <string name="whats_new_item_quick_panel">விரைவுப் பலகம் இயங்கும் ஆப்பின் சொந்த விருப்பம், கலக்கு, மீண்டும் பொத்தான்களைப் பயன்படுத்தலாம்.</string>
+    <string name="whats_new_item_fixes">சரிசெய்யப்பட்டது: தவறான இசையைத் தொடங்கிய குறுக்குவழிகள், கட்டுப்பாடுகள்மீது படர்ந்த நீண்ட தலைப்புகள்.</string>
+</resources>

@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Тема са овим називом већ постоји</string>
 
     <string name="online_themes_title">Теме заједнице</string>
+    <string name="online_themes_title_short">Продавница</string>
     <string name="online_theme_intro">Откријте изгледе које је креирала заједница. Отварањем ове галерије преузима се њен јавни каталог.</string>
     <string name="online_theme_refresh">Освежи теме заједнице</string>
     <string name="online_theme_list_description">Теме сата које је креирала заједница</string>

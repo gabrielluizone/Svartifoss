@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">「%1$s」タブでは、新しいホームにテーマが画像で並び、クイック調整もできます。</string>
+    <string name="whats_new_item_pickers">スタイル選択に、名前の一覧ではなくお使いのウォッチが表示されるようになりました。</string>
+    <string name="whats_new_item_notification">Svartifoss の通知に「%1$s」ボタンが付き、次の曲も表示されます。</string>
+    <string name="whats_new_item_songs">YouTube Music のプレイリストの曲が、ウォッチのショートカット画面に一覧表示されます。</string>
+    <string name="whats_new_item_icons">新しいアプリアイコンが3つ加わりました：%1$s、%2$s、%3$s。</string>
+    <string name="whats_new_item_quick_panel">クイックパネルで、再生中アプリ自身の「高評価」「シャッフル」「リピート」ボタンを使えるようになりました。</string>
+    <string name="whats_new_item_fixes">修正：違う音楽を再生してしまうショートカットと、長いタイトルが操作部分に重なる問題。</string>
+</resources>

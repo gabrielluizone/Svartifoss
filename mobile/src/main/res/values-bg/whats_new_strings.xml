@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">В раздела „%1$s“ нова начална страница показва вашите теми като картини, с бързи настройки.</string>
+    <string name="whats_new_item_pickers">Избирачите на стил вече показват самия ви часовник вместо списък с имена.</string>
+    <string name="whats_new_item_notification">Известието на Svartifoss има бутон „%1$s“ и показва следващата песен.</string>
+    <string name="whats_new_item_songs">Плейлист в YouTube Music показва песните си на екрана за пряк път в часовника.</string>
+    <string name="whats_new_item_icons">Три нови иконки на приложението: %1$s, %2$s и %3$s.</string>
+    <string name="whats_new_item_quick_panel">Бързият панел може да използва бутоните за харесване, разбъркване и повторение на приложението, което свири.</string>
+    <string name="whats_new_item_fixes">Поправено: преки пътища, които пускаха грешна музика, и дълги заглавия, които се наслагваха върху контролите.</string>
+</resources>

@@ -344,6 +344,8 @@
     <string name="setting_always_show_time_on_description">現在時刻を常に表示します。上部のアクションアイコンは表示されず時計に置き換わりますが、アクション自体は通常どおり機能します。</string>
     <string name="notification_action_stop">停止</string>
     <string name="notification_action_force_stop">強制停止</string>
+    <string name="notification_action_themes">テーマ</string>
+    <string name="notification_up_next">次のトラック：%1$s</string>
     <string name="error_notification_access">通知へのアクセス権がありません。スマートフォンを確認してください。</string>
     <string name="error_notifications">エラー通知</string>
     <string name="notification_access_notification_title">Svartifoss には通知へのアクセス権が必要です</string>
@@ -2041,7 +2043,7 @@
     <string name="setting_playlist_shortcuts">ストリーミングショートカット</string>
     <string name="setting_playlist_shortcuts_description">ウォッチの共有リンクを YouTube Music、Spotify、その他のストリーミングアプリで開きます</string>
     <string name="setting_shortcut_artwork">ショートカットのアートワークをオンラインで取得</string>
-    <string name="setting_shortcut_artwork_description">保存した各ショートカットについて、サービスからサムネイルをダウンロードし、スマートフォンの一覧、ウォッチメニュー、割り当てたボタンに表示します。各サムネイルは1回だけ取得され、送信されるのは公開共有リンクだけです。既定ではオフです。</string>
+    <string name="setting_shortcut_artwork_description">保存した各ショートカットについて、サービスからサムネイルをダウンロードし、スマートフォンの一覧、ウォッチメニュー、割り当てたボタンに表示します。各サムネイルは1回だけ取得され、送信されるのは公開共有リンクだけです。既定ではオフです。ウォッチのショートカット画面では、YouTube Music のプレイリストとアルバムの曲も一覧表示されます（YouTube 経由で取得）。オフの場合は「曲を表示」をタップしたときだけ取得します。</string>
     <string name="setting_queue_local_artwork">ライブラリからのキューカバー</string>
     <string name="setting_queue_local_artwork_description">ローカル音楽プレーヤーは、キューのカバーをライブラリ参照として公開します。メディアアクセスを許可すると、ウォッチのキューに表示できます。インターネット接続は使用しません。</string>
     <string name="setting_queue_local_artwork_granted">メディアアクセスを許可済み — ローカルキューのカバーを表示します</string>
@@ -2943,8 +2945,11 @@
     <string name="action_symfonium_sync">Symfonium のプロバイダーを同期</string>
     <string name="app_icon_style_gradient">グラデーション</string>
     <string name="app_icon_style_solid">単色</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">クリーム色</string>
     <string name="app_icon_style_feather">灰羽</string>
+    <string name="app_icon_style_coral">コーラル</string>
+    <string name="app_icon_style_ocean">オーシャン</string>
+    <string name="app_icon_style_violet">バイオレット</string>
     <string name="dev_show_rating_card">評価カードを表示</string>
     <string name="dev_show_rating_card_description">通常の制限を無視して、Google Play のアプリ内レビューカードを今すぐ要求します。Google Play からインストールしたビルドでのみ表示されます（内部テストも対象です）</string>
     <string name="dev_show_rating_card_unavailable">このビルドには Google Play のレビューカードがありません。内部テストを含め、Google Play からインストールしてもう一度お試しください</string>

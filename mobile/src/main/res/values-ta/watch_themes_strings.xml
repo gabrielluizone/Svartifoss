@@ -206,6 +206,7 @@
     <string name="watch_theme_name_required">Theme பெயரை உள்ளிடவும்</string>
     <string name="watch_theme_name_duplicate">இந்த பெயரில் theme ஏற்கனவே உள்ளது</string>
     <string name="online_themes_title">Community themes</string>
+    <string name="online_themes_title_short">ஸ்டோர்</string>
     <string name="online_theme_intro">Community உருவாக்கிய தோற்றங்களை கண்டறியுங்கள். ஒன்றைச் சேர்க்கும் முன் அவற்றின் preview screen-களை search, filter மற்றும் compare செய்யுங்கள்.</string>
     <string name="online_theme_refresh">Community themes-ஐ refresh செய்</string>
     <string name="online_theme_list_description">Community உருவாக்கிய watch themes</string>

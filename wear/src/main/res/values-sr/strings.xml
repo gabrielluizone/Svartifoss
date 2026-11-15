@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">Недавне претраге</string>
     <string name="menu_header_library">Библиотека</string>
     <string name="shortcut_open_on_phone">Отвори на телефону</string>
+    <string name="shortcut_tracks_heading">Песме</string>
+    <string name="shortcut_tracks_show">Прикажи песме</string>
+    <string name="shortcut_tracks_failed">Није могуће учитати песме. Додирните да бисте покушали поново.</string>
     <string name="shortcut_continue_on_phone">Наставите на телефону</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Данас</string>

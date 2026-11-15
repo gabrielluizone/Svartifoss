@@ -359,6 +359,8 @@ Svartifoss — काले बेसाल्ट के स्तंभ
     <string name="setting_always_show_time_on_description">मौजूदा समय हमेशा दिखेगा। ऊपर का ऐक्शन आइकन दिखाई नहीं देगा (उसकी जगह घड़ी होगी), लेकिन ऐक्शन सामान्य रूप से काम करता रहेगा।</string>
     <string name="notification_action_stop">रोकें</string>
     <string name="notification_action_force_stop">फ़ोर्स स्टॉप</string>
+    <string name="notification_action_themes">थीम्स</string>
+    <string name="notification_up_next">अगला ट्रैक: %1$s</string>
     <string name="error_notification_access">नोटिफ़िकेशन एक्सेस नहीं है। फ़ोन जाँचें।</string>
     <string name="error_notifications">त्रुटि नोटिफ़िकेशन</string>
     <string name="notification_access_notification_title">Svartifoss को नोटिफ़िकेशन एक्सेस चाहिए</string>
@@ -2066,7 +2068,7 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     <string name="setting_playlist_shortcuts">स्ट्रीमिंग शॉर्टकट</string>
     <string name="setting_playlist_shortcuts_description">घड़ी से YouTube Music, Spotify और अन्य स्ट्रीमिंग ऐप में शेयर लिंक खोलें</string>
     <string name="setting_shortcut_artwork">शॉर्टकट आर्टवर्क ऑनलाइन लाएँ</string>
-    <string name="setting_shortcut_artwork_description">सेवा से हर सहेजे गए शॉर्टकट का थंबनेल डाउनलोड करें, जो फ़ोन सूची, वॉच मेन्यू और असाइन किए गए बटन पर दिखेगा। हर थंबनेल केवल एक बार लिया जाता है; केवल सार्वजनिक शेयर लिंक भेजा जाता है। डिफ़ॉल्ट रूप से बंद।</string>
+    <string name="setting_shortcut_artwork_description">सेवा से हर सहेजे गए शॉर्टकट का थंबनेल डाउनलोड करें, जो फ़ोन सूची, वॉच मेन्यू और असाइन किए गए बटन पर दिखेगा। हर थंबनेल केवल एक बार लिया जाता है; केवल सार्वजनिक शेयर लिंक भेजा जाता है। डिफ़ॉल्ट रूप से बंद। घड़ी की शॉर्टकट स्क्रीन पर YouTube Music की प्लेलिस्ट और एल्बम अपने गाने भी दिखाते हैं, जो YouTube से लाए जाते हैं; बंद होने पर केवल “गाने देखें” पर टैप करने के बाद।</string>
     <string name="setting_queue_local_artwork">आपकी लाइब्रेरी से कतार कवर</string>
     <string name="setting_queue_local_artwork_description">लोकल म्यूज़िक प्लेयर कतार कवर को लाइब्रेरी रेफ़रेंस के रूप में प्रकाशित करते हैं। मीडिया एक्सेस दें ताकि वे वॉच कतार में दिख सकें। इसमें इंटरनेट एक्सेस शामिल नहीं है।</string>
     <string name="setting_queue_local_artwork_granted">मीडिया एक्सेस दी गई — लोकल कतार कवर दिखेंगे</string>
@@ -2971,8 +2973,11 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     <string name="action_symfonium_sync">Symfonium प्रदाता सिंक करें</string>
     <string name="app_icon_style_gradient">ग्रेडिएंट</string>
     <string name="app_icon_style_solid">एक रंग</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">क्रीम</string>
     <string name="app_icon_style_feather">चारकोल पंख</string>
+    <string name="app_icon_style_coral">मूंगा</string>
+    <string name="app_icon_style_ocean">महासागर</string>
+    <string name="app_icon_style_violet">बैंगनी</string>
     <string name="dev_show_rating_card">रेटिंग कार्ड दिखाएँ</string>
     <string name="dev_show_rating_card_description">सामान्य सीमाओं को अनदेखा करके अभी Google Play से उसका इन-ऐप रिव्यू कार्ड माँगता है। यह केवल Google Play से इंस्टॉल किए गए बिल्ड में दिखता है (आंतरिक टेस्टिंग भी गिनी जाती है)</string>
     <string name="dev_show_rating_card_unavailable">इस बिल्ड के लिए Google Play के पास कोई रिव्यू कार्ड नहीं है। इसे Google Play से इंस्टॉल करें, आंतरिक टेस्टिंग समेत, और फिर कोशिश करें</string>

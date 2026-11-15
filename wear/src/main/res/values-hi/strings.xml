@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">हाल की खोजें</string>
     <string name="menu_header_library">लाइब्रेरी</string>
     <string name="shortcut_open_on_phone">फ़ोन पर खोलें</string>
+    <string name="shortcut_tracks_heading">गाने</string>
+    <string name="shortcut_tracks_show">गाने देखें</string>
+    <string name="shortcut_tracks_failed">गाने लोड नहीं हो सके। फिर से कोशिश करने के लिए टैप करें।</string>
     <string name="shortcut_continue_on_phone">अपने फ़ोन पर जारी रखें</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">आज</string>

@@ -350,6 +350,8 @@
     <string name="setting_always_show_time_on_description">Aktuálny čas sa bude zobrazovať vždy. Horná ikona akcie nebude viditeľná (nahradia ju hodiny), ale akcia bude naďalej fungovať normálne.</string>
     <string name="notification_action_stop">Zastaviť</string>
     <string name="notification_action_force_stop">Vynútiť zastavenie</string>
+    <string name="notification_action_themes">Témy</string>
+    <string name="notification_up_next">Ďalšia skladba: %1$s</string>
     <string name="error_notification_access">Žiadny prístup k oznámeniam. Skontrolujte telefón.</string>
     <string name="error_notifications">Oznámenia o chybách</string>
     <string name="notification_access_notification_title">Svartifoss potrebuje prístup k oznámeniam</string>
@@ -2047,7 +2049,7 @@
     <string name="setting_playlist_shortcuts">Skratky streamovania</string>
     <string name="setting_playlist_shortcuts_description">Otvárať zdieľané odkazy z hodiniek v YouTube Music, Spotify a ďalších streamovacích aplikáciách</string>
     <string name="setting_shortcut_artwork">Načítať obrázky skratiek online</string>
-    <string name="setting_shortcut_artwork_description">Stiahne zo služby miniatúru pre každú uloženú skratku a zobrazí ju v zozname telefónu, ponuke hodiniek a na priradených tlačidlách. Každá miniatúra sa načíta len raz; odošle sa iba verejný odkaz na zdieľanie. Predvolene vypnuté.</string>
+    <string name="setting_shortcut_artwork_description">Stiahne zo služby miniatúru pre každú uloženú skratku a zobrazí ju v zozname telefónu, ponuke hodiniek a na priradených tlačidlách. Každá miniatúra sa načíta len raz; odošle sa iba verejný odkaz na zdieľanie. Predvolene vypnuté. Na obrazovke odkazu v hodinkách playlisty a albumy YouTube Music zobrazia aj svoje skladby, načítané cez YouTube; keď je voľba vypnutá, iba po klepnutí na „Zobraziť skladby“.</string>
     <string name="setting_queue_local_artwork">Obaly poradia z knižnice</string>
     <string name="setting_queue_local_artwork_description">Lokálne hudobné prehrávače publikujú obaly poradia ako odkazy do knižnice. Povoľte prístup k médiám, aby sa mohli zobraziť v poradí na hodinkách. Internet sa nepoužíva.</string>
     <string name="setting_queue_local_artwork_granted">Prístup k médiám povolený — lokálne obaly poradia sa zobrazia</string>
@@ -2958,8 +2960,11 @@
     <string name="action_symfonium_sync">Synchronizovať poskytovateľa Symfonium</string>
     <string name="app_icon_style_gradient">Prechod</string>
     <string name="app_icon_style_solid">Jednofarebná</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Krémová</string>
     <string name="app_icon_style_feather">Uhoľné pierko</string>
+    <string name="app_icon_style_coral">Korálová</string>
+    <string name="app_icon_style_ocean">Oceánová</string>
+    <string name="app_icon_style_violet">Fialová</string>
     <string name="dev_show_rating_card">Zobraziť hodnotiacu kartu</string>
     <string name="dev_show_rating_card_description">Okamžite si vyžiada od Google Play jeho kartu na hodnotenie priamo v aplikácii a pritom ignoruje obvyklé obmedzenia. Zobrazí sa len v zostavení nainštalovanom z Google Play (počíta sa aj interné testovanie)</string>
     <string name="dev_show_rating_card_unavailable">Google Play pre toto zostavenie nemá hodnotiacu kartu. Nainštalujte ho z Google Play, vrátane interného testovania, a skúste to znova</string>

@@ -40,6 +40,7 @@
     <string name="watch_theme_name_duplicate">Ein Theme mit diesem Namen existiert bereits</string>
 
     <string name="online_themes_title">Community-Themes</string>
+    <string name="online_themes_title_short">Shop</string>
     <string name="online_theme_intro">Entdecke von der Community erstellte Designs. Beim Öffnen dieser Galerie wird ihr öffentlicher Katalog heruntergeladen.</string>
     <string name="online_theme_refresh">Community-Themes aktualisieren</string>
     <string name="online_theme_list_description">Von der Community erstellte Watch-Themes</string>

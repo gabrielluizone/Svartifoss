@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">在“%1$s”标签页中，新的主页以图片形式显示你的主题，并提供快速调整。</string>
+    <string name="whats_new_item_pickers">样式选择器现在显示你自己的手表，而不是名称列表。</string>
+    <string name="whats_new_item_notification">Svartifoss 通知新增了“%1$s”按钮，并会显示下一首曲目。</string>
+    <string name="whats_new_item_songs">YouTube Music 播放列表会在手表的快捷方式界面上列出其中的歌曲。</string>
+    <string name="whats_new_item_icons">三个新的应用图标：%1$s、%2$s和%3$s。</string>
+    <string name="whats_new_item_quick_panel">快捷面板可以使用正在播放的应用自带的喜欢、随机播放和重复按钮。</string>
+    <string name="whats_new_item_fixes">已修复：快捷方式播放错误音乐，以及过长的标题遮挡控件。</string>
+</resources>

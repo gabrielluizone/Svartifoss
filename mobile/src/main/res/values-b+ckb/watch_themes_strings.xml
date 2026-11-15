@@ -206,6 +206,7 @@
     <string name="watch_theme_name_required">ناوی theme بنووسە</string>
     <string name="watch_theme_name_duplicate">theme ـێک بەم ناوەوە هەیە</string>
     <string name="online_themes_title">Community themes</string>
+    <string name="online_themes_title_short">فرۆشگا</string>
     <string name="online_theme_intro">ڕووخسارە دروستکراوەکانی community بدۆزەرەوە. پێش زیادکردنی یەکێک، preview screen ـەکانیان بگەڕێ، filter بکە و بەراورد بکە.</string>
     <string name="online_theme_refresh">community themes نوێ بکەرەوە</string>
     <string name="online_theme_list_description">watch theme ـە دروستکراوەکانی community</string>

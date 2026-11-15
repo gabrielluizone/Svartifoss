@@ -40,6 +40,7 @@
     <string name="watch_theme_name_duplicate">Υπάρχει ήδη θέμα με αυτό το όνομα</string>
 
     <string name="online_themes_title">Θέματα κοινότητας</string>
+    <string name="online_themes_title_short">Κατάστημα</string>
     <string name="online_theme_intro">Ανακαλύψτε εμφανίσεις που δημιούργησε η κοινότητα. Το άνοιγμα αυτής της συλλογής κατεβάζει τον δημόσιο κατάλογό της.</string>
     <string name="online_theme_refresh">Ανανέωση θεμάτων κοινότητας</string>
     <string name="online_theme_list_description">Θέματα ρολογιού που δημιούργησε η κοινότητα</string>

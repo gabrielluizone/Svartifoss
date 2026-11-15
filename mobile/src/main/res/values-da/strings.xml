@@ -346,6 +346,8 @@
     <string name="setting_always_show_time_on_description">Aktuel tid vises altid. Det øverste handlingsikon er ikke synligt (det erstattes af uret), men handlingen fungerer stadig normalt.</string>
     <string name="notification_action_stop">Stop</string>
     <string name="notification_action_force_stop">Tving stop</string>
+    <string name="notification_action_themes">Temaer</string>
+    <string name="notification_up_next">Næste nummer: %1$s</string>
     <string name="error_notification_access">Ingen adgang til notifikationer. Tjek telefonen.</string>
     <string name="error_notifications">Fejlnotifikationer</string>
     <string name="notification_access_notification_title">Svartifoss skal have adgang til notifikationer</string>
@@ -2043,7 +2045,7 @@
     <string name="setting_playlist_shortcuts">Streaminggenveje</string>
     <string name="setting_playlist_shortcuts_description">Åbn delingslinks fra uret i YouTube Music, Spotify og andre streamingapps</string>
     <string name="setting_shortcut_artwork">Hent genvejsbilleder online</string>
-    <string name="setting_shortcut_artwork_description">Downloader en miniature fra tjenesten for hver gemt genvej og viser den på telefonlisten, i urmenuen og på tildelte knapper. Hver miniature hentes kun én gang; kun det offentlige delingslink sendes. Slået fra som standard.</string>
+    <string name="setting_shortcut_artwork_description">Downloader en miniature fra tjenesten for hver gemt genvej og viser den på telefonlisten, i urmenuen og på tildelte knapper. Hver miniature hentes kun én gang; kun det offentlige delingslink sendes. Slået fra som standard. På urets genvejsskærm viser playlister og album fra YouTube Music også deres sange, hentet via YouTube; når den er slået fra, kun når du trykker på “Se sange”.</string>
     <string name="setting_queue_local_artwork">Køcovers fra dit bibliotek</string>
     <string name="setting_queue_local_artwork_description">Lokale musikafspillere udgiver køcovers som biblioteksreferencer. Giv medieadgang, så de kan vises i urets kø. Der bruges ingen internetadgang.</string>
     <string name="setting_queue_local_artwork_granted">Medieadgang givet — lokale køcovers vises</string>
@@ -2948,8 +2950,11 @@
     <string name="action_symfonium_sync">Synkroniser Symfonium-udbyder</string>
     <string name="app_icon_style_gradient">Farveforløb</string>
     <string name="app_icon_style_solid">Ensfarvet</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">Creme</string>
     <string name="app_icon_style_feather">Trækulsfjer</string>
+    <string name="app_icon_style_coral">Koral</string>
+    <string name="app_icon_style_ocean">Ocean</string>
+    <string name="app_icon_style_violet">Violet</string>
     <string name="dev_show_rating_card">Vis bedømmelseskortet</string>
     <string name="dev_show_rating_card_description">Beder med det samme Google Play om sit anmeldelseskort i appen og ignorerer de sædvanlige grænser. Det vises kun i en version installeret fra Google Play (intern test tæller med)</string>
     <string name="dev_show_rating_card_unavailable">Google Play har intet anmeldelseskort til denne version. Installer den fra Google Play, intern test inkluderet, og prøv igen</string>

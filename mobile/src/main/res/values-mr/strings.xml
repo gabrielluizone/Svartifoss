@@ -763,6 +763,8 @@
     <string name="setting_always_show_time_on_description">सध्याची वेळ नेहमी दिसेल. वरचे क्रिया आयकॉन दिसणार नाही (त्याऐवजी घड्याळ दिसेल), पण क्रिया तरीही सामान्यपणे काम करेल.</string>
     <string name="notification_action_stop">थांबवा</string>
     <string name="notification_action_force_stop">सक्तीने थांबवा</string>
+    <string name="notification_action_themes">थीम्स</string>
+    <string name="notification_up_next">पुढील ट्रॅक: %1$s</string>
     <string name="error_notification_access">सूचना प्रवेश नाही. फोन तपासा.</string>
     <string name="error_notifications">त्रुटी सूचना</string>
     <string name="notification_access_notification_title">Svartifoss ला सूचना प्रवेश आवश्यक आहे</string>
@@ -1990,7 +1992,7 @@
     <string name="setting_playlist_shortcuts">स्ट्रीमिंग शॉर्टकट्स</string>
     <string name="setting_playlist_shortcuts_description">घड्याळावरून share links YouTube Music, Spotify आणि इतर streaming apps मध्ये उघडा</string>
     <string name="setting_shortcut_artwork">शॉर्टकट artwork ऑनलाइन मिळवा</string>
-    <string name="setting_shortcut_artwork_description">सेवा सार्वजनिक preview artwork उपलब्ध करत असल्यास thumbnail डाउनलोड करते; ते फोन सूची, घड्याळ मेनू आणि नियुक्त बटणांवर दिसते. प्रत्येक उपलब्ध thumbnail फक्त एकदाच घेतला जातो; फक्त सार्वजनिक share link पाठवली जाते. डीफॉल्टने बंद.</string>
+    <string name="setting_shortcut_artwork_description">सेवा सार्वजनिक preview artwork उपलब्ध करत असल्यास thumbnail डाउनलोड करते; ते फोन सूची, घड्याळ मेनू आणि नियुक्त बटणांवर दिसते. प्रत्येक उपलब्ध thumbnail फक्त एकदाच घेतला जातो; फक्त सार्वजनिक share link पाठवली जाते. डीफॉल्टने बंद. घड्याळाच्या शॉर्टकट स्क्रीनवर YouTube Music च्या प्लेलिस्ट आणि अल्बम त्यांची गाणीही दाखवतात, जी YouTube मधून मिळवली जातात; बंद असताना फक्त “गाणी पहा” वर टॅप केल्यावर.</string>
     <string name="setting_queue_local_artwork">तुमच्या लायब्ररीमधील queue covers</string>
     <string name="setting_queue_local_artwork_description">लोकल music players queue covers लायब्ररी references म्हणून प्रकाशित करतात. ते घड्याळाच्या queue वर दाखवण्यासाठी media access द्या. इंटरनेट प्रवेश वापरला जात नाही.</string>
     <string name="setting_queue_local_artwork_granted">Media access मंजूर — स्थानिक queue covers दाखवले जातील</string>
@@ -2327,8 +2329,11 @@
     <string name="action_symfonium_sync">Symfonium प्रदाता सिंक करा</string>
     <string name="app_icon_style_gradient">ग्रेडियंट</string>
     <string name="app_icon_style_solid">एकच रंग</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">क्रीम</string>
     <string name="app_icon_style_feather">चारकोल पंख</string>
+    <string name="app_icon_style_coral">प्रवाळी</string>
+    <string name="app_icon_style_ocean">महासागर</string>
+    <string name="app_icon_style_violet">जांभळा</string>
     <string name="dev_show_rating_card">रेटिंग कार्ड दाखवा</string>
     <string name="dev_show_rating_card_description">नेहमीच्या मर्यादा दुर्लक्षित करून Google Play कडे आता त्याचे अ‍ॅपमधील रिव्ह्यू कार्ड मागते. ते फक्त Google Play वरून इन्स्टॉल केलेल्या बिल्डमध्येच दिसते (अंतर्गत चाचणीही गणली जाते)</string>
     <string name="dev_show_rating_card_unavailable">या बिल्डसाठी Google Play कडे रिव्ह्यू कार्ड नाही. ते Google Play वरून, अंतर्गत चाचणीसह, इन्स्टॉल करा आणि पुन्हा प्रयत्न करा</string>

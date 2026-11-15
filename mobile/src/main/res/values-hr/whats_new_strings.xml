@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Na kartici „%1$s“ nova početna stranica prikazuje vaše teme kao slike, uz brza podešavanja.</string>
+    <string name="whats_new_item_pickers">Odabir stila sada prikazuje vaš vlastiti sat umjesto popisa naziva.</string>
+    <string name="whats_new_item_notification">Obavijest Svartifossa ima gumb „%1$s“ i prikazuje sljedeću pjesmu.</string>
+    <string name="whats_new_item_songs">Popis za reprodukciju s YouTube Musica navodi svoje pjesme na zaslonu prečaca na satu.</string>
+    <string name="whats_new_item_icons">Tri nove ikone aplikacije: %1$s, %2$s i %3$s.</string>
+    <string name="whats_new_item_quick_panel">Brza ploča može koristiti vlastite gumbe za sviđanje, nasumično i ponavljanje aplikacije koja svira.</string>
+    <string name="whats_new_item_fixes">Ispravljeno: prečaci koji su pokretali pogrešnu glazbu i dugi naslovi koji su zalazili u kontrole.</string>
+</resources>

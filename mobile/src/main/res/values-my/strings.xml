@@ -763,6 +763,8 @@
     <string name="setting_always_show_time_on_description">လက်ရှိအချိန်ကို အမြဲပြမည်။ အပေါ် action icon ကို မမြင်ရဘဲ (နာရီဖြင့် အစားထိုးမည်) လုပ်ဆောင်ချက်က ပုံမှန်အတိုင်း အလုပ်လုပ်မည်။</string>
     <string name="notification_action_stop">ရပ်ရန်</string>
     <string name="notification_action_force_stop">အတင်းရပ်ရန်</string>
+    <string name="notification_action_themes">Themes</string>
+    <string name="notification_up_next">နောက်တစ်ပုဒ်: %1$s</string>
     <string name="error_notification_access">Notification access မရှိပါ။ ဖုန်းကို စစ်ပါ။</string>
     <string name="error_notifications">အမှား notification များ</string>
     <string name="notification_access_notification_title">Svartifoss သည် notification access လိုအပ်သည်</string>
@@ -1990,7 +1992,7 @@
     <string name="setting_playlist_shortcuts">Streaming shortcut များ</string>
     <string name="setting_playlist_shortcuts_description">နာရီမှ share link များကို YouTube Music, Spotify နှင့် အခြား streaming apps တွင် ဖွင့်ပါ</string>
     <string name="setting_shortcut_artwork">Shortcut artwork ကို online မှရယူပါ</string>
-    <string name="setting_shortcut_artwork_description">Service က public preview artwork ပေးလျှင် thumbnail ကို download လုပ်ပြီး phone list, watch menu နှင့် သတ်မှတ်ထားသော buttons တွင် ပြမည်။ ရနိုင်သော thumbnail တစ်ခုစီကို တစ်ကြိမ်သာ ရယူပြီး public share link သာ ပို့သည်။ ပုံသေပိတ်ထားသည်။</string>
+    <string name="setting_shortcut_artwork_description">Service က public preview artwork ပေးလျှင် thumbnail ကို download လုပ်ပြီး phone list, watch menu နှင့် သတ်မှတ်ထားသော buttons တွင် ပြမည်။ ရနိုင်သော thumbnail တစ်ခုစီကို တစ်ကြိမ်သာ ရယူပြီး public share link သာ ပို့သည်။ ပုံသေပိတ်ထားသည်။ နာရီ၏ shortcut မျက်နှာပြင်တွင် YouTube Music playlist နှင့် album များသည် ၎င်းတို့၏ သီချင်းများကိုလည်း ပြမည်၊ YouTube မှတစ်ဆင့် ရယူသည်။ ပိတ်ထားလျှင် “သီချင်းများ ကြည့်ရန်” ကို တို့မှသာ ရယူသည်။</string>
     <string name="setting_queue_local_artwork">Library မှ queue covers</string>
     <string name="setting_queue_local_artwork_description">Local music players များက queue covers ကို library references အဖြစ် ထုတ်ပေးသည်။ watch queue တွင် ပြရန် media access ခွင့်ပြုပါ။ Internet access မသုံးပါ။</string>
     <string name="setting_queue_local_artwork_granted">Media access ခွင့်ပြုပြီး — local queue covers ပြမည်</string>
@@ -2327,8 +2329,11 @@
     <string name="action_symfonium_sync">Symfonium ပံ့ပိုးသူကို ထပ်တူပြုရန်</string>
     <string name="app_icon_style_gradient">အရောင်ဆင်ခြင်</string>
     <string name="app_icon_style_solid">အရောင်တစ်ရောင်တည်း</string>
-    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_cream">ခရင်မ်</string>
     <string name="app_icon_style_feather">မီးသွေးငှက်မွှေး</string>
+    <string name="app_icon_style_coral">ကိုရယ်</string>
+    <string name="app_icon_style_ocean">သမုဒ္ဒရာ</string>
+    <string name="app_icon_style_violet">ခရမ်း</string>
     <string name="dev_show_rating_card">အဆင့်သတ်မှတ်ကတ်ကို ပြရန်</string>
     <string name="dev_show_rating_card_description">ပုံမှန်ကန့်သတ်ချက်များကို လျစ်လျူရှုပြီး Google Play ထံမှ အက်ပ်အတွင်း သုံးသပ်ချက်ကတ်ကို ယခုချက်ချင်း တောင်းသည်။ Google Play မှ ထည့်သွင်းထားသော ဗားရှင်းတွင်သာ ပေါ်လာသည် (အတွင်းပိုင်း စမ်းသပ်မှုလည်း ပါဝင်သည်)</string>
     <string name="dev_show_rating_card_unavailable">ဤဗားရှင်းအတွက် Google Play တွင် သုံးသပ်ချက်ကတ် မရှိပါ။ အတွင်းပိုင်း စမ်းသပ်မှုအပါအဝင် Google Play မှ ထည့်သွင်းပြီး ထပ်စမ်းကြည့်ပါ</string>

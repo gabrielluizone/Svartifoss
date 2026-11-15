@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">Dans l’onglet « %1$s », une nouvelle page d’accueil affiche vos thèmes sous forme d’images, avec des réglages rapides.</string>
+    <string name="whats_new_item_pickers">Les sélecteurs de style affichent désormais votre propre montre plutôt qu’une liste de noms.</string>
+    <string name="whats_new_item_notification">La notification de Svartifoss a un bouton « %1$s » et affiche le titre suivant.</string>
+    <string name="whats_new_item_songs">Une playlist YouTube Music liste ses morceaux sur l’écran de raccourci de la montre.</string>
+    <string name="whats_new_item_icons">Trois nouvelles icônes d’application : %1$s, %2$s et %3$s.</string>
+    <string name="whats_new_item_quick_panel">Le panneau rapide peut utiliser les boutons J’aime, Aléatoire et Répéter de l’application en cours de lecture.</string>
+    <string name="whats_new_item_fixes">Corrigé : des raccourcis qui lançaient la mauvaise musique et de longs titres qui débordaient sur les commandes.</string>
+</resources>

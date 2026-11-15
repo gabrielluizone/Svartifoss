@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">På fliken ”%1$s” visar en ny startsida dina teman som bilder, med snabbjusteringar.</string>
+    <string name="whats_new_item_pickers">Stilväljarna visar nu din egen klocka i stället för en lista med namn.</string>
+    <string name="whats_new_item_notification">Svartifoss-aviseringen har en ”%1$s”-knapp och visar nästa låt.</string>
+    <string name="whats_new_item_songs">En YouTube Music-spellista visar sina låtar på klockans genvägsskärm.</string>
+    <string name="whats_new_item_icons">Tre nya appikoner: %1$s, %2$s och %3$s.</string>
+    <string name="whats_new_item_quick_panel">Snabbpanelen kan använda den spelande appens egna knappar för gilla, blanda och upprepa.</string>
+    <string name="whats_new_item_fixes">Åtgärdat: genvägar som startade fel musik och långa titlar som hamnade över kontrollerna.</string>
+</resources>

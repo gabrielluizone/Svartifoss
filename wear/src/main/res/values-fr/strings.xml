@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">Recherches récentes</string>
     <string name="menu_header_library">Bibliothèque</string>
     <string name="shortcut_open_on_phone">Ouvrir sur le téléphone</string>
+    <string name="shortcut_tracks_heading">Titres</string>
+    <string name="shortcut_tracks_show">Voir les titres</string>
+    <string name="shortcut_tracks_failed">Impossible de charger les titres. Touchez pour réessayer.</string>
     <string name="shortcut_continue_on_phone">Continuez sur votre téléphone</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Aujourd’hui</string>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="whats_new_item_home">На вкладке «%1$s» новая главная страница показывает ваши темы в виде картинок и быстрые настройки.</string>
+    <string name="whats_new_item_pickers">Выбор стиля теперь показывает ваши собственные часы вместо списка названий.</string>
+    <string name="whats_new_item_notification">В уведомлении Svartifoss есть кнопка «%1$s», и оно показывает следующий трек.</string>
+    <string name="whats_new_item_songs">Плейлист YouTube Music показывает свои песни на экране ярлыка в часах.</string>
+    <string name="whats_new_item_icons">Три новых значка приложения: %1$s, %2$s и %3$s.</string>
+    <string name="whats_new_item_quick_panel">Быстрая панель может использовать собственные кнопки «Нравится», «Перемешать» и «Повтор» воспроизводящего приложения.</string>
+    <string name="whats_new_item_fixes">Исправлено: ярлыки, запускавшие не ту музыку, и длинные названия, заходившие на элементы управления.</string>
+</resources>

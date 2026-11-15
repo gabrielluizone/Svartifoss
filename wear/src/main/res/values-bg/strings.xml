@@ -68,6 +68,9 @@
     <string name="menu_header_search_history">Скорошни търсения</string>
     <string name="menu_header_library">Библиотека</string>
     <string name="shortcut_open_on_phone">Отваряне на телефона</string>
+    <string name="shortcut_tracks_heading">Песни</string>
+    <string name="shortcut_tracks_show">Покажи песните</string>
+    <string name="shortcut_tracks_failed">Песните не можаха да бъдат заредени. Докоснете, за да опитате отново.</string>
     <string name="shortcut_continue_on_phone">Продължете на телефона си</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Днес</string>

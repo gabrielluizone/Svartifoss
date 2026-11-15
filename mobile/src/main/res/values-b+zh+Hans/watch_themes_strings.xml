@@ -38,6 +38,7 @@
     <string name="watch_theme_name_required">请输入主题名称</string>
     <string name="watch_theme_name_duplicate">已存在同名主题</string>
     <string name="online_themes_title">社区主题</string>
+    <string name="online_themes_title_short">商店</string>
     <string name="online_theme_intro">发现社区创作的外观。打开此图库会下载其公开目录。</string>
     <string name="online_theme_refresh">刷新社区主题</string>
     <string name="online_theme_list_description">社区创作的手表主题</string>

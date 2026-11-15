@@ -41,6 +41,7 @@
     <string name="watch_theme_name_duplicate">Már létezik ilyen nevű téma</string>
 
     <string name="online_themes_title">Közösségi témák</string>
+    <string name="online_themes_title_short">Áruház</string>
     <string name="online_theme_intro">Fedezze fel a közösség által készített megjelenéseket. A galéria megnyitásakor letöltődik a nyilvános katalógusa.</string>
     <string name="online_theme_refresh">Közösségi témák frissítése</string>
     <string name="online_theme_list_description">A közösség által készített óraí témák</string>
