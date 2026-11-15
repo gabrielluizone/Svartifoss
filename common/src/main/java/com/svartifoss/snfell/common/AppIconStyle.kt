@@ -15,6 +15,9 @@ package com.svartifoss.snfell.common
  *   polarity above: the phone's icon is a dark green (#435244) with a warm grey mark (#BCB8AD), the
  *   watch's a pale yellow (#F5F3D9) with a brown mark (#6C5E3B) - the `launcher_feather_*` colours in
  *   `common`. The preference value is `feather` because values are `[a-z]+` protocol identifiers.
+ * - [CORAL], [OCEAN] and [VIOLET]: a palette per device, like Feather, in the same polarity. Each is
+ *   a saturated ground with a pale mark on the phone and a pale ground with a deep mark of the same
+ *   hue on the watch (`launcher_coral_*`, `launcher_ocean_*`, `launcher_violet_*` in `common`).
  *
  * Every style is an `<activity-alias>` in each module's `src/play` manifest, and [aliasName] is
  * what both launcher controllers address. The launcher only ever sees one of them enabled.
@@ -25,7 +28,10 @@ enum class AppIconStyle(val preferenceValue: String, val aliasName: String) {
     SOLID("solid", ".LauncherIconSolid"),
     GRADIENT("gradient", ".LauncherIconGradient"),
     CREAM("cream", ".LauncherIconCream"),
-    FEATHER("feather", ".LauncherIconFeather");
+    FEATHER("feather", ".LauncherIconFeather"),
+    CORAL("coral", ".LauncherIconCoral"),
+    OCEAN("ocean", ".LauncherIconOcean"),
+    VIOLET("violet", ".LauncherIconViolet");
 
     companion object {
         /** What a new install, an unknown value and a missing value all resolve to. */

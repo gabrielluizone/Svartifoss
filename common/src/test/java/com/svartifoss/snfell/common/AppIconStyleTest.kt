@@ -52,8 +52,10 @@ class AppIconStyleTest {
     @Test
     fun `the styles added after the original two keep the picker order`() {
         // The enum is the picker's order: the arrays pair with it by index, so a new style goes last.
-        assertEquals(listOf("solid", "gradient", "cream", "feather"), AppIconStyle.entries.map { it.preferenceValue })
+        assertEquals(listOf("solid", "gradient", "cream", "feather", "coral", "ocean", "violet"),
+                AppIconStyle.entries.map { it.preferenceValue })
         assertEquals(".LauncherIconCream", AppIconStyle.CREAM.aliasName)
         assertEquals(".LauncherIconFeather", AppIconStyle.FEATHER.aliasName)
+        assertEquals(".LauncherIconViolet", AppIconStyle.VIOLET.aliasName)
     }
 }

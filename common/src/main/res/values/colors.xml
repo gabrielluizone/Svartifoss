@@ -27,4 +27,21 @@
     <color name="launcher_feather_phone_mark">#BCB8AD</color>
     <color name="launcher_feather_watch_background">#F5F3D9</color>
     <color name="launcher_feather_watch_mark">#6C5E3B</color>
+
+    <!-- The Play build's Coral, Ocean and Violet launcher icons (AppIconStyle.CORAL, OCEAN, VIOLET).
+         Like Charcoal Feather, a palette per device in one polarity: the phone's icon is a saturated
+         ground with a pale mark, the watch's a pale ground with a deep mark of the same hue. The
+         colours live here so the icons and the picker's previews read the very same values. -->
+    <color name="launcher_coral_phone_background">#A8482F</color>
+    <color name="launcher_coral_phone_mark">#FBEFEA</color>
+    <color name="launcher_coral_watch_background">#F8E0D6</color>
+    <color name="launcher_coral_watch_mark">#8A3A28</color>
+    <color name="launcher_ocean_phone_background">#1F5162</color>
+    <color name="launcher_ocean_phone_mark">#E6F2F4</color>
+    <color name="launcher_ocean_watch_background">#D5EAEE</color>
+    <color name="launcher_ocean_watch_mark">#1F5162</color>
+    <color name="launcher_violet_phone_background">#56478A</color>
+    <color name="launcher_violet_phone_mark">#EFEBF7</color>
+    <color name="launcher_violet_watch_background">#E6E0F4</color>
+    <color name="launcher_violet_watch_mark">#4B3D7A</color>
 </resources>

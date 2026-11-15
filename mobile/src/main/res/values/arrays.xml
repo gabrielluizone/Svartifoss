@@ -23,6 +23,9 @@
         <item>gradient</item>
         <item>cream</item>
         <item>feather</item>
+        <item>coral</item>
+        <item>ocean</item>
+        <item>violet</item>
     </string-array>
 
     <!-- Preference values are protocol identifiers shared with the watch. Keep them outside

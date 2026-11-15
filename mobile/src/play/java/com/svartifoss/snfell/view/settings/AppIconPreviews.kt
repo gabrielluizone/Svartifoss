@@ -26,6 +26,9 @@ object AppIconPreviews {
                 AppIconStyle.GRADIENT -> R.drawable.launcher_preview_phone_gradient
                 AppIconStyle.CREAM -> R.drawable.launcher_preview_phone_cream
                 AppIconStyle.FEATHER -> R.drawable.launcher_preview_phone_feather
+                AppIconStyle.CORAL -> R.drawable.launcher_preview_phone_coral
+                AppIconStyle.OCEAN -> R.drawable.launcher_preview_phone_ocean
+                AppIconStyle.VIOLET -> R.drawable.launcher_preview_phone_violet
             })
 
     fun watch(context: Context, style: AppIconStyle): Drawable? = ContextCompat.getDrawable(
@@ -35,5 +38,8 @@ object AppIconPreviews {
                 AppIconStyle.GRADIENT -> R.drawable.launcher_preview_watch_gradient
                 AppIconStyle.CREAM -> R.drawable.launcher_preview_watch_cream
                 AppIconStyle.FEATHER -> R.drawable.launcher_preview_watch_feather
+                AppIconStyle.CORAL -> R.drawable.launcher_preview_watch_coral
+                AppIconStyle.OCEAN -> R.drawable.launcher_preview_watch_ocean
+                AppIconStyle.VIOLET -> R.drawable.launcher_preview_watch_violet
             })
 }

@@ -282,7 +282,22 @@ class AppIconStyleContractTest {
                     phoneBackground = "launcher_feather_phone_background" to "#435244",
                     phoneMark = "launcher_feather_phone_mark" to "#BCB8AD",
                     watchBackground = "launcher_feather_watch_background" to "#F5F3D9",
-                    watchMark = "launcher_feather_watch_mark" to "#6C5E3B"))
+                    watchMark = "launcher_feather_watch_mark" to "#6C5E3B"),
+            Flat(AppIconStyle.CORAL,
+                    phoneBackground = "launcher_coral_phone_background" to "#A8482F",
+                    phoneMark = "launcher_coral_phone_mark" to "#FBEFEA",
+                    watchBackground = "launcher_coral_watch_background" to "#F8E0D6",
+                    watchMark = "launcher_coral_watch_mark" to "#8A3A28"),
+            Flat(AppIconStyle.OCEAN,
+                    phoneBackground = "launcher_ocean_phone_background" to "#1F5162",
+                    phoneMark = "launcher_ocean_phone_mark" to "#E6F2F4",
+                    watchBackground = "launcher_ocean_watch_background" to "#D5EAEE",
+                    watchMark = "launcher_ocean_watch_mark" to "#1F5162"),
+            Flat(AppIconStyle.VIOLET,
+                    phoneBackground = "launcher_violet_phone_background" to "#56478A",
+                    phoneMark = "launcher_violet_phone_mark" to "#EFEBF7",
+                    watchBackground = "launcher_violet_watch_background" to "#E6E0F4",
+                    watchMark = "launcher_violet_watch_mark" to "#4B3D7A"))
 
     @Test
     fun everyStyleButTheTwoOriginalsIsCheckedAsAFlatStyle() {
@@ -382,16 +397,21 @@ class AppIconStyleContractTest {
     }
 
     @Test
-    fun theCreamStyleIsJustCreamInEveryLanguage() {
-        // It was "Cream and charcoal" and was shortened on request to one untranslated word, so the
-        // picker row reads the same everywhere. A translator "restoring" a local name would undo that.
+    fun theCreamStyleIsTranslatedIntoEveryLanguage() {
+        // It was kept as one untranslated word on purpose, so the picker row read the same everywhere,
+        // until the owner asked for the name to be translated like the others. The base keeps "Cream";
+        // every translated locale must name it in its own language, so a locale that is missed fails
+        // here rather than showing English in the picker.
         val res = file("mobile/src/main/res")
         val locales = res.listFiles { f -> f.isDirectory && f.name.startsWith("values") && File(f, "strings.xml").exists() }!!
         assertTrue("expected the base and the translated locales", locales.size >= 40)
-        locales.sortedBy { it.name }.forEach { dir ->
+        assertEquals("Cream", xml("mobile/src/main/res/values/strings.xml").all("string")
+                .single { it.attr("name") == "app_icon_style_cream" }.textContent.trim())
+        locales.sortedBy { it.name }.filter { it.name != "values" }.forEach { dir ->
             val name = xml("mobile/src/main/res/${dir.name}/strings.xml").all("string")
                     .singleOrNull { it.attr("name") == "app_icon_style_cream" }?.textContent?.trim()
-            assertEquals("${dir.name}: app_icon_style_cream", "Cream", name)
+            assertTrue("${dir.name}: app_icon_style_cream must be translated, was '$name'",
+                    !name.isNullOrBlank() && name != "Cream")
         }
     }
 
