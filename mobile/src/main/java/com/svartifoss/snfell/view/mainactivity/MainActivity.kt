@@ -293,6 +293,13 @@ class MainActivity : WearCompanionPhoneActivity(),
         // to match, so recommend resetting watch appearance to actually land on the new defaults.
         com.svartifoss.snfell.view.watchface.FaceResetMigrationPrompt.maybeShow(this)
 
+        // The counterpart of the welcome above for a build with no updater screen (Play): the first
+        // time the app opens after an update, a window says what changed. Play's own "What's new"
+        // lives in the Store, which an update never sends anybody back to.
+        if (!UpdateGateway.SUPPORTS_SELF_UPDATE) {
+            com.svartifoss.snfell.whatsnew.WhatsNewPrompt.attach(this)
+        }
+
         // Play build: asks for a rating with Play's own in-app card once the app has been opened
         // on a few different days, and decides for itself when (see ReviewPromptPolicy). It is
         // wired here, at start-up, and nowhere a user can press, on purpose: Play advises against

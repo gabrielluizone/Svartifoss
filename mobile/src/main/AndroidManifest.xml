@@ -250,6 +250,12 @@
             </intent-filter>
         </activity>
 
+        <!-- Shown once after an update, from WhatsNewPrompt, in the build that has no Updates screen. -->
+        <activity
+            android:name=".whatsnew.WhatsNewActivity"
+            android:exported="false"
+            android:label="@string/update_whats_new" />
+
         <activity
             android:name=".view.settings.SettingsSearchActivity"
             android:exported="false"

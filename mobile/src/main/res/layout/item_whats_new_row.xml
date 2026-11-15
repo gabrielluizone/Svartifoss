@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One change in the What's new list: a glyph on a soft wash of the accent, and the sentence. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="10dp">
+
+    <FrameLayout
+        android:id="@+id/row_badge"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/update_status_badge_bg">
+
+        <ImageView
+            android:id="@+id/row_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            tools:src="@drawable/ic_watch" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/row_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/google_sans"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="3dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="14sp"
+        tools:text="A new Home page shows your themes as pictures." />
+</LinearLayout>
