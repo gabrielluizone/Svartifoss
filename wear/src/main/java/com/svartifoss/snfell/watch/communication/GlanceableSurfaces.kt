@@ -12,6 +12,7 @@ import com.svartifoss.snfell.watch.complication.PlaybackComplicationToggleReceiv
 import com.svartifoss.snfell.watch.tile.MediaTileService
 import com.svartifoss.snfell.watch.tile.RecentTracksTileService
 import com.svartifoss.snfell.watch.tile.ShortcutsTileService
+import com.svartifoss.snfell.watch.tile.TileUpdateRequests
 import timber.log.Timber
 
 /**
@@ -47,14 +48,9 @@ object GlanceableSurfaces {
         service: Class<out TileService>,
         label: String
     ) {
+        // Never TileService.getUpdater: see TileUpdateRequests for why it crashed the watch app.
         try {
-            TileService.getUpdater(context).requestUpdate(service)
-        } catch (e: SecurityException) {
-            Timber.w(
-                "Could not request %s Tile update due to API 35+ settings restrictions: %s",
-                label,
-                e.message
-            )
+            TileUpdateRequests.request(context, service)
         } catch (e: RuntimeException) {
             Timber.w(e, "Could not request %s Tile update", label)
         }

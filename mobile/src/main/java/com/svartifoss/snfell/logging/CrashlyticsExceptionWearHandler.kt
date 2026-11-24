@@ -17,9 +17,12 @@ class CrashlyticsExceptionWearHandler : ExceptionWearHandler {
 
         // The watch forwards its uncaught exceptions here wrapped in a WatchException, so we match
         // on the message text. Routine coroutine cancellation and "phone not currently connected"
-        // Data Layer failures are expected background noise, not faults - drop them.
+        // Data Layer failures are expected background noise, not faults - drop them. So is a channel
+        // the Bluetooth link closed mid-transfer: watch builds up to 4.4 logged that at ERROR (an
+        // update APK or a font interrupted), and newer ones no longer send it at all.
         val message = throwable.message.orEmpty()
-        if (message.contains("CancellationException") || message.contains("TARGET_NODE_NOT_CONNECTED")) {
+        if (message.contains("CancellationException") || message.contains("TARGET_NODE_NOT_CONNECTED") ||
+                message.contains("ChannelIOException")) {
             return
         }
 

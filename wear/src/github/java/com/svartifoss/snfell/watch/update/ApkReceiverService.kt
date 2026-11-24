@@ -11,7 +11,10 @@ import com.google.android.gms.wearable.WearableListenerService
 import com.svartifoss.snfell.common.CommPaths
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
+import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 /**
  * Receives a newer wear APK streamed by the phone over [CommPaths.CHANNEL_WEAR_APK] (see the
@@ -53,13 +56,30 @@ class ApkReceiverService : WearableListenerService() {
         val channelClient = Wearable.getChannelClient(this)
         val apkFile = File(cacheDir, UPDATE_APK_NAME)
         try {
-            receiveApk(channelClient, channel, apkFile)
+            try {
+                receiveApk(channelClient, channel, apkFile)
+            } catch (e: Exception) {
+                // The phone sees the same failure and offers to send again. A link that dropped
+                // mid-transfer (the channel closed, or was gone before its stream opened) is the
+                // usual reason and is not a fault, so it is not reported as one.
+                if (e is IOException || e is ExecutionException || e is TimeoutException) {
+                    throw TransferInterrupted(e)
+                }
+                throw e
+            }
             if (validateApk(apkFile)) {
                 startInstall(apkFile)
             }
             // After the install session has taken its own copy - or, when the file was no APK of
             // ours, instead of it. Either way nothing needs it any more.
             apkFile.delete()
+        } catch (e: TransferInterrupted) {
+            Timber.w(e.cause, "Receiving wear update APK was interrupted")
+            apkFile.delete()
+            try {
+                channelClient.close(channel)
+            } catch (ignored: Exception) {
+            }
         } catch (e: Exception) {
             Timber.e(e, "Receiving wear update APK failed")
             apkFile.delete()
@@ -164,6 +184,9 @@ class ApkReceiverService : WearableListenerService() {
             leftover.delete()
         }
     }
+
+    /** The transfer itself failed, which is the Bluetooth link and not a fault - see [onChannelOpened]. */
+    private class TransferInterrupted(cause: Exception) : Exception(cause)
 
     companion object {
         const val UPDATE_APK_NAME = "wear-update.apk"

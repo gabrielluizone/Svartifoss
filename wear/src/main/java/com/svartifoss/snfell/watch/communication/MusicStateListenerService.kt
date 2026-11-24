@@ -59,10 +59,10 @@ class MusicStateListenerService : WearableListenerService() {
 
         // Only when a field the Tile/complication actually renders changed - the same guard
         // WatchMusicService already applies. The phone re-publishes music state on every position
-        // tick, so this ran roughly once a second, and each run makes the Tiles library bind and
-        // unbind a system service. That library (SysUiTileUpdateRequester) unbinds twice under
-        // load and throws "Service not registered" from its own background thread, where no
-        // try/catch of ours can reach it - so the only lever we have is asking far less often.
+        // tick, so this ran roughly once a second, and each run binds and unbinds the system's Tile
+        // update service. Tile requests go through TileUpdateRequests, which binds on the
+        // application context: this service is destroyed as soon as onDataChanged returns, and the
+        // library requester that used to be handed `this` crashed the app when it unbound later.
         val fingerprint = latestState?.let {
             "${it.title}|${it.displayArtist()}|${it.playing}|${it.error}|${it.albumArtPending}"
         }

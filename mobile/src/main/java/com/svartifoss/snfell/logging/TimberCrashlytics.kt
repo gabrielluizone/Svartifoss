@@ -11,6 +11,9 @@ import java.util.concurrent.CancellationException
  * below (e.g. a cross-version config blob that failed to decode and fell back to defaults) - are
  * kept only as a breadcrumb on the next real crash rather than raising their own Crashlytics
  * issue. [CancellationException] is always skipped: routine coroutine cancellation is not a fault.
+ * So is a Play services failure that only says the Wear OS link is down or absent
+ * ([isRoutineTransportFailure]): those were filed from call sites that log every failed Data Layer
+ * call at ERROR, and named nothing but Play services' own threads.
  *
  * Every call that cannot reach Crashlytics - no throwable, or crash reporting switched off - is
  * turned away before Timber's base class formats it. That formatting runs for every tree before
@@ -21,7 +24,8 @@ class TimberCrashlytics : Timber.Tree() {
         if (t != null && CrashReporting.enabled) {
             val crashlytics = FirebaseCrashlytics.getInstance()
             message?.let { crashlytics.log(it) }
-            if (priority >= Log.ERROR && t !is CancellationException) {
+            if (priority >= Log.ERROR && t !is CancellationException &&
+                    !isRoutineTransportFailure(t)) {
                 crashlytics.recordException(t)
             }
         }
