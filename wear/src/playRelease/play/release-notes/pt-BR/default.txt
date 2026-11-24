@@ -1,8 +1,4 @@
-Novidades do 4.4
-• A aba Relógio abre numa Home com seus temas em imagens e ajustes rápidos
-• Seletores de estilo mostram o seu relógio
-• Botão Temas na notificação, que agora mostra a próxima faixa
-• Playlists do YouTube Music listam as músicas no relógio
-• Novos ícones do app: Coral, Oceano e Violeta
-• Painel rápido com curtir, aleatório e repetir do próprio app
-Corrigidos: atalhos que tocavam a música errada; títulos longos sobre os controles.
+Novidades do 4.4.1
+• Botão Fila na notificação: veja o que toca a seguir, busque na fila e use os botões do próprio player
+• A notificação mostra a capa da próxima faixa e a posição da música na fila
+Corrigido: o app do relógio fechando sozinho durante a música.

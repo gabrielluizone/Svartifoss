@@ -120,7 +120,8 @@ object WhatsNewPrompt {
             Item(R.drawable.ic_bell,
                     context.getString(
                             R.string.whats_new_item_notification,
-                            context.getString(R.string.notification_action_themes))),
+                            // Queue since 4.4.1, where it took the Themes button's place.
+                            context.getString(R.string.quick_tool_queue))),
             Item(R.drawable.ic_playlist_play, context.getString(R.string.whats_new_item_songs)),
             Item(R.drawable.ic_apps,
                     context.getString(

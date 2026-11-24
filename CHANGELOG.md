@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.4.1
+
+### Changed
+
+- **The Svartifoss notification has a Queue button.** It opens a window over whatever is on screen with the track playing (cover, seek bar and the player's own buttons, with its icons) above the queue: what comes next, the tracks already played one tap away, and a search. Tap a track to jump to it. It takes the place of the Themes button; themes stay on the Watch tab.
+
+- **The notification shows the next track's cover**, round, and where the track is in the queue ("Track 15 of 25").
+
+### Fixed
+
+- **The watch app no longer closes on its own while music plays.** Refreshing the Tiles could crash it, and on a busy evening could exhaust its memory.
+
+- **Fewer false error reports.** A phone without Wear OS, or a watch update interrupted by the Bluetooth link, is no longer reported as a crash.
+
 ## 4.4
 
 ### Added

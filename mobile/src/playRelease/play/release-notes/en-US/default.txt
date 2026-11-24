@@ -1,8 +1,4 @@
-New in 4.4
-• The Watch tab opens on a Home with your themes as pictures and quick adjustments
-• Style pickers show your own watch
-• Themes button on the notification, which now shows the next track
-• YouTube Music playlists list their songs on the watch
-• New app icons: Coral, Ocean and Violet
-• Quick panel with the app's own like, shuffle and repeat
-Fixed: shortcuts playing the wrong music; long titles over the controls.
+New in 4.4.1
+• Queue button on the notification: see what plays next, search the queue and use the player's own buttons
+• The notification shows the next track's cover and the track's place in the queue
+Fixed: the watch app closing on its own while music played.
