@@ -3012,4 +3012,8 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     </string-array>
     <string name="watch_home_quick_title">Жылдам баптаулар</string>
     <string name="watch_home_scope_note">Өзгерістер «%1$s» ішіне сақталады</string>
+    <string name="notification_queue_position">%1$d-трек, барлығы %2$d</string>
+    <string name="queue_window_played">Ойнатылған · %1$d</string>
+    <string name="queue_window_search_hint">Кезектен іздеу</string>
+    <string name="queue_window_no_matches">Сәйкес трек жоқ</string>
 </resources>

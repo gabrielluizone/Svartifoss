@@ -2994,4 +2994,8 @@
     </string-array>
     <string name="watch_home_quick_title">Бързи настройки</string>
     <string name="watch_home_scope_note">Промените се запазват в %1$s</string>
+    <string name="notification_queue_position">Песен %1$d от %2$d</string>
+    <string name="queue_window_played">Изсвирени · %1$d</string>
+    <string name="queue_window_search_hint">Търсене в опашката</string>
+    <string name="queue_window_no_matches">Няма съвпадащи песни</string>
 </resources>

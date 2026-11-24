@@ -2989,4 +2989,8 @@
     </string-array>
     <string name="watch_home_quick_title">Pelarasan pantas</string>
     <string name="watch_home_scope_note">Perubahan disimpan ke %1$s</string>
+    <string name="notification_queue_position">Lagu %1$d daripada %2$d</string>
+    <string name="queue_window_played">Sudah dimainkan · %1$d</string>
+    <string name="queue_window_search_hint">Cari dalam baris gilir</string>
+    <string name="queue_window_no_matches">Tiada lagu yang sepadan</string>
 </resources>

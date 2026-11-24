@@ -2988,4 +2988,8 @@
     </string-array>
     <string name="watch_home_quick_title">Fljótlegar stillingar</string>
     <string name="watch_home_scope_note">Breytingar vistast í %1$s</string>
+    <string name="notification_queue_position">Lag %1$d af %2$d</string>
+    <string name="queue_window_played">Spilað · %1$d</string>
+    <string name="queue_window_search_hint">Leita í biðröð</string>
+    <string name="queue_window_no_matches">Engin lög passa</string>
 </resources>

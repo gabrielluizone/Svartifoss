@@ -3017,4 +3017,8 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     </string-array>
     <string name="watch_home_quick_title">Réglages rapides</string>
     <string name="watch_home_scope_note">Les modifications sont enregistrées dans %1$s</string>
+    <string name="notification_queue_position">Titre %1$d sur %2$d</string>
+    <string name="queue_window_played">Écoutés · %1$d</string>
+    <string name="queue_window_search_hint">Rechercher dans la file</string>
+    <string name="queue_window_no_matches">Aucun titre ne correspond</string>
 </resources>

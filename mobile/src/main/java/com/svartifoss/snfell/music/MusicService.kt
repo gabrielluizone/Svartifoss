@@ -84,7 +84,7 @@ import com.svartifoss.snfell.config.ActionConfig
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.view.mainactivity.MainActivity
-import com.svartifoss.snfell.view.watchface.theme.ThemeQuickSwitchActivity
+import com.svartifoss.snfell.view.queue.PlaybackQueueActivity
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.di.MusicServiceSubComponent
@@ -214,14 +214,6 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         /** How many recent transmissions the over-budget warning names the causes of. */
         private const val RECENT_TRIGGERS_KEPT = 30
 
-        /**
-         * How long a queue jump is given to take visible effect before the media-id route is tried
-         * instead - see [onQueueEntrySelected]. Long enough for a player that updates metadata a
-         * beat after the transport command (most of them), short enough not to feel like a stall.
-         * Overshooting only costs a re-play of the track the user asked for anyway.
-         */
-        private const val QUEUE_SKIP_VERIFY_MS = 1200L
-
         /** Smallest side a cover read from a content URI is decoded at - see [loadBitmapFromUri]. */
         private const val URI_ART_MIN_DECODE_PX = 512
         private const val MAX_TRACK_HISTORY_SIZE = 20
@@ -239,7 +231,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         /** How long a direct `playFromUri` gets to actually start playing before the deep link
          *  falls through to the browser/visible routes. Long enough for a streaming app to buffer,
          *  short enough that a dead command doesn't strand the request - the same trade, and the
-         *  same reasoning, as [QUEUE_SKIP_VERIFY_MS]. */
+         *  same reasoning, as [QueueJump.VERIFY_MS]. */
         private const val DEEP_LINK_VERIFY_MS = 1800L
 
         /**
@@ -275,7 +267,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val STOP_SELF_PENDING_INTENT_REQUEST_CODE = 333
         private const val FORCE_STOP_PENDING_INTENT_REQUEST_CODE = 334
         private const val OPEN_APP_PENDING_INTENT_REQUEST_CODE = 335
-        private const val THEMES_PENDING_INTENT_REQUEST_CODE = 336
+        private const val QUEUE_PENDING_INTENT_REQUEST_CODE = 337
         private const val ACTION_STOP_SELF = "STOP_SELF"
         private const val ACTION_FORCE_STOP = "FORCE_STOP"
         // Not private: MiscSettingsFragment links out to this channel's system settings page.
@@ -498,8 +490,22 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** The queue's next track, read behind the queue refresh's debounce - see [refreshUpNextForNotification]. */
     private var upNextReading: UpNextReading? = null
 
+    /** Where the playing track is in the queue, read with [upNextReading]. */
+    private var queuePlace: QueuePlace? = null
+
     /** What the persistent notification shows now, so an unchanged one is not posted again. */
     private var shownNotificationContent: PersistentNotificationContent? = null
+
+    /**
+     * The next track's cover, round, for the notification's large icon - see [refreshUpNextCover].
+     * Keyed by the track it belongs to, so a cover still loading for the previous "up next" is never
+     * shown beside a newer one. A null bitmap is an answer (no cover found), not a pending one.
+     */
+    private var upNextCover: Pair<NotificationTrack, Bitmap?>? = null
+    private var upNextCoverJob: Job? = null
+
+    /** The large icon last posted, compared alongside [shownNotificationContent]. */
+    private var shownNotificationCover: Bitmap? = null
 
     /**
      * True from a successful promotion until the notification is removed. Gates every update, so a
@@ -853,6 +859,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             return false
         }
         shownNotificationContent = content
+        shownNotificationCover = coverFor(content)
         persistentNotificationShown = true
         return true
     }
@@ -880,19 +887,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // Tapping the notification opens the app, as a notification does everywhere else. It used
         // to stop the service - one accidental tap on the body ended the controls - and the "Stop"
         // button below already says that explicitly. Android shows at most three action buttons,
-        // so the body is "Open", which is what leaves room for the theme button beside Stop and
-        // Force stop.
+        // so the body is "Open", which is what leaves room for the queue button beside Stop and
+        // Force stop. (The third slot held a theme window in 4.4; it gave way to the queue, and
+        // themes are on the Watch tab's Home.)
         val openAppPendingIntent = PendingIntent.getActivity(this,
                 OPEN_APP_PENDING_INTENT_REQUEST_CODE,
                 Intent(this, MainActivity::class.java),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         // A window of its own over whatever is on screen, not the app: the point of the button is
-        // to change the watch's theme without going through the app. A task of its own and a fresh
+        // to see what is coming without leaving what is in front. A task of its own and a fresh
         // instance every time, so a stale window never comes back.
-        val themesPendingIntent = PendingIntent.getActivity(this,
-                THEMES_PENDING_INTENT_REQUEST_CODE,
-                Intent(this, ThemeQuickSwitchActivity::class.java)
+        val queuePendingIntent = PendingIntent.getActivity(this,
+                QUEUE_PENDING_INTENT_REQUEST_CODE,
+                Intent(this, PlaybackQueueActivity::class.java)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
@@ -913,9 +921,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
                 .setContentTitle(playing?.title ?: getString(commonR.string.music_control_active))
                 .setContentText(upNextLine ?: playing?.artist)
+                // "Track 15 of 25" beside the app name on the top line.
+                .setSubText(content.spot?.let {
+                    getString(R.string.notification_queue_position, it.number, it.total)
+                })
                 .setContentIntent(openAppPendingIntent)
-                .addAction(R.drawable.ic_palette,
-                        getString(R.string.notification_action_themes), themesPendingIntent)
+                .addAction(R.drawable.ic_queue_music,
+                        getString(R.string.quick_tool_queue), queuePendingIntent)
                 // "Stop" ends the service; "force stop" additionally unbinds the notification
                 // listener and kills the process outright.
                 .addAction(R.drawable.ic_nav_stopped,
@@ -945,6 +957,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             notificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(expandedText))
         }
 
+        // The cover of the track that comes next, as a plain disc beside the text - only while the
+        // "up next" line is shown, so it always pictures the track that line names. The lock
+        // screen's public version above carries none of it.
+        coverFor(content)?.let { notificationBuilder.setLargeIcon(it) }
+
         // This is still needed for Pre-O versions, so it must be used, even if it is deprecated.
         @Suppress("DEPRECATION")
         notificationBuilder.priority = Notification.PRIORITY_MIN
@@ -963,7 +980,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 playingArtist = state?.artist,
                 reading = upNextReading,
                 shuffleOn = state?.shuffleEnabled == true,
-                repeatsOneTrack = state?.repeatMode == repeatModeCode(PlaybackStateCompat.REPEAT_MODE_ONE))
+                repeatsOneTrack = state?.repeatMode == repeatModeCode(PlaybackStateCompat.REPEAT_MODE_ONE),
+                place = queuePlace)
     }
 
     /**
@@ -974,8 +992,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun refreshPersistentNotification() {
         if (!persistentNotificationShown) return
         val content = currentNotificationContent()
-        if (content == shownNotificationContent) return
+        val cover = coverFor(content)
+        if (content == shownNotificationContent && cover === shownNotificationCover) return
         shownNotificationContent = content
+        shownNotificationCover = cover
         try {
             // Already in the foreground, so this only replaces the text of the notification it shows.
             ServiceCompat.startForeground(
@@ -1002,17 +1022,76 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val controller = currentMediaController
         val queue = resolvePlaybackQueue()
         upNextReading = null
+        queuePlace = null
+        var nextDescription: android.media.MediaDescription? = null
         if (controller != null && queue != null) {
             val active = activeQueueIndex(queue)
+            queuePlace = QueuePlace.of(
+                    playingTitle = controller.metadata?.getString(MediaMetadata.METADATA_KEY_TITLE),
+                    index = active,
+                    size = queue.size)
             val next = if (active >= 0) queue.getOrNull(active + 1)?.description else null
             if (next != null) {
                 upNextReading = UpNextReading.of(
                         playingTitle = controller.metadata?.getString(MediaMetadata.METADATA_KEY_TITLE),
                         nextTitle = next.title?.toString(),
                         nextArtist = next.subtitle?.toString())
+                nextDescription = next
             }
         }
         refreshPersistentNotification()
+        refreshUpNextCover(upNextReading?.next, nextDescription)
+    }
+
+    /** The round cover for [content]'s "up next" track, when one has been resolved for it. */
+    private fun coverFor(content: PersistentNotificationContent): Bitmap? {
+        val next = content.upNext ?: return null
+        return upNextCover?.takeIf { it.first == next }?.second
+    }
+
+    /**
+     * Resolves the cover of [track] (the queue's next entry, [description]) for the notification's
+     * large icon, then posts the notification again.
+     *
+     * It is resolved at the size the neighbouring covers are resolved at for the watch
+     * ([encodeAdjacentCover]), on purpose: a streaming app's cover is an address whose size is
+     * written into it before it is fetched, so the same size finds the copy already downloaded for
+     * the watch instead of fetching a second one. Only then is it cut down to the icon.
+     */
+    private fun refreshUpNextCover(track: NotificationTrack?, description: android.media.MediaDescription?) {
+        if (track == null || description == null) {
+            upNextCoverJob?.cancel()
+            return
+        }
+        if (upNextCover?.first == track) return
+        upNextCoverJob?.cancel()
+        upNextCoverJob = lifecycleScope.launch {
+            try {
+                val targetPx = watchInfoProvider.value?.watchInfo?.displayWidth
+                        ?.takeIf { it > 0 }
+                        ?: QueueArtworkResolver.DEFAULT_TARGET_PX
+                val cover = withTimeoutOrNull(ADJACENT_ARTWORK_RESOLVE_TIMEOUT_MS) {
+                    QueueArtworkResolver.resolve(
+                            this@MusicService,
+                            description,
+                            QueueArtworkResolver.remoteArtworkEnabled(this@MusicService),
+                            targetPx = targetPx)
+                }
+                // The platform scales a large icon down to its own size when the notification is
+                // posted (97px on a Pixel 3, Android 10), so anything bigger is wasted.
+                val iconPx = resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
+                val round = cover?.let {
+                    withContext(Dispatchers.Default) { NotificationCover.circular(it, iconPx) }
+                }
+                upNextCover = track to round
+                refreshPersistentNotification()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // Decoration: a cover that cannot be had must never take the notification down.
+                Timber.w(e, "Could not resolve the next track's cover for the notification")
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -2241,30 +2320,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }, QUEUE_REFRESH_DEBOUNCE_MS)
     }
 
-    /**
-     * Which row of [queue] is the track currently playing, or -1 when it cannot be identified.
-     *
-     * Queue id first, title second, in that order for the reason `QueueScrollPolicy.activeRowIndex`
-     * documents: the id is exact where it exists, and the title is the only thing left for the many
-     * players that never publish one.
-     */
-    fun activeQueueIndex(queue: List<android.media.session.MediaSession.QueueItem>): Int {
-        val byId = currentMediaController?.playbackState?.activeQueueItemId
-                ?.takeIf { it != android.media.session.MediaSession.QueueItem.UNKNOWN_ID.toLong() }
-                ?.let { id -> queue.indexOfFirst { it.queueId == id } }
-                ?: -1
-        if (byId >= 0) {
-            return byId
-        }
-        val title = currentMediaController?.metadata
-                ?.getString(MediaMetadata.METADATA_KEY_TITLE)
-                ?.trim()
-                ?.takeIf { it.isNotEmpty() }
-                ?: return -1
-        return queue.indexOfFirst { entry ->
-            entry.description.title?.toString()?.trim().equals(title, ignoreCase = true)
-        }
-    }
+    /** Which row of [queue] is the track currently playing, or -1 - see [ActiveQueueRow]. */
+    fun activeQueueIndex(queue: List<android.media.session.MediaSession.QueueItem>): Int =
+            ActiveQueueRow.index(
+                    queueIds = queue.map { it.queueId },
+                    titles = queue.map { it.description.title?.toString() },
+                    activeQueueId = currentMediaController?.playbackState?.activeQueueItemId,
+                    playingTitle = currentMediaController?.metadata
+                            ?.getString(MediaMetadata.METADATA_KEY_TITLE))
 
     /**
      * Sends the covers of the tracks around the playing one to the watch, ahead of the presses
@@ -3319,40 +3382,16 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * for the same reason the gate had to go.
      */
     private fun onQueueEntrySelected(entryId: String) {
-        val queueId = QueueEntry.queueId(entryId)
-        val mediaId = QueueEntry.mediaId(entryId)
-        val playing = currentMediaController
-        val owner = resolveQueueSource()?.controller
-
-        val known = queueId != android.media.session.MediaSession.QueueItem.UNKNOWN_ID.toLong()
-
-        // Both read *before* anything is issued. A player that reacts to the skip synchronously
-        // would otherwise have already moved by the time these are sampled, making a jump that
-        // worked perfectly look like a no-op and earning the track a pointless second start.
-        val before = playbackIdentity(playing)
-        val alreadyOnThisRow = known && playing?.playbackState?.activeQueueItemId == queueId
-
-        if (known) {
-            Timber.d("Queue tap: skipToQueueItem(%d) on %s", queueId, playing?.packageName)
-            playing?.transportControls?.skipToQueueItem(queueId)
-            if (owner != null && owner.sessionToken != playing?.sessionToken) {
-                Timber.d("Queue tap: also on queue owner %s", owner.packageName)
-                owner.transportControls.skipToQueueItem(queueId)
-            }
-        }
-
-        if (mediaId == null) return
-        // Tapping the row that is already playing is the one case where "nothing changed" is the
-        // correct outcome rather than a failure, so it must not trigger the fallback.
-        if (alreadyOnThisRow) return
-
-        val packageName = playing?.packageName ?: owner?.packageName ?: return
+        // The rules (both sessions, always issue, verify then fall back) live in QueueJump, shared
+        // with the phone's queue window so the two cannot drift.
+        val pending = QueueJump.issue(
+                queueId = QueueEntry.queueId(entryId),
+                mediaId = QueueEntry.mediaId(entryId),
+                playing = currentMediaController,
+                owner = resolveQueueSource()?.controller) ?: return
         lifecycleScope.launchWithPlayServicesErrorHandling(this) {
-            delay(QUEUE_SKIP_VERIFY_MS)
-            if (playbackIdentity(currentMediaController) != before) return@launchWithPlayServicesErrorHandling
-            Timber.d("Queue tap: skip had no effect on %s; playing media id %s",
-                    packageName, mediaId)
-            MediaBrowserPlayback.playMediaId(this@MusicService, packageName, mediaId)
+            delay(QueueJump.VERIFY_MS)
+            QueueJump.settle(this@MusicService, pending, currentMediaController)
         }
     }
 
@@ -3365,10 +3404,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * user asked for, which is the right track either way.
      */
     private fun playbackIdentity(controller: MediaController?): Triple<Long?, String?, String?> =
-            Triple(
-                    controller?.playbackState?.activeQueueItemId,
-                    controller?.metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
-                    controller?.metadata?.getString(MediaMetadata.METADATA_KEY_TITLE))
+            QueueJump.identity(controller)
 
     /**
      * Skips, then checks the player answered - and tells the watch when it did not and does not

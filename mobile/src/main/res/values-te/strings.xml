@@ -2373,4 +2373,8 @@
     </string-array>
     <string name="watch_home_quick_title">త్వరిత సర్దుబాట్లు</string>
     <string name="watch_home_scope_note">మార్పులు %1$sలో సేవ్ చేయబడతాయి</string>
+    <string name="notification_queue_position">%2$d లో ట్రాక్ %1$d</string>
+    <string name="queue_window_played">ప్లే అయినవి · %1$d</string>
+    <string name="queue_window_search_hint">క్యూలో వెతకండి</string>
+    <string name="queue_window_no_matches">సరిపోలే ట్రాక్‌లు లేవు</string>
 </resources>

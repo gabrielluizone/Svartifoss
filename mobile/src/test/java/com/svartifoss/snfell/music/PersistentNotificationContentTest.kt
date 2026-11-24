@@ -82,4 +82,24 @@ class PersistentNotificationContentTest {
         assertNull(UpNextReading.of(null, "Song B", null))
         assertEquals(NotificationTrack("Song B", null), UpNextReading.of("Song A", "Song B", "  ")!!.next)
     }
+
+    @Test
+    fun `shows where the playing track is in the queue, even under shuffle`() {
+        val place = QueuePlace.of("Song A", index = 14, size = 25)
+        val content = PersistentNotificationContent.compose("Song A", null, reading, true, false, place)
+        assertEquals(QueueSpot(15, 25), content.spot)
+    }
+
+    @Test
+    fun `withholds the position until the queue catches up with a change of track`() {
+        val place = QueuePlace.of("Song A", index = 0, size = 3)
+        assertNull(PersistentNotificationContent.compose("Song C", null, reading, false, false, place).spot)
+    }
+
+    @Test
+    fun `a position outside the queue is no position`() {
+        assertNull(QueuePlace.of("Song A", index = -1, size = 3))
+        assertNull(QueuePlace.of("Song A", index = 3, size = 3))
+        assertNull(QueuePlace.of(" ", index = 0, size = 3))
+    }
 }

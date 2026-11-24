@@ -2989,4 +2989,8 @@
     </string-array>
     <string name="watch_home_quick_title">การปรับแต่งด่วน</string>
     <string name="watch_home_scope_note">การเปลี่ยนแปลงจะบันทึกไว้ใน %1$s</string>
+    <string name="notification_queue_position">เพลงที่ %1$d จาก %2$d</string>
+    <string name="queue_window_played">เล่นแล้ว · %1$d</string>
+    <string name="queue_window_search_hint">ค้นหาในคิว</string>
+    <string name="queue_window_no_matches">ไม่พบเพลงที่ตรงกัน</string>
 </resources>

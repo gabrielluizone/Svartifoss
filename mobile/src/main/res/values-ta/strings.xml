@@ -2373,4 +2373,8 @@
     </string-array>
     <string name="watch_home_quick_title">விரைவுச் சரிசெய்தல்கள்</string>
     <string name="watch_home_scope_note">மாற்றங்கள் %1$s இல் சேமிக்கப்படும்</string>
+    <string name="notification_queue_position">%2$d இல் பாடல் %1$d</string>
+    <string name="queue_window_played">இயக்கப்பட்டவை · %1$d</string>
+    <string name="queue_window_search_hint">வரிசையில் தேடு</string>
+    <string name="queue_window_no_matches">பொருந்தும் பாடல்கள் இல்லை</string>
 </resources>

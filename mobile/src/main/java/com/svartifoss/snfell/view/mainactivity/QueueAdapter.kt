@@ -104,6 +104,12 @@ internal class QueueAdapter(
         private val bars: MusicLoadingBarsView = view.findViewById(R.id.queue_item_playing_bars)
         private var coverJob: Job? = null
 
+        init {
+            // The rounded background clips the cover only when asked in code: the XML attribute
+            // for it exists from Android 12 only, so before that the covers were drawn square.
+            cover.clipToOutline = true
+        }
+
         fun cancelPendingCover() {
             coverJob?.cancel()
             coverJob = null

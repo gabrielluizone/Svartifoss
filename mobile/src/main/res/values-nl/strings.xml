@@ -2977,4 +2977,8 @@
     </string-array>
     <string name="watch_home_quick_title">Snelle aanpassingen</string>
     <string name="watch_home_scope_note">Wijzigingen worden opgeslagen in %1$s</string>
+    <string name="notification_queue_position">Nummer %1$d van %2$d</string>
+    <string name="queue_window_played">Afgespeeld · %1$d</string>
+    <string name="queue_window_search_hint">Zoeken in wachtrij</string>
+    <string name="queue_window_no_matches">Geen nummers gevonden</string>
 </resources>

@@ -148,6 +148,17 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         setReportedController(reportedController, "resolved after $reason")
     }
 
+    /**
+     * The session a screen should show when this provider reports none: the playing one, else the
+     * one the system last had active ([DirectTransportTarget.pick]). This provider reports a paused
+     * session only if it saw it playing first, so a screen opened while the music is paused would
+     * otherwise show nothing.
+     */
+    fun mostRecentSession(): MediaController? =
+            DirectTransportTarget.pick(getActiveSessions()) {
+                it.playbackState?.state == PlaybackState.STATE_PLAYING
+            }
+
     private fun getActiveSessions(): List<MediaController> {
         return try {
             mediaSessionManager.getActiveSessions(notificationListenerComponent)

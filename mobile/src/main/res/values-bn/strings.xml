@@ -2994,4 +2994,8 @@
     </string-array>
     <string name="watch_home_quick_title">দ্রুত সমন্বয়</string>
     <string name="watch_home_scope_note">পরিবর্তনগুলো %1$s-এ সংরক্ষিত হয়</string>
+    <string name="notification_queue_position">%2$d-এর মধ্যে %1$d নম্বর ট্র্যাক</string>
+    <string name="queue_window_played">বাজানো হয়েছে · %1$d</string>
+    <string name="queue_window_search_hint">সারিতে খুঁজুন</string>
+    <string name="queue_window_no_matches">কোনো মিলে যাওয়া ট্র্যাক নেই</string>
 </resources>

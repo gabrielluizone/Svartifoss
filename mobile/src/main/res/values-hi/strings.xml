@@ -3017,4 +3017,8 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     </string-array>
     <string name="watch_home_quick_title">त्वरित समायोजन</string>
     <string name="watch_home_scope_note">बदलाव %1$s में सहेजे जाते हैं</string>
+    <string name="notification_queue_position">%2$d में से ट्रैक %1$d</string>
+    <string name="queue_window_played">चलाए गए · %1$d</string>
+    <string name="queue_window_search_hint">कतार में खोजें</string>
+    <string name="queue_window_no_matches">कोई मिलता-जुलता ट्रैक नहीं</string>
 </resources>

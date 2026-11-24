@@ -3017,4 +3017,8 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     </string-array>
     <string name="watch_home_quick_title">Snabbjusteringar</string>
     <string name="watch_home_scope_note">Ändringar sparas i %1$s</string>
+    <string name="notification_queue_position">Spår %1$d av %2$d</string>
+    <string name="queue_window_played">Spelade · %1$d</string>
+    <string name="queue_window_search_hint">Sök i kön</string>
+    <string name="queue_window_no_matches">Inga spår matchar</string>
 </resources>

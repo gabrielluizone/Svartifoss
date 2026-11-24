@@ -3027,4 +3027,8 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     </string-array>
     <string name="watch_home_quick_title">Rychlé úpravy</string>
     <string name="watch_home_scope_note">Změny se ukládají do %1$s</string>
+    <string name="notification_queue_position">Skladba %1$d z %2$d</string>
+    <string name="queue_window_played">Přehráno · %1$d</string>
+    <string name="queue_window_search_hint">Hledat ve frontě</string>
+    <string name="queue_window_no_matches">Žádné odpovídající skladby</string>
 </resources>

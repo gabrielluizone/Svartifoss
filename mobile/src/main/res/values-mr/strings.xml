@@ -2373,4 +2373,8 @@
     </string-array>
     <string name="watch_home_quick_title">झटपट समायोजन</string>
     <string name="watch_home_scope_note">बदल %1$s मध्ये जतन होतात</string>
+    <string name="notification_queue_position">%2$d पैकी ट्रॅक %1$d</string>
+    <string name="queue_window_played">वाजवलेले · %1$d</string>
+    <string name="queue_window_search_hint">रांगेत शोधा</string>
+    <string name="queue_window_no_matches">जुळणारे ट्रॅक नाहीत</string>
 </resources>

@@ -2999,4 +2999,8 @@
     </string-array>
     <string name="watch_home_quick_title">התאמות מהירות</string>
     <string name="watch_home_scope_note">השינויים נשמרים ב-%1$s</string>
+    <string name="notification_queue_position">רצועה %1$d מתוך %2$d</string>
+    <string name="queue_window_played">הושמעו · %1$d</string>
+    <string name="queue_window_search_hint">חיפוש בתור</string>
+    <string name="queue_window_no_matches">אין רצועות תואמות</string>
 </resources>

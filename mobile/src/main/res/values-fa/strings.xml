@@ -2977,4 +2977,8 @@
     </string-array>
     <string name="watch_home_quick_title">تنظیمات سریع</string>
     <string name="watch_home_scope_note">تغییرات در %1$s ذخیره می‌شوند</string>
+    <string name="notification_queue_position">قطعهٔ %1$d از %2$d</string>
+    <string name="queue_window_played">پخش‌شده · %1$d</string>
+    <string name="queue_window_search_hint">جستجو در صف</string>
+    <string name="queue_window_no_matches">قطعه‌ای پیدا نشد</string>
 </resources>

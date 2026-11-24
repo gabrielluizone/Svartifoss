@@ -32,6 +32,27 @@ data class MediaNotificationAction(
         val iconPng: ByteArray?
 )
 
+/**
+ * One button of a player's own media notification, for the phone's queue window: its label, what
+ * it does ([semantic]), its icon as the flat-white template the watch's action icons are, and the
+ * player's own [PendingIntent], so pressing it does exactly what the button in the player does.
+ * Phone-only, never serialized.
+ */
+class PlayerNotificationButton internal constructor(
+        val label: String,
+        val semantic: String,
+        val iconPng: ByteArray?,
+        private val intent: PendingIntent
+) {
+    /** Sends the player's own action. False when the player has since withdrawn it. */
+    fun press(): Boolean = try {
+        intent.send()
+        true
+    } catch (_: PendingIntent.CanceledException) {
+        false
+    }
+}
+
 /** MediaStyle identifies the buttons the app considers suitable for its compact surface. Mirror
  * that exact set on the watch: filling empty watch slots from the expanded notification made a
  * two-action Spotify panel grow an unrelated third bubble. If compact metadata is absent or
@@ -154,7 +175,10 @@ object MediaNotificationActions {
             // The notification's own small icon (the branded glyph the status bar shows), used
             // as the watch's source-icon element. This is what users recognise as "the app icon
             // in the notification"; the launcher icon is different, chunkier artwork.
-            val smallIconPng: ByteArray?
+            val smallIconPng: ByteArray?,
+            // Every action of the notification in the player's own order, for the phone's queue
+            // window, which shows the row the player shows rather than the watch's compact three.
+            val playerButtons: List<PlayerNotificationButton> = emptyList()
     )
 
     private val notifications = LinkedHashMap<String, StoredNotification>()
@@ -250,34 +274,66 @@ object MediaNotificationActions {
                         )
                     }
                     .toList()
-                    .let { discardDislikeActions(it) { stored -> stored.publicAction.semantic } }
-                    .take(MAX_ACTIONS)
-                    .takeIf { it.isNotEmpty() }
-                    ?.let { actions ->
-                        StoredNotification(
-                                packageName = sbn.packageName,
-                                notificationKey = sbn.key,
-                                sessionToken = sessionToken,
-                                postedAt = sbn.postTime,
-                                actions = actions,
-                                likeAction = findLikeAction(notificationActions),
-                                smallIconPng = smallIconPng
-                        )
+                    .let { compactCandidates ->
+                        compactCandidates to playerButtonsOf(
+                                publisherContexts, notificationActions, compactCandidates)
+                    }
+                    .let { (compactCandidates, playerButtons) ->
+                        discardDislikeActions(compactCandidates) { stored -> stored.publicAction.semantic }
+                                .take(MAX_ACTIONS)
+                                .takeIf { it.isNotEmpty() }
+                                ?.let { actions ->
+                                    StoredNotification(
+                                            packageName = sbn.packageName,
+                                            notificationKey = sbn.key,
+                                            sessionToken = sessionToken,
+                                            postedAt = sbn.postTime,
+                                            actions = actions,
+                                            likeAction = findLikeAction(notificationActions),
+                                            smallIconPng = smallIconPng,
+                                            playerButtons = playerButtons
+                                    )
+                                }
                     }
         } else {
             null
         }
 
+        var playerRowChanged = false
         val changed = synchronized(this) {
             if (stored == null) {
-                notifications.remove(sbn.key) != null
+                (notifications.remove(sbn.key) != null).also { playerRowChanged = it }
             } else {
                 val old = notifications.put(sbn.key, stored)
+                playerRowChanged = old == null || !old.hasSamePlayerRow(stored)
                 old == null || !old.hasSamePublicContent(stored)
             }
         }
         if (changed) notifyChanged()
+        if (playerRowChanged) playerRowListeners.forEach { it.invoke() }
     }
+
+    private val playerRowListeners = CopyOnWriteArraySet<() -> Unit>()
+
+    /**
+     * Told whenever a stored notification's whole action row changes, which [addListener] is not:
+     * that one follows the watch's compact actions only, and a like toggled in the expanded row
+     * changes nothing the watch is sent.
+     */
+    fun addPlayerRowListener(listener: () -> Unit) {
+        playerRowListeners += listener
+    }
+
+    fun removePlayerRowListener(listener: () -> Unit) {
+        playerRowListeners -= listener
+    }
+
+    private fun StoredNotification.hasSamePlayerRow(other: StoredNotification): Boolean =
+            playerButtons.size == other.playerButtons.size &&
+                    playerButtons.zip(other.playerButtons).all { (left, right) ->
+                        left.label == right.label && left.semantic == right.semantic &&
+                                left.iconPng.contentEqualsNullable(right.iconPng)
+                    }
 
     fun remove(notificationKey: String) {
         val changed = synchronized(this) { notifications.remove(notificationKey) != null }
@@ -314,6 +370,46 @@ object MediaNotificationActions {
                 ?.actions
                 ?.map { it.publicAction }
                 .orEmpty()
+    }
+
+    /**
+     * Every button of the media notification that belongs to [sessionToken], in the player's own
+     * order - the row the player itself shows, transport included - for the phone's queue window.
+     * Matched to the session exactly as [actionsForSession] is. Empty when no such notification is
+     * held (no notification access, or a player that posts none).
+     */
+    fun playerButtonsForSession(
+            packageName: String,
+            sessionToken: MediaSession.Token?,
+            onlySessionOfPackage: Boolean = false
+    ): List<PlayerNotificationButton> = synchronized(this) {
+        pickNotificationForSession(
+                candidates = notifications.values.filter { it.packageName == packageName },
+                sessionToken = sessionToken,
+                onlySessionOfPackage = onlySessionOfPackage,
+                tokenOf = { it.sessionToken },
+                postedAtOf = { it.postedAt })
+                ?.playerButtons
+                .orEmpty()
+    }
+
+    /**
+     * The whole action row of a media notification, reusing the icons already rendered for the
+     * compact actions so only the expanded ones cost a render.
+     */
+    private fun playerButtonsOf(
+            contexts: PublisherContexts,
+            notificationActions: Array<out Notification.Action>,
+            compact: List<StoredAction>
+    ): List<PlayerNotificationButton> = notificationActions.withIndex().mapNotNull { (index, action) ->
+        val intent = action.actionIntent ?: return@mapNotNull null
+        val rendered = compact.firstOrNull { it.notificationActionIndex == index }?.publicAction
+        val label = rendered?.label ?: action.title?.toString().orEmpty()
+        PlayerNotificationButton(
+                label = label,
+                semantic = rendered?.semantic ?: notificationActionSemantic(action, label),
+                iconPng = rendered?.iconPng ?: rasterizePng(actionDrawableCandidates(contexts, action)),
+                intent = intent)
     }
 
     /**

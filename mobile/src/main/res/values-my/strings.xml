@@ -2373,4 +2373,8 @@
     </string-array>
     <string name="watch_home_quick_title">အမြန်ချိန်ညှိမှုများ</string>
     <string name="watch_home_scope_note">ပြောင်းလဲမှုများကို %1$s တွင် သိမ်းဆည်းသည်</string>
+    <string name="notification_queue_position">သီချင်း %2$d ပုဒ်အနက် %1$d</string>
+    <string name="queue_window_played">ဖွင့်ပြီး · %1$d</string>
+    <string name="queue_window_search_hint">တန်းစီစာရင်းတွင် ရှာရန်</string>
+    <string name="queue_window_no_matches">ကိုက်ညီသော သီချင်း မရှိပါ</string>
 </resources>

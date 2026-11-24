@@ -2987,4 +2987,8 @@
     </string-array>
     <string name="watch_home_quick_title">Быстрые настройки</string>
     <string name="watch_home_scope_note">Изменения сохраняются в «%1$s»</string>
+    <string name="notification_queue_position">Трек %1$d из %2$d</string>
+    <string name="queue_window_played">Прослушано · %1$d</string>
+    <string name="queue_window_search_hint">Поиск в очереди</string>
+    <string name="queue_window_no_matches">Нет подходящих треков</string>
 </resources>

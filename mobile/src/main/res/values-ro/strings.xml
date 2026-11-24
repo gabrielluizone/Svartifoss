@@ -2982,4 +2982,8 @@
     </string-array>
     <string name="watch_home_quick_title">Ajustări rapide</string>
     <string name="watch_home_scope_note">Modificările se salvează în %1$s</string>
+    <string name="notification_queue_position">Piesa %1$d din %2$d</string>
+    <string name="queue_window_played">Redate · %1$d</string>
+    <string name="queue_window_search_hint">Caută în coadă</string>
+    <string name="queue_window_no_matches">Nicio piesă nu se potrivește</string>
 </resources>

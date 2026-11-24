@@ -2994,4 +2994,8 @@
     </string-array>
     <string name="watch_home_quick_title">Hurtige justeringer</string>
     <string name="watch_home_scope_note">Ændringer gemmes i %1$s</string>
+    <string name="notification_queue_position">Nummer %1$d af %2$d</string>
+    <string name="queue_window_played">Afspillet · %1$d</string>
+    <string name="queue_window_search_hint">Søg i køen</string>
+    <string name="queue_window_no_matches">Ingen numre matcher</string>
 </resources>

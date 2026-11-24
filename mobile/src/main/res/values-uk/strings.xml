@@ -3004,4 +3004,8 @@
     </string-array>
     <string name="watch_home_quick_title">Швидкі налаштування</string>
     <string name="watch_home_scope_note">Зміни зберігаються в «%1$s»</string>
+    <string name="notification_queue_position">Трек %1$d з %2$d</string>
+    <string name="queue_window_played">Прослухано · %1$d</string>
+    <string name="queue_window_search_hint">Пошук у черзі</string>
+    <string name="queue_window_no_matches">Немає відповідних треків</string>
 </resources>

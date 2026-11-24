@@ -2972,4 +2972,8 @@
     </string-array>
     <string name="watch_home_quick_title">Penyesuaian cepat</string>
     <string name="watch_home_scope_note">Perubahan disimpan ke %1$s</string>
+    <string name="notification_queue_position">Lagu %1$d dari %2$d</string>
+    <string name="queue_window_played">Sudah diputar · %1$d</string>
+    <string name="queue_window_search_hint">Cari di antrean</string>
+    <string name="queue_window_no_matches">Tidak ada lagu yang cocok</string>
 </resources>

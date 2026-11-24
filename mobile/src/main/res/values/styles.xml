@@ -57,7 +57,7 @@
         <item name="android:windowLightStatusBar">@bool/is_light_mode</item>
     </style>
 
-    <!-- The window behind the quick theme dialog (ThemeQuickSwitchActivity): nothing at all. The
+    <!-- The window behind the notification's queue dialog (PlaybackQueueActivity): nothing at all. The
          dialog is the only thing drawn, so it floats over whatever was on screen - the launcher,
          another app - and closing it leaves the user exactly there. The status bar is transparent
          for the same reason: the opaque Lyra colour AppTheme gives it would be painted over the

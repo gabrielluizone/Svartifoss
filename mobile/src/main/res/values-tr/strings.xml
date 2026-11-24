@@ -3012,4 +3012,8 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     </string-array>
     <string name="watch_home_quick_title">Hızlı ayarlar</string>
     <string name="watch_home_scope_note">Değişiklikler şuraya kaydedilir: %1$s</string>
+    <string name="notification_queue_position">Parça %1$d / %2$d</string>
+    <string name="queue_window_played">Çalınanlar · %1$d</string>
+    <string name="queue_window_search_hint">Kuyrukta ara</string>
+    <string name="queue_window_no_matches">Eşleşen parça yok</string>
 </resources>

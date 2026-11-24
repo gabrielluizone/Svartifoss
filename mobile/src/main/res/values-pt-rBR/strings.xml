@@ -3025,4 +3025,8 @@
     </string-array>
     <string name="watch_home_quick_title">Ajustes rápidos</string>
     <string name="watch_home_scope_note">As alterações são salvas em %1$s</string>
+    <string name="notification_queue_position">Faixa %1$d de %2$d</string>
+    <string name="queue_window_played">Já tocadas · %1$d</string>
+    <string name="queue_window_search_hint">Buscar na fila</string>
+    <string name="queue_window_no_matches">Nenhuma faixa encontrada</string>
 </resources>

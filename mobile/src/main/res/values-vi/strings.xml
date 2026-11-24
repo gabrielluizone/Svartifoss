@@ -3012,4 +3012,8 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     </string-array>
     <string name="watch_home_quick_title">Điều chỉnh nhanh</string>
     <string name="watch_home_scope_note">Các thay đổi được lưu vào %1$s</string>
+    <string name="notification_queue_position">Bài %1$d/%2$d</string>
+    <string name="queue_window_played">Đã phát · %1$d</string>
+    <string name="queue_window_search_hint">Tìm trong hàng đợi</string>
+    <string name="queue_window_no_matches">Không có bài nào khớp</string>
 </resources>

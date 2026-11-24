@@ -2373,4 +2373,8 @@
     </string-array>
     <string name="watch_home_quick_title">ڕێکخستنی خێرا</string>
     <string name="watch_home_scope_note">گۆڕانکارییەکان لە %1$s پاشەکەوت دەکرێن</string>
+    <string name="notification_queue_position">تراکی %1$d لە %2$d</string>
+    <string name="queue_window_played">لێدراو · %1$d</string>
+    <string name="queue_window_search_hint">لە نۆرەدا بگەڕێ</string>
+    <string name="queue_window_no_matches">هیچ تراکێک ناگونجێت</string>
 </resources>

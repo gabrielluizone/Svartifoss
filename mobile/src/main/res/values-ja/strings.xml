@@ -2989,4 +2989,8 @@
     </string-array>
     <string name="watch_home_quick_title">クイック調整</string>
     <string name="watch_home_scope_note">変更は %1$s に保存されます</string>
+    <string name="notification_queue_position">%2$d 曲中 %1$d 曲目</string>
+    <string name="queue_window_played">再生済み · %1$d</string>
+    <string name="queue_window_search_hint">キューを検索</string>
+    <string name="queue_window_no_matches">一致する曲はありません</string>
 </resources>

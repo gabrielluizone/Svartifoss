@@ -3102,4 +3102,8 @@
          the theme every change is saved to (%1$s, a theme's name). -->
     <string name="watch_home_quick_title">Quick adjustments</string>
     <string name="watch_home_scope_note">Changes are saved to %1$s</string>
+    <string name="notification_queue_position">Track %1$d of %2$d</string>
+    <string name="queue_window_played">Played · %1$d</string>
+    <string name="queue_window_search_hint">Search the queue</string>
+    <string name="queue_window_no_matches">No tracks match</string>
 </resources>

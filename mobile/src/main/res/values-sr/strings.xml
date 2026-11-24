@@ -2999,4 +2999,8 @@
     </string-array>
     <string name="watch_home_quick_title">Брза подешавања</string>
     <string name="watch_home_scope_note">Измене се чувају у %1$s</string>
+    <string name="notification_queue_position">Нумера %1$d од %2$d</string>
+    <string name="queue_window_played">Пуштено · %1$d</string>
+    <string name="queue_window_search_hint">Претражи ред чекања</string>
+    <string name="queue_window_no_matches">Нема одговарајућих нумера</string>
 </resources>

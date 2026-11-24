@@ -2977,4 +2977,8 @@
     </string-array>
     <string name="watch_home_quick_title">Regolazioni rapide</string>
     <string name="watch_home_scope_note">Le modifiche vengono salvate in %1$s</string>
+    <string name="notification_queue_position">Brano %1$d di %2$d</string>
+    <string name="queue_window_played">Riprodotti · %1$d</string>
+    <string name="queue_window_search_hint">Cerca nella coda</string>
+    <string name="queue_window_no_matches">Nessun brano corrispondente</string>
 </resources>

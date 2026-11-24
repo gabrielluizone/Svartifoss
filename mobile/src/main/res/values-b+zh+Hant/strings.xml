@@ -2989,4 +2989,8 @@
     </string-array>
     <string name="watch_home_quick_title">快速調整</string>
     <string name="watch_home_scope_note">變更會儲存到 %1$s</string>
+    <string name="notification_queue_position">第 %1$d 首，共 %2$d 首</string>
+    <string name="queue_window_played">已播放 · %1$d</string>
+    <string name="queue_window_search_hint">搜尋播放佇列</string>
+    <string name="queue_window_no_matches">沒有符合的曲目</string>
 </resources>

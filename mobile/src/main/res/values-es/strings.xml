@@ -2976,4 +2976,8 @@
     </string-array>
     <string name="watch_home_quick_title">Ajustes rápidos</string>
     <string name="watch_home_scope_note">Los cambios se guardan en %1$s</string>
+    <string name="notification_queue_position">Canción %1$d de %2$d</string>
+    <string name="queue_window_played">Reproducidas · %1$d</string>
+    <string name="queue_window_search_hint">Buscar en la cola</string>
+    <string name="queue_window_no_matches">Ninguna canción coincide</string>
 </resources>

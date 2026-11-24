@@ -3017,4 +3017,8 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     </string-array>
     <string name="watch_home_quick_title">Gyors beállítások</string>
     <string name="watch_home_scope_note">A módosítások ide kerülnek: %1$s</string>
+    <string name="notification_queue_position">%1$d. szám / %2$d</string>
+    <string name="queue_window_played">Lejátszva · %1$d</string>
+    <string name="queue_window_search_hint">Keresés a sorban</string>
+    <string name="queue_window_no_matches">Nincs egyező szám</string>
 </resources>

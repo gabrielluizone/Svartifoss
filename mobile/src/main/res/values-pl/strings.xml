@@ -3004,4 +3004,8 @@
     </string-array>
     <string name="watch_home_quick_title">Szybkie ustawienia</string>
     <string name="watch_home_scope_note">Zmiany są zapisywane w %1$s</string>
+    <string name="notification_queue_position">Utwór %1$d z %2$d</string>
+    <string name="queue_window_played">Odtworzone · %1$d</string>
+    <string name="queue_window_search_hint">Szukaj w kolejce</string>
+    <string name="queue_window_no_matches">Brak pasujących utworów</string>
 </resources>

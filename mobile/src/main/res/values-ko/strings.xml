@@ -2989,4 +2989,8 @@
     </string-array>
     <string name="watch_home_quick_title">빠른 조정</string>
     <string name="watch_home_scope_note">변경 사항은 %1$s에 저장됩니다</string>
+    <string name="notification_queue_position">%2$d곡 중 %1$d번째</string>
+    <string name="queue_window_played">재생함 · %1$d</string>
+    <string name="queue_window_search_hint">대기열 검색</string>
+    <string name="queue_window_no_matches">일치하는 곡이 없습니다</string>
 </resources>

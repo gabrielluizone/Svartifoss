@@ -2978,4 +2978,8 @@
     </string-array>
     <string name="watch_home_quick_title">Schnelle Anpassungen</string>
     <string name="watch_home_scope_note">Änderungen werden in %1$s gespeichert</string>
+    <string name="notification_queue_position">Titel %1$d von %2$d</string>
+    <string name="queue_window_played">Gespielt · %1$d</string>
+    <string name="queue_window_search_hint">Warteschlange durchsuchen</string>
+    <string name="queue_window_no_matches">Keine passenden Titel</string>
 </resources>

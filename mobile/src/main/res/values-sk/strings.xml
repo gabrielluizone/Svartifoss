@@ -3004,4 +3004,8 @@
     </string-array>
     <string name="watch_home_quick_title">Rýchle úpravy</string>
     <string name="watch_home_scope_note">Zmeny sa ukladajú do %1$s</string>
+    <string name="notification_queue_position">Skladba %1$d z %2$d</string>
+    <string name="queue_window_played">Prehrané · %1$d</string>
+    <string name="queue_window_search_hint">Hľadať v poradí</string>
+    <string name="queue_window_no_matches">Žiadne zodpovedajúce skladby</string>
 </resources>

@@ -2994,4 +2994,8 @@
     </string-array>
     <string name="watch_home_quick_title">Pikasäädöt</string>
     <string name="watch_home_scope_note">Muutokset tallennetaan kohteeseen %1$s</string>
+    <string name="notification_queue_position">Kappale %1$d/%2$d</string>
+    <string name="queue_window_played">Soitettu · %1$d</string>
+    <string name="queue_window_search_hint">Hae jonosta</string>
+    <string name="queue_window_no_matches">Ei osuvia kappaleita</string>
 </resources>

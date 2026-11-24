@@ -2999,4 +2999,8 @@
     </string-array>
     <string name="watch_home_quick_title">Brze prilagodbe</string>
     <string name="watch_home_scope_note">Promjene se spremaju u %1$s</string>
+    <string name="notification_queue_position">Pjesma %1$d od %2$d</string>
+    <string name="queue_window_played">Reproducirano · %1$d</string>
+    <string name="queue_window_search_hint">Pretraži red</string>
+    <string name="queue_window_no_matches">Nema odgovarajućih pjesama</string>
 </resources>

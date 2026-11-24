@@ -3037,4 +3037,8 @@ Svartifoss — أعمدة بازلت سوداء
     </string-array>
     <string name="watch_home_quick_title">تعديلات سريعة</string>
     <string name="watch_home_scope_note">تُحفظ التغييرات في %1$s</string>
+    <string name="notification_queue_position">المقطع %1$d من %2$d</string>
+    <string name="queue_window_played">تم تشغيلها · %1$d</string>
+    <string name="queue_window_search_hint">ابحث في قائمة الانتظار</string>
+    <string name="queue_window_no_matches">لا توجد مقاطع مطابقة</string>
 </resources>
